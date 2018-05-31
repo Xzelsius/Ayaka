@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>  
+    <Summary>A lightweight development kit built to help developing applications using .NET Standard.</Summary>
+    <Description>A lightweight development kit built to help developing applications using .NET Standard.</Description>  
+    <PackageId>Ayaka</PackageId>
+  </PropertyGroup>
+
+</Project>

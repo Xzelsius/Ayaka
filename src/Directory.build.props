@@ -1,0 +1,17 @@
+<Project>
+
+    <PropertyGroup>
+        <Authors>Raphael Strotz and other contributors under the MIT license.</Authors>
+        <Copyright>Copyright © 2018 Raphael Strotz and other contributors under the MIT license.</Copyright>
+        <PackageLicenseUrl>https://github.com/Xzelsius/Ayaka/blob/master/LICENSE.md</PackageLicenseUrl>
+        <PackageProjectUrl>https://github.com/Xzelsius/Ayaka</PackageProjectUrl>        
+        <PackageTags>csharp;dotnet;dotnet-standard</PackageTags>
+        <RepositoryUrl>https://github.com/Xzelsius/Ayaka.git</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <Version>1.0.0.0</Version>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <FileVersion>1.0.0.0</FileVersion>
+        <LangVersion>latest</LangVersion>
+    </PropertyGroup>
+    
+</Project>
