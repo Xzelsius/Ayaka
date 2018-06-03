@@ -27,13 +27,13 @@ namespace Ayaka.Data
         Task<TEntity> FindAsync(int id);
 
         /// <summary>
-        ///     Inserts the <typeparamref name="TEntity" /> into the data source asynchronously.
+        ///     Inserts the entity into the data source asynchronously.
         /// </summary>
         /// <param name="entity">The entity to insert.</param>
         Task InsertAsync(TEntity entity);
 
         /// <summary>
-        ///     Persists the modification on the <typeparamref name="TEntity" /> to the data source asynchronously.
+        ///     Persists the modification on the entity to the data source asynchronously.
         /// </summary>
         /// <param name="entity">The entity to update.</param>
         Task UpdateAsync(TEntity entity);

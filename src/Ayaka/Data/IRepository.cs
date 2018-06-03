@@ -26,13 +26,13 @@ namespace Ayaka.Data
         TEntity Find(int id);
 
         /// <summary>
-        ///     Inserts the <typeparamref name="TEntity" /> into the database
+        ///     Inserts the entity into the database
         /// </summary>
         /// <param name="entity">The entity to insert.</param>
         void Insert(TEntity entity);
 
         /// <summary>
-        ///     Persists the modification on the <typeparamref name="TEntity" /> to the database.
+        ///     Persists the modification on the entity to the database.
         /// </summary>
         /// <param name="entity">The entity to update.</param>
         void Update(TEntity entity);
