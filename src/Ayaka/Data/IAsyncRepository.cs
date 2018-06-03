@@ -30,18 +30,21 @@ namespace Ayaka.Data
         ///     Inserts the entity into the data source asynchronously.
         /// </summary>
         /// <param name="entity">The entity to insert.</param>
+        /// <returns>A task that represents the asynchronous save operation.</returns>
         Task InsertAsync(TEntity entity);
 
         /// <summary>
         ///     Persists the modification on the entity to the data source asynchronously.
         /// </summary>
         /// <param name="entity">The entity to update.</param>
+        /// <returns>A task that represents the asynchronous save operation.</returns>
         Task UpdateAsync(TEntity entity);
 
         /// <summary>
         ///     Deletes the entity from the data source asynchronously.
         /// </summary>
         /// <param name="entity">The entity to delete.</param>
+        /// <returns>A task that represents the asynchronous save operation.</returns>
         Task DeleteAsync(TEntity entity);
     }
 }
