@@ -6,7 +6,7 @@ Ayaka is a lightweight development kit built to help developing applications usi
 | Package                 | Description                | Version                                                                                                               |
 |-------------------------|----------------------------|-----------------------------------------------------------------------------------------------------------------------|
 | `Ayaka`                 | The core package           | [![Nuget](https://img.shields.io/nuget/v/Ayaka.svg)](https://www.nuget.org/packages/Ayaka/)                           |
-| `Ayaka.EntityFramework` | EntityFramework extensions | [![Nuget](https://img.shields.io/nuget/v/Ayaka.EntityFramework.svg)](https://www.nuget.org/packages/Ayaka.Framework/) |
+| `Ayaka.EntityFramework` | EntityFramework extensions | [![Nuget](https://img.shields.io/nuget/v/Ayaka.EntityFramework.svg)](https://www.nuget.org/packages/Ayaka.EntityFramework/) |
 
 ## Copyright and License
 
