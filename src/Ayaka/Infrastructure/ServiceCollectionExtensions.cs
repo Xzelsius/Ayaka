@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Ayaka.Infrastructure
@@ -18,31 +19,34 @@ namespace Ayaka.Infrastructure
         ///     registrars.
         /// </summary>
         /// <param name="services">The <see cref="IServiceCollection" /> to add services to.</param>
+        /// <param name="configuration">The configuration.</param>
         /// <returns>The same service collection so that multiple calls can be chained.</returns>
-        public static IServiceCollection Scan(this IServiceCollection services)
-            => services.Scan(AppDomain.CurrentDomain.GetAssemblies());
+        public static IServiceCollection Scan(this IServiceCollection services, IConfiguration configuration)
+            => services.Scan(configuration, AppDomain.CurrentDomain.GetAssemblies());
 
         /// <summary>
         ///     Searches for <see cref="IServiceRegistrar" /> in the specified assemblies and adds services using the found
         ///     registrars.
         /// </summary>
         /// <param name="services">The <see cref="IServiceCollection" /> to add services to.</param>
+        /// <param name="configuration">The configuration.</param>
         /// <param name="assemblies">The assemblies to search for <see cref="IServiceRegistrar" /> classes.</param>
         /// <returns>The same service collection so that multiple calls can be chained.</returns>
-        public static IServiceCollection Scan(this IServiceCollection services, params Assembly[] assemblies)
-            => services.ScanForRegistrars(assemblies);
+        public static IServiceCollection Scan(this IServiceCollection services, IConfiguration configuration, params Assembly[] assemblies)
+            => services.ScanForRegistrars(configuration, assemblies);
 
         /// <summary>
         ///     Searches for <see cref="IServiceRegistrar" /> in the specified assemblies and adds services using the found
         ///     registrars.
         /// </summary>
         /// <param name="services">The <see cref="IServiceCollection" /> to add services to.</param>
+        /// <param name="configuration">The configuration.</param>
         /// <param name="assemblies">The assemblies to search for <see cref="IServiceRegistrar" /> classes.</param>
         /// <returns>The same service collection so that multiple calls can be chained.</returns>
-        public static IServiceCollection Scan(this IServiceCollection services, IEnumerable<Assembly> assemblies)
-            => services.ScanForRegistrars(assemblies);
+        public static IServiceCollection Scan(this IServiceCollection services, IConfiguration configuration, IEnumerable<Assembly> assemblies)
+            => services.ScanForRegistrars(configuration, assemblies);
 
-        private static IServiceCollection ScanForRegistrars(this IServiceCollection services, IEnumerable<Assembly> assemblies)
+        private static IServiceCollection ScanForRegistrars(this IServiceCollection services, IConfiguration configuration, IEnumerable<Assembly> assemblies)
         {
             assemblies = assemblies as Assembly[] ?? assemblies.ToArray();
 
@@ -62,7 +66,7 @@ namespace Ayaka.Infrastructure
 
             foreach (var registrar in registrarInstances)
             {
-                registrar.ConfigureServices(services);
+                registrar.ConfigureServices(services, configuration);
             }
 
             return services;

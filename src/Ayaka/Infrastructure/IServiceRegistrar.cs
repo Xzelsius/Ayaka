@@ -1,5 +1,6 @@
 // Copyright (c) Raphael Strotz and other contributors under the MIT license. All rights reserved.
 
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Ayaka.Infrastructure
@@ -20,6 +21,7 @@ namespace Ayaka.Infrastructure
         ///     Adds services to the specified sevice collection.
         /// </summary>
         /// <param name="services">The <see cref="IServiceCollection" /> to add services to.</param>
-        void ConfigureServices(IServiceCollection services);
+        /// <param name="configuration">The configuration.</param>
+        void ConfigureServices(IServiceCollection services, IConfiguration configuration);
     }
 }
