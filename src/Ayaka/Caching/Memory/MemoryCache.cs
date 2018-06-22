@@ -70,6 +70,11 @@ namespace Ayaka.Caching.Memory
             var options = new MemoryCacheEntryOptions();
             options.SetAbsoluteExpiration(expiresIn ?? _options.Value.DefaultExpiration);
             options.AddExpirationToken(new CancellationChangeToken(_tokenSource.Token));
+            options.RegisterPostEvictionCallback((o, k, r, s) =>
+            {
+                if (r == EvictionReason.Replaced) return;
+                _keys.Remove(k.ToString());
+            });
 
             _memoryCache.Set(key, value, options);
             _keys.Add(key);
