@@ -46,7 +46,7 @@ namespace Ayaka.Caching.Memory
         /// </returns>
         public bool Exists(string key)
         {
-            return _keys.Contains(key);
+            return _memoryCache.TryGetValue(key, out _);
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace Ayaka.Caching.Memory
             var options = new MemoryCacheEntryOptions();
             options.SetAbsoluteExpiration(expiresIn ?? _options.Value.DefaultExpiration);
             options.AddExpirationToken(new CancellationChangeToken(_tokenSource.Token));
-            options.RegisterPostEvictionCallback((o, k, r, s) =>
+            options.RegisterPostEvictionCallback((k, v, r, s) =>
             {
                 if (r == EvictionReason.Replaced) return;
                 _keys.Remove(k.ToString());
