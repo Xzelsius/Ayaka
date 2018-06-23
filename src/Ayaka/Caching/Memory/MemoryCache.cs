@@ -64,8 +64,8 @@ namespace Ayaka.Caching.Memory
         /// </summary>
         /// <param name="key">The key of the value.</param>
         /// <param name="value">The value to store.</param>
-        /// <param name="expiresIn">The expiration of the value.</param>
-        public void Set(string key, object value, TimeSpan? expiresIn)
+        /// <param name="expiresIn">Optional expiration of the value.</param>
+        public void Set(string key, object value, TimeSpan? expiresIn = null)
         {
             var options = new MemoryCacheEntryOptions();
             options.SetAbsoluteExpiration(expiresIn ?? _options.Value.DefaultExpiration);

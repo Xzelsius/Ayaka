@@ -32,9 +32,9 @@ namespace Ayaka.Caching
         /// <param name="cache">The cache instance.</param>
         /// <param name="key">The key of the value to get.</param>
         /// <param name="acquire">The function to acquire the cache value, if it does not exist.</param> 
-        /// <param name="expiresIn">The expiration of the value.</param>
+        /// <param name="expiresIn">Optional expiration of the value.</param>
         /// <returns>The value associated with the specified key.</returns>
-        public static TValue Get<TValue>(this ICache cache, string key, Func<TValue> acquire, TimeSpan? expiresIn)
+        public static TValue Get<TValue>(this ICache cache, string key, Func<TValue> acquire, TimeSpan? expiresIn = null)
         {
             if (cache == null) throw new ArgumentNullException(nameof(cache));
 
@@ -53,8 +53,8 @@ namespace Ayaka.Caching
         /// <param name="cache">The cache instance.</param>
         /// <param name="key">The key of the value.</param>
         /// <param name="value">The value to store.</param> 
-        /// <param name="expiresIn">The expiration of the value.</param>
-        public static void Set<TValue>(this ICache cache, string key, TValue value, TimeSpan? expiresIn)
+        /// <param name="expiresIn">Optional expiration of the value.</param>
+        public static void Set<TValue>(this ICache cache, string key, TValue value, TimeSpan? expiresIn = null)
         {
             if (cache == null) throw new ArgumentNullException(nameof(cache));
 

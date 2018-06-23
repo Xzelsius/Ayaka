@@ -37,8 +37,8 @@ namespace Ayaka.Caching
         /// </summary>
         /// <param name="key">The key of the value.</param>
         /// <param name="value">The value to store.</param>
-        /// <param name="expiresIn">The expiration of the value.</param>
-        void Set(string key, object value, TimeSpan? expiresIn);
+        /// <param name="expiresIn">Optional expiration of the value.</param>
+        void Set(string key, object value, TimeSpan? expiresIn = null);
 
         /// <summary>
         ///     Removes the value with the specified key from the cache.
