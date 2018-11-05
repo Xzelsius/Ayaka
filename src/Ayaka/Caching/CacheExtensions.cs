@@ -3,6 +3,7 @@
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace Ayaka.Caching
 {
@@ -41,6 +42,30 @@ namespace Ayaka.Caching
             if (cache.Exists(key)) return (TValue) cache.Get(key);
 
             var value = acquire();
+            cache.Set(key, value, expiresIn);
+
+            return value;
+        }
+
+        /// <summary>
+        ///     Gets the value associated with the specified key asynchronously.
+        /// </summary>
+        /// <typeparam name="TValue">The type of the value.</typeparam>
+        /// <param name="cache">The cache instance.</param>
+        /// <param name="key">The key of the value to get.</param>
+        /// <param name="acquire">The function to acquire the cache value, if it does not exist.</param>
+        /// <param name="expiresIn">Optional expiration of the value.</param>
+        /// <returns>
+        ///     A task that represents the asynchronous get operation. The task result contains the value associated with the
+        ///     specified key.
+        /// </returns>
+        public static async Task<TValue> GetAsync<TValue>(this ICache cache, string key, Func<Task<TValue>> acquire, TimeSpan? expiresIn = null)
+        {
+            if (cache == null) throw new ArgumentNullException(nameof(cache));
+
+            if (cache.Exists(key)) return (TValue) cache.Get(key);
+
+            var value = await acquire();
             cache.Set(key, value, expiresIn);
 
             return value;
