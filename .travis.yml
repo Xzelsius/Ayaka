@@ -2,8 +2,8 @@ language: csharp
 mono: none
 dotnet: 2.1
 install:
-- dotnet restore ./Ayaka.sln
+- dotnet restore
 script:
-- dotnet build ./Ayaka.sln
+- dotnet build
 - dotnet test ./test/Ayaka.Tests/Ayaka.Tests.csproj
 - dotnet test ./test/Ayaka.EntityFramework.Tests/Ayaka.EntityFramework.Tests.csproj
