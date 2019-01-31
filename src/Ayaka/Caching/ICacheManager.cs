@@ -8,7 +8,7 @@ namespace Ayaka.Caching
     /// <summary>
     ///     Defines functionality to interact with caches.
     /// </summary>
-    public interface ICache
+    public interface ICacheManager
     {
         /// <summary>
         ///     Gets an <see cref="IEnumerable{T}" /> containing the keys of all cached values.

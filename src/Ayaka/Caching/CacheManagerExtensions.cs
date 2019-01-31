@@ -8,41 +8,41 @@ using System.Threading.Tasks;
 namespace Ayaka.Caching
 {
     /// <summary>
-    ///     Provides additional functionality for <see cref="ICache" />.
+    ///     Provides additional functionality for <see cref="ICacheManager" />.
     /// </summary>
-    public static class CacheExtensions
+    public static class CacheManagerExtensions
     {
         /// <summary>
         ///     Gets the value associated with the specified key.
         /// </summary>
         /// <typeparam name="TValue">The type of the value.</typeparam>
-        /// <param name="cache">The cache instance.</param>
+        /// <param name="cacheManager">The cache manager instance.</param>
         /// <param name="key">The key of the value to get.</param>
         /// <returns>The value associated with the specified key.</returns>
-        public static TValue Get<TValue>(this ICache cache, string key)
+        public static TValue Get<TValue>(this ICacheManager cacheManager, string key)
         {
-            if (cache == null) throw new ArgumentNullException(nameof(cache));
+            if (cacheManager == null) throw new ArgumentNullException(nameof(cacheManager));
 
-            return (TValue) cache.Get(key);
+            return (TValue) cacheManager.Get(key);
         }
 
         /// <summary>
         ///     Gets the value associated with the specified key.
         /// </summary>
         /// <typeparam name="TValue">The type of the value.</typeparam>
-        /// <param name="cache">The cache instance.</param>
+        /// <param name="cacheManager">The cache manager instance.</param>
         /// <param name="key">The key of the value to get.</param>
-        /// <param name="acquire">The function to acquire the cache value, if it does not exist.</param> 
+        /// <param name="acquire">The function to acquire the cache value, if it does not exist.</param>
         /// <param name="expiresIn">Optional expiration of the value.</param>
         /// <returns>The value associated with the specified key.</returns>
-        public static TValue Get<TValue>(this ICache cache, string key, Func<TValue> acquire, TimeSpan? expiresIn = null)
+        public static TValue Get<TValue>(this ICacheManager cacheManager, string key, Func<TValue> acquire, TimeSpan? expiresIn = null)
         {
-            if (cache == null) throw new ArgumentNullException(nameof(cache));
+            if (cacheManager == null) throw new ArgumentNullException(nameof(cacheManager));
 
-            if (cache.Exists(key)) return (TValue) cache.Get(key);
+            if (cacheManager.Exists(key)) return (TValue) cacheManager.Get(key);
 
             var value = acquire();
-            cache.Set(key, value, expiresIn);
+            cacheManager.Set(key, value, expiresIn);
 
             return value;
         }
@@ -51,7 +51,7 @@ namespace Ayaka.Caching
         ///     Gets the value associated with the specified key asynchronously.
         /// </summary>
         /// <typeparam name="TValue">The type of the value.</typeparam>
-        /// <param name="cache">The cache instance.</param>
+        /// <param name="cacheManager">The cache manager instance.</param>
         /// <param name="key">The key of the value to get.</param>
         /// <param name="acquire">The function to acquire the cache value, if it does not exist.</param>
         /// <param name="expiresIn">Optional expiration of the value.</param>
@@ -59,14 +59,14 @@ namespace Ayaka.Caching
         ///     A task that represents the asynchronous get operation. The task result contains the value associated with the
         ///     specified key.
         /// </returns>
-        public static async Task<TValue> GetAsync<TValue>(this ICache cache, string key, Func<Task<TValue>> acquire, TimeSpan? expiresIn = null)
+        public static async Task<TValue> GetAsync<TValue>(this ICacheManager cacheManager, string key, Func<Task<TValue>> acquire, TimeSpan? expiresIn = null)
         {
-            if (cache == null) throw new ArgumentNullException(nameof(cache));
+            if (cacheManager == null) throw new ArgumentNullException(nameof(cacheManager));
 
-            if (cache.Exists(key)) return (TValue) cache.Get(key);
+            if (cacheManager.Exists(key)) return (TValue) cacheManager.Get(key);
 
             var value = await acquire();
-            cache.Set(key, value, expiresIn);
+            cacheManager.Set(key, value, expiresIn);
 
             return value;
         }
@@ -75,33 +75,33 @@ namespace Ayaka.Caching
         ///     Adds the specified key and value to the cache.
         /// </summary>
         /// <typeparam name="TValue">The type of the value.</typeparam>
-        /// <param name="cache">The cache instance.</param>
+        /// <param name="cacheManager">The cache manager instance.</param>
         /// <param name="key">The key of the value.</param>
-        /// <param name="value">The value to store.</param> 
+        /// <param name="value">The value to store.</param>
         /// <param name="expiresIn">Optional expiration of the value.</param>
-        public static void Set<TValue>(this ICache cache, string key, TValue value, TimeSpan? expiresIn = null)
+        public static void Set<TValue>(this ICacheManager cacheManager, string key, TValue value, TimeSpan? expiresIn = null)
         {
-            if (cache == null) throw new ArgumentNullException(nameof(cache));
+            if (cacheManager == null) throw new ArgumentNullException(nameof(cacheManager));
 
-            cache.Set(key, value, expiresIn);
+            cacheManager.Set(key, value, expiresIn);
         }
 
         /// <summary>
         ///     Removes all values matching with the specified pattern from the cache.
         /// </summary>
-        /// <param name="cache">The cache instance.</param>
+        /// <param name="cacheManager">The cache manager instance.</param>
         /// <param name="pattern">The regular expression.</param>
-        public static void RemoveByPattern(this ICache cache, string pattern)
+        public static void RemoveByPattern(this ICacheManager cacheManager, string pattern)
         {
-            if (cache == null) throw new ArgumentNullException(nameof(cache));
+            if (cacheManager == null) throw new ArgumentNullException(nameof(cacheManager));
             if (pattern == null) throw new ArgumentNullException(nameof(pattern));
 
             var regex = new Regex(pattern, RegexOptions.Singleline | RegexOptions.Compiled | RegexOptions.IgnoreCase);
-            var keys = cache.Keys.Where(k => regex.IsMatch(k));
+            var keys = cacheManager.Keys.Where(k => regex.IsMatch(k));
 
             foreach (var key in keys)
             {
-                cache.Remove(key);
+                cacheManager.Remove(key);
             }
         }
     }
