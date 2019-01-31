@@ -1,6 +1,7 @@
 // Copyright (c) Raphael Strotz and other contributors under the MIT license. All rights reserved.
 
 using System;
+using Ayaka.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -12,33 +13,57 @@ namespace Ayaka.Caching
     public static class ServiceCollectionExtensions
     {
         /// <summary>
-        ///     Adds the specified cache to the service collection.
+        ///     Adds the specified <typeparamref name="TCacheManager">cache manager</typeparamref> to the service collection.
         /// </summary>
-        /// <typeparam name="TCache">The type of the cache.</typeparam>
+        /// <typeparam name="TCacheManager">The type of the cache manager.</typeparam>
         /// <param name="services">The <see cref="IServiceCollection" /> to add services to.</param>
         /// <returns>The same service collection so that multiple calls can be chained.</returns>
-        public static IServiceCollection AddCache<TCache>(this IServiceCollection services) 
-            where TCache : class, ICache
+        public static IServiceCollection AddCacheManager<TCacheManager>(this IServiceCollection services)
+            where TCacheManager : class, ICacheManager
         {
             services.AddOptions();
-            services.TryAddSingleton<ICache, TCache>();
+            services.TryAddSingleton<ICacheManager, TCacheManager>();
 
             return services;
         }
 
         /// <summary>
-        ///     Adds the specified cache and options to the service collection.
+        ///     Adds the specified <typeparamref name="TCacheManager">cache manager</typeparamref> and options to the service
+        ///     collection.
         /// </summary>
-        /// <typeparam name="TCache">The type of the cache.</typeparam>
+        /// <typeparam name="TCacheManager">The type of the cache manager.</typeparam>
         /// <param name="services">The <see cref="IServiceCollection" /> to add services to.</param>
-        /// <param name="optionsAction">An optional action to configure the cache.</param>
+        /// <param name="setupAction">The action to configure the cache manager.</param>
         /// <returns>The same service collection so that multiple calls can be chained.</returns>
-        public static IServiceCollection AddCache<TCache>(this IServiceCollection services, Action<CacheOptions> optionsAction) 
-            where TCache : class, ICache
+        public static IServiceCollection AddCacheManager<TCacheManager>(this IServiceCollection services, Action<CacheOptions> setupAction)
+            where TCacheManager : class, ICacheManager
         {
-            services.AddCache<TCache>();
-            services.Configure(optionsAction);
+            services.AddCacheManager<TCacheManager>();
+            services.Configure(setupAction);
 
+            return services;
+        }
+
+        /// <summary>
+        ///     Adds a <see cref="MemoryCacheManager" /> to the service collection.
+        /// </summary>
+        /// <param name="services">The <see cref="IServiceCollection" /> to add services to.</param>
+        /// <returns>The same service collection so that multiple calls can be chained.</returns>
+        public static IServiceCollection AddMemoryCacheManager(this IServiceCollection services)
+        {
+            services.AddCacheManager<MemoryCacheManager>();
+            return services;
+        }
+
+        /// <summary>
+        ///     Adds a <see cref="MemoryCacheManager" /> and specified options to the service collection.
+        /// </summary>
+        /// <param name="services">The <see cref="IServiceCollection" /> to add services to.</param>
+        /// <param name="setupAction">The action to configure the cache manager.</param>
+        /// <returns>The same service collection so that multiple calls can be chained.</returns>
+        public static IServiceCollection AddMemoryCacheManager(this IServiceCollection services, Action<CacheOptions> setupAction)
+        {
+            services.AddCacheManager<MemoryCacheManager>(setupAction);
             return services;
         }
     }

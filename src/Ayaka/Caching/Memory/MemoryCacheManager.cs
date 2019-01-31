@@ -12,23 +12,23 @@ namespace Ayaka.Caching.Memory
     /// <summary>
     ///     Provides functionality to interact with a <see cref="IMemoryCache" />.
     /// </summary>
-    public class MemoryCache : ICache
+    public class MemoryCacheManager : ICacheManager
     {
         private readonly IMemoryCache _memoryCache;
-        private readonly IOptions<CacheOptions> _options;
+        private readonly CacheOptions _options;
         private readonly HashSet<string> _keys = new HashSet<string>();
 
         private CancellationTokenSource _tokenSource = new CancellationTokenSource();
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="MemoryCache" /> class.
+        ///     Initializes a new instance of the <see cref="MemoryCacheManager" /> class.
         /// </summary>
         /// <param name="memoryCache">The underlying <see cref="IMemoryCache" />.</param>
-        /// <param name="options">THe cache options.</param>
-        public MemoryCache(IMemoryCache memoryCache, IOptions<CacheOptions> options)
+        /// <param name="optionsAccessor">The cache options.</param>
+        public MemoryCacheManager(IMemoryCache memoryCache, IOptions<CacheOptions> optionsAccessor)
         {
             _memoryCache = memoryCache;
-            _options = options;
+            _options = optionsAccessor.Value;
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Ayaka.Caching.Memory
         public void Set(string key, object value, TimeSpan? expiresIn = null)
         {
             var options = new MemoryCacheEntryOptions();
-            options.SetAbsoluteExpiration(expiresIn ?? _options.Value.DefaultExpiration);
+            options.SetAbsoluteExpiration(expiresIn ?? _options.DefaultExpiration);
             options.AddExpirationToken(new CancellationChangeToken(_tokenSource.Token));
             options.RegisterPostEvictionCallback((k, v, r, s) =>
             {
