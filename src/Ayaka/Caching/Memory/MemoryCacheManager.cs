@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Raphael Strotz and other contributors under the MIT license. All rights reserved.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
@@ -16,7 +18,7 @@ namespace Ayaka.Caching.Memory
     {
         private readonly IMemoryCache _memoryCache;
         private readonly CacheOptions _options;
-        private readonly HashSet<string> _keys = new HashSet<string>();
+        private readonly ConcurrentDictionary<string, bool> _keys = new ConcurrentDictionary<string, bool>();
 
         private CancellationTokenSource _tokenSource = new CancellationTokenSource();
 
@@ -35,7 +37,8 @@ namespace Ayaka.Caching.Memory
         ///     Gets an <see cref="IEnumerable{T}" /> containing the keys of all cached values.
         /// </summary>
         /// <returns>An <see cref="IEnumerable{T}" /> containing the keys.</returns>
-        public IEnumerable<string> Keys => _keys;
+        public IEnumerable<string> Keys 
+            => _keys.Where(kvp => kvp.Value).Select(kvp => kvp.Key);
 
         /// <summary>
         ///     Gets a value indicating whether a value associated with the specified key exists or not.
@@ -73,11 +76,13 @@ namespace Ayaka.Caching.Memory
             options.RegisterPostEvictionCallback((k, v, r, s) =>
             {
                 if (r == EvictionReason.Replaced) return;
-                _keys.Remove(k.ToString());
+
+                CleanupKeys();
+                TryRemoveKey(k.ToString());
             });
 
             _memoryCache.Set(key, value, options);
-            _keys.Add(key);
+            _keys.TryAdd(key, value: true);
         }
 
         /// <summary>
@@ -87,7 +92,7 @@ namespace Ayaka.Caching.Memory
         public void Remove(string key)
         {
             _memoryCache.Remove(key);
-            _keys.Remove(key);
+            TryRemoveKey(key);
         }
 
         /// <summary>
@@ -101,8 +106,31 @@ namespace Ayaka.Caching.Memory
                 _tokenSource.Dispose();
             }
 
-            _keys.Clear();
             _tokenSource = new CancellationTokenSource();
+        }
+
+        /// <summary>
+        ///     Removes the specified key from the internal key list.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        protected void TryRemoveKey(string key)
+        {
+            if (!_keys.TryRemove(key, out _))
+            {
+                _keys.TryUpdate(key, newValue: false, comparisonValue: true);
+            }
+        }
+
+        /// <summary>
+        ///     Clean flagged keys from the internal key list.
+        /// </summary>
+        protected void CleanupKeys()
+        {
+            var keys = _keys.Where(kvp => !kvp.Value).Select(kvp => kvp.Key);
+            foreach (var key in keys)
+            {
+                TryRemoveKey(key);
+            }
         }
     }
 }
