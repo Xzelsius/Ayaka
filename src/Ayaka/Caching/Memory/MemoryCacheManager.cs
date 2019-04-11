@@ -67,12 +67,19 @@ namespace Ayaka.Caching.Memory
         /// </summary>
         /// <param name="key">The key of the value.</param>
         /// <param name="value">The value to store.</param>
-        /// <param name="expiresIn">Optional expiration of the value.</param>
-        public void Set(string key, object value, TimeSpan? expiresIn = null)
+        /// <param name="expiresIn">Optional expiration of the value.</param> 
+        /// <param name="expirationToken">Optional <see cref="IChangeToken"/> that causes the cache entry to expire.</param>
+        public void Set(string key, object value, TimeSpan? expiresIn = null, IChangeToken expirationToken = null)
         {
             var options = new MemoryCacheEntryOptions();
             options.SetAbsoluteExpiration(expiresIn ?? _options.DefaultExpiration);
             options.AddExpirationToken(new CancellationChangeToken(_tokenSource.Token));
+
+            if (expirationToken != null)
+            {
+                options.AddExpirationToken(expirationToken);
+            }
+
             options.RegisterPostEvictionCallback((k, v, r, s) =>
             {
                 if (r == EvictionReason.Replaced) return;
