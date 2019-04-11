@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Primitives;
 
 namespace Ayaka.Caching
 {
@@ -34,15 +35,16 @@ namespace Ayaka.Caching
         /// <param name="key">The key of the value to get.</param>
         /// <param name="acquire">The function to acquire the cache value, if it does not exist.</param>
         /// <param name="expiresIn">Optional expiration of the value.</param>
+        /// <param name="expirationToken">Optional <see cref="IChangeToken"/> that causes the cache entry to expire.</param>
         /// <returns>The value associated with the specified key.</returns>
-        public static TValue Get<TValue>(this ICacheManager cacheManager, string key, Func<TValue> acquire, TimeSpan? expiresIn = null)
+        public static TValue Get<TValue>(this ICacheManager cacheManager, string key, Func<TValue> acquire, TimeSpan? expiresIn = null, IChangeToken expirationToken = null)
         {
             if (cacheManager == null) throw new ArgumentNullException(nameof(cacheManager));
 
             if (cacheManager.Exists(key)) return (TValue) cacheManager.Get(key);
 
             var value = acquire();
-            cacheManager.Set(key, value, expiresIn);
+            cacheManager.Set(key, value, expiresIn, expirationToken);
 
             return value;
         }
@@ -55,18 +57,19 @@ namespace Ayaka.Caching
         /// <param name="key">The key of the value to get.</param>
         /// <param name="acquire">The function to acquire the cache value, if it does not exist.</param>
         /// <param name="expiresIn">Optional expiration of the value.</param>
+        /// <param name="expirationToken">Optional <see cref="IChangeToken"/> that causes the cache entry to expire.</param>
         /// <returns>
         ///     A task that represents the asynchronous get operation. The task result contains the value associated with the
         ///     specified key.
         /// </returns>
-        public static async Task<TValue> GetAsync<TValue>(this ICacheManager cacheManager, string key, Func<Task<TValue>> acquire, TimeSpan? expiresIn = null)
+        public static async Task<TValue> GetAsync<TValue>(this ICacheManager cacheManager, string key, Func<Task<TValue>> acquire, TimeSpan? expiresIn = null, IChangeToken expirationToken = null)
         {
             if (cacheManager == null) throw new ArgumentNullException(nameof(cacheManager));
 
             if (cacheManager.Exists(key)) return (TValue) cacheManager.Get(key);
 
             var value = await acquire();
-            cacheManager.Set(key, value, expiresIn);
+            cacheManager.Set(key, value, expiresIn, expirationToken);
 
             return value;
         }
@@ -79,11 +82,12 @@ namespace Ayaka.Caching
         /// <param name="key">The key of the value.</param>
         /// <param name="value">The value to store.</param>
         /// <param name="expiresIn">Optional expiration of the value.</param>
-        public static void Set<TValue>(this ICacheManager cacheManager, string key, TValue value, TimeSpan? expiresIn = null)
+        /// <param name="expirationToken">Optional <see cref="IChangeToken"/> that causes the cache entry to expire.</param>
+        public static void Set<TValue>(this ICacheManager cacheManager, string key, TValue value, TimeSpan? expiresIn = null, IChangeToken expirationToken = null)
         {
             if (cacheManager == null) throw new ArgumentNullException(nameof(cacheManager));
 
-            cacheManager.Set(key, value, expiresIn);
+            cacheManager.Set(key, value, expiresIn, expirationToken);
         }
 
         /// <summary>

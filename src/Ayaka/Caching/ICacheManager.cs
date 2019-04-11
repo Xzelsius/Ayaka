@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using Microsoft.Extensions.Primitives;
 
 namespace Ayaka.Caching
 {
@@ -37,8 +38,9 @@ namespace Ayaka.Caching
         /// </summary>
         /// <param name="key">The key of the value.</param>
         /// <param name="value">The value to store.</param>
-        /// <param name="expiresIn">Optional expiration of the value.</param>
-        void Set(string key, object value, TimeSpan? expiresIn = null);
+        /// <param name="expiresIn">Optional expiration of the value.</param> 
+        /// <param name="expirationToken">Optional <see cref="IChangeToken"/> that causes the cache entry to expire.</param>
+        void Set(string key, object value, TimeSpan? expiresIn = null, IChangeToken expirationToken = null);
 
         /// <summary>
         ///     Removes the value with the specified key from the cache.
