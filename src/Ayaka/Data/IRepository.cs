@@ -8,7 +8,8 @@ namespace Ayaka.Data
     ///     Defines functionality to interact with data source objects.
     /// </summary>
     /// <typeparam name="TEntity">The type of the entity.</typeparam>
-    public interface IRepository<TEntity> where TEntity : IEntity
+    /// <typeparam name="TKey">The type of the primary key.</typeparam>
+    public interface IRepository<TEntity, in TKey> where TEntity : IIdentifiable<TKey>
     {
         /// <summary>
         ///     Provides functionality to evaluate queries against the underlying data source.
@@ -23,7 +24,7 @@ namespace Ayaka.Data
         /// </summary>
         /// <param name="id">The identifier of the entity.</param>
         /// <returns>The <typeparamref name="TEntity" /> found for the specified primary key.</returns>
-        TEntity Find(int id);
+        TEntity Find(TKey id);
 
         /// <summary>
         ///     Inserts the entity into the database

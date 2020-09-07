@@ -12,7 +12,7 @@ namespace Ayaka.Data
         ///     Gets or sets the identifier.
         /// </summary>
         /// <value>
-        ///     A <see cref="TKey" /> value representing the identifier.
+        ///     A <typeparamref name="TKey">value</typeparamref> representing the identifier.
         /// </value>
         TKey Id { get; set; }
     }

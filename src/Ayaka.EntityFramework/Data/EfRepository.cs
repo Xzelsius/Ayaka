@@ -10,13 +10,14 @@ namespace Ayaka.Data
     ///     Provides functionality to interact with data source objects using EntityFramework.
     /// </summary>
     /// <typeparam name="TEntity">The type of the entity.</typeparam>
-    public class EfRepository<TEntity> : IAsyncRepository<TEntity>, IRepository<TEntity> where TEntity : class, IEntity
+    /// <typeparam name="TKey">The type of the primary key.</typeparam>
+    public class EfRepository<TEntity, TKey> : IAsyncRepository<TEntity, TKey>, IRepository<TEntity, TKey> where TEntity : class, IIdentifiable<TKey>
     {
         private readonly DbContext _dbContext;
         private readonly DbSet<TEntity> _dbSet;
 
         /// <summary>
-        ///     Initializes a new instance of <see cref="EfRepository{TEntity}" /> class.
+        ///     Initializes a new instance of <see cref="EfRepository{TEntity, TKey}" /> class.
         /// </summary>
         /// <param name="dbContext">The underlying data context.</param>
         public EfRepository(DbContext dbContext)
@@ -38,7 +39,7 @@ namespace Ayaka.Data
         /// </summary>
         /// <param name="id">The identifier of the entity.</param>
         /// <returns>The <typeparamref name="TEntity" /> found for the specified primary key.</returns>
-        public virtual TEntity Find(int id)
+        public virtual TEntity Find(TKey id)
         {
             return _dbSet.Find(id);
         }
@@ -48,7 +49,7 @@ namespace Ayaka.Data
         /// </summary>
         /// <param name="id">The identifier of the entity.</param>
         /// <returns>The <typeparamref name="TEntity" /> found for the specified primary key.</returns>
-        public virtual Task<TEntity> FindAsync(int id)
+        public virtual Task<TEntity> FindAsync(TKey id)
         {
             return _dbSet.FindAsync(id);
         }

@@ -27,7 +27,7 @@ namespace Ayaka.Data
 
             using (var context = new TestContext(options))
             {
-                var repository = new EfRepository<TestEntity>(context);
+                var repository = new EfRepository<TestEntity, int>(context);
                 var entity = repository.Find(id);
 
                 Assert.NotNull(entity);
@@ -53,7 +53,7 @@ namespace Ayaka.Data
 
             using (var context = new TestContext(options))
             {
-                var repository = new EfRepository<TestEntity>(context);
+                var repository = new EfRepository<TestEntity, int>(context);
                 var entity = await repository.FindAsync(id);
 
                 Assert.NotNull(entity);
@@ -70,7 +70,7 @@ namespace Ayaka.Data
 
             using (var context = new TestContext(options))
             {
-                var repository = new EfRepository<TestEntity>(context);
+                var repository = new EfRepository<TestEntity, int>(context);
                 repository.Insert(new TestEntity {Name = "Test"});
             }
 
@@ -90,7 +90,7 @@ namespace Ayaka.Data
 
             using (var context = new TestContext(options))
             {
-                var repository = new EfRepository<TestEntity>(context);
+                var repository = new EfRepository<TestEntity, int>(context);
                 await repository.InsertAsync(new TestEntity {Name = "Test"});
             }
 
@@ -120,7 +120,7 @@ namespace Ayaka.Data
 
                 entity.Name = "Test (Updated)";
 
-                var repository = new EfRepository<TestEntity>(context);
+                var repository = new EfRepository<TestEntity, int>(context);
                 repository.Update(entity);
             }
 
@@ -150,7 +150,7 @@ namespace Ayaka.Data
 
                 entity.Name = "Test (Updated)";
 
-                var repository = new EfRepository<TestEntity>(context);
+                var repository = new EfRepository<TestEntity, int>(context);
                 await repository.UpdateAsync(entity);
             }
 
@@ -178,7 +178,7 @@ namespace Ayaka.Data
             {
                 var entity = context.Set<TestEntity>().Single();
 
-                var repository = new EfRepository<TestEntity>(context);
+                var repository = new EfRepository<TestEntity, int>(context);
                 repository.Delete(entity);
             }
 
@@ -205,7 +205,7 @@ namespace Ayaka.Data
             {
                 var entity = context.Set<TestEntity>().Single();
 
-                var repository = new EfRepository<TestEntity>(context);
+                var repository = new EfRepository<TestEntity, int>(context);
                 await repository.DeleteAsync(entity);
             }
 
@@ -233,7 +233,7 @@ namespace Ayaka.Data
 
             using (var context = new TestContext(options))
             {
-                var repository = new EfRepository<TestEntity>(context);
+                var repository = new EfRepository<TestEntity, int>(context);
                 var entities = repository.Table.ToList();
 
                 Assert.NotNull(entities);
@@ -255,7 +255,7 @@ namespace Ayaka.Data
             }
         }
 
-        public class TestEntity : IEntity
+        public class TestEntity : IIdentifiable<int>
         {
             public int Id { get; set; }
             public string Name { get; set; }
