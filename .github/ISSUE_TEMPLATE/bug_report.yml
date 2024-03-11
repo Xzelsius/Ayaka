@@ -1,0 +1,44 @@
+name: 🐞 Bug Report
+description: Create a report about something that is not working
+labels: ["untriaged", "bug"]
+body:
+  - type: textarea
+    attributes:
+      label: Describe the bug
+      description: A clear and concise description of what the bug is.
+      placeholder: Description
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Steps to reproduce
+      description: |
+        The minimal steps required to reproduce the bug.
+        Feel free to provide us a project hosted in a public GitHub repo.
+
+        We will close this issue if:
+        - The steps you share with us are too complex and no repro project is provided
+        - If the repro project is attached as a `.zip` file
+        - If the GitHub repo is set to `Private`
+        - If we will not be able to repro the behavior you are reporting
+      placeholder: Minimal Reproduction
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Expected behavior
+      description: A clear and concise description of what you expected to happen.
+      placeholder: Expected Behavior
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Version
+      description: Ayaka Version
+      placeholder: 1.0.0
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Anything else?
+      description: Additional information that might be helpful
