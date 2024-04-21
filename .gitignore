@@ -1,6 +1,6 @@
-######################
-## Visual Studio
-######################
+#================================
+# Visual Studio
+#================================
 
 # Cache/options directory
 .vs/
@@ -40,9 +40,9 @@ publish/
 *.pubxml
 *.publishproj
 
-######################
-## Visual Studio Code
-######################
+#================================
+# Visual Studio Code
+#================================
 
 # Cache/options directory
 .vscode/*
@@ -52,16 +52,16 @@ publish/
 !.vscode/extensions.json
 .history
 
-######################
-## JetBrains IDEs
-######################
+#================================
+# JetBrains IDEs
+#================================
 
 # Cache/options directory
 .idea/*
 
-######################
-## NuGet
-######################
+#================================
+# NuGet
+#================================
 
 # NuGet Packages
 *.nupkg
@@ -74,9 +74,9 @@ publish/
 # except build/, which is used as an MSBuild target.
 !**/packages/build/
 
-######################
-## Node.js
-######################
+#================================
+# Node.js
+#================================
 
 # Node Packages
 node_modules/
@@ -98,9 +98,9 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
-######################
-## Windows detritus
-######################
+#================================
+# Windows detritus
+#================================
 
 # Windows image file caches
 Thumbs.db
@@ -115,9 +115,9 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-######################
-## OSX
-######################
+#================================
+# OSX
+#================================
 
 *.DS_Store
 .AppleDouble
@@ -129,6 +129,6 @@ Icon
 # Thumbnails
 ._*
 
-######################
-## Others
-######################
+#================================
+# Others
+#================================

@@ -10,10 +10,9 @@ The general rule we follow is **use Visual Studio defaults**.
    controlled block.
 2. We use four spaces of indentation (no tabs).
 3. We use `_camelCase` for internal and private fields and use `readonly` where possible. Prefix
-   internal and private instance fields with `_`, static fields with `s_` and thread static fields
-   with `t_`. When used on static fields, `readonly` should come after static (e.g.
-   `static readonly` not `readonly static`). Public fields should be used sparingly, but when they
-   are used, they should use `PascalCasing`, no prefix.
+   internal and private instance fields with `_`. When used on static fields, `readonly` should come
+   after static (e.g. `static readonly` not `readonly static`). Public fields should be used sparingly,
+   but when they are used, they should use `PascalCasing`, no prefix.
 4. We avoid `this.` unless absolutely necessary.
 5. We always specify the visibility, even if it's the default (e.g. `private string _foo` not
    `string _foo`). Visibility should be the first modifier (e.g. `public abstract` not
@@ -44,3 +43,5 @@ The general rule we follow is **use Visual Studio defaults**.
       statement uses braces or if a single statement body spans multiple lines.
     * Braces may be omitted only if the body of every block associated with an `if/else` / `if/.../else`
       compound statement is placed on a single line.
+
+_Our `.edtorconfig` should help your editor to match these code style and formatting rules._
