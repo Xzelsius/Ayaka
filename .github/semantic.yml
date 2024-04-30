@@ -1,0 +1,10 @@
+﻿enabled: true
+types:
+  - chore
+  - docs
+  - feat
+  - fix
+  - refactor
+  - revert
+  - style
+  - test
