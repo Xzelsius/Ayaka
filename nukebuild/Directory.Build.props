@@ -1,0 +1,12 @@
+<Project DefaultTargets="Build">
+
+  <PropertyGroup>
+    <IsPackable>False</IsPackable>
+    <IsNuGetPackage>False</IsNuGetPackage>
+    <IsTestProject>False</IsTestProject>
+  </PropertyGroup>
+
+  <Import Project="..\build\TargetFramework.props" />
+  <Import Project="..\build\Compiler.props" />
+
+</Project>

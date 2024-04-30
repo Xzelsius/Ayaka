@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>$(DotNetTargetFramework)</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageDescription>Provides various opinionated NUKE build components for simpler build automation. $(PackageDescriptionAppendix)</PackageDescription>
+    <PackageTags>$(PackageCommonTags);nuke;build;automation;continuous-integration;tools;orchestration</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Nuke.Common" Version="8.0.0" />
+  </ItemGroup>
+
+</Project>

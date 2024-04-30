@@ -50,6 +50,9 @@ end_of_line = lf
 # C# Source files
 [*.cs]
 indent_size = 4
+
+# File Header
+dotnet_diagnostic.IDE0073.severity = warning
 file_header_template = Copyright (c) Raphael Strotz. All rights reserved.
 
 #================================
@@ -223,6 +226,9 @@ dotnet_naming_rule.local_variable_naming.severity = warning
 # Namespaces
 csharp_style_namespace_declarations = file_scoped
 
+# Usings
+csharp_using_directive_placement = inside_namespace
+
 # Modifiers
 csharp_preferred_modifier_order = public, private, protected, internal, file, static, new, abstract, virtual, sealed, readonly, override, extern, unsafe, volatile, required, async:warning
 
@@ -338,5 +344,17 @@ csharp_style_unused_value_assignment_preference = discard_variable:warning
 # ReSharper
 #================================
 
+[*.cs]
+
 resharper_align_linq_query = true
 resharper_arguments_literal = named
+
+#================================
+# Analyzer Overrides
+#================================
+
+[/test/**/*.cs]
+# Computed value is never used
+# Reason: We don't want this rule in tests as would not play nice with FluentAssertions
+csharp_style_unused_value_expression_statement_preference = none
+dotnet_diagnostic.IDE0058.severity = none

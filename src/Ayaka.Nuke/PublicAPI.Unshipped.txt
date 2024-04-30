@@ -1,0 +1,57 @@
+#nullable enable
+Ayaka.Nuke.DotNet.Configuration
+Ayaka.Nuke.DotNet.Configuration.Configuration() -> void
+Ayaka.Nuke.DotNet.ICanCompileDotNet
+Ayaka.Nuke.DotNet.ICanCompileDotNet.CompileSettings.get -> Nuke.Common.Tooling.Configure<Nuke.Common.Tools.DotNet.DotNetBuildSettings!>!
+Ayaka.Nuke.DotNet.ICanCompileDotNet.CompileSettingsBase.get -> Nuke.Common.Tooling.Configure<Nuke.Common.Tools.DotNet.DotNetBuildSettings!>!
+Ayaka.Nuke.DotNet.ICanPackDotNet
+Ayaka.Nuke.DotNet.ICanPackDotNet.PackSettings.get -> Nuke.Common.Tooling.Configure<Nuke.Common.Tools.DotNet.DotNetPackSettings!>!
+Ayaka.Nuke.DotNet.ICanPackDotNet.PackSettingsBase.get -> Nuke.Common.Tooling.Configure<Nuke.Common.Tools.DotNet.DotNetPackSettings!>!
+Ayaka.Nuke.DotNet.ICanRestoreDotNet
+Ayaka.Nuke.DotNet.ICanRestoreDotNet.RestoreSettings.get -> Nuke.Common.Tooling.Configure<Nuke.Common.Tools.DotNet.DotNetRestoreSettings!>!
+Ayaka.Nuke.DotNet.ICanRestoreDotNet.RestoreSettingsBase.get -> Nuke.Common.Tooling.Configure<Nuke.Common.Tools.DotNet.DotNetRestoreSettings!>!
+Ayaka.Nuke.DotNet.ICanTestDotNet
+Ayaka.Nuke.DotNet.ICanTestDotNet.ReportTestCount() -> void
+Ayaka.Nuke.DotNet.ICanTestDotNet.TestProjects.get -> System.Collections.Generic.IEnumerable<Nuke.Common.ProjectModel.Project!>!
+Ayaka.Nuke.DotNet.ICanTestDotNet.TestProjectSettings.get -> Nuke.Common.Tooling.Configure<Nuke.Common.Tools.DotNet.DotNetTestSettings!, Nuke.Common.ProjectModel.Project!>!
+Ayaka.Nuke.DotNet.ICanTestDotNet.TestProjectSettingsBase.get -> Nuke.Common.Tooling.Configure<Nuke.Common.Tools.DotNet.DotNetTestSettings!, Nuke.Common.ProjectModel.Project!>!
+Ayaka.Nuke.DotNet.ICanTestDotNet.TestSettings.get -> Nuke.Common.Tooling.Configure<Nuke.Common.Tools.DotNet.DotNetTestSettings!>!
+Ayaka.Nuke.DotNet.ICanTestDotNet.TestSettingsBase.get -> Nuke.Common.Tooling.Configure<Nuke.Common.Tools.DotNet.DotNetTestSettings!>!
+Ayaka.Nuke.DotNet.IHaveConfiguration
+Ayaka.Nuke.DotNet.IHaveConfiguration.Configuration.get -> Ayaka.Nuke.DotNet.Configuration!
+Ayaka.Nuke.Extensions
+Ayaka.Nuke.ICan
+Ayaka.Nuke.ICanClean
+Ayaka.Nuke.IHave
+Ayaka.Nuke.IHaveArtifacts
+Ayaka.Nuke.IHaveArtifacts.ArtifactsDirectory.get -> Nuke.Common.IO.AbsolutePath!
+Ayaka.Nuke.IHaveCleanTarget
+Ayaka.Nuke.IHaveCleanTarget.Clean.get -> Nuke.Common.Target!
+Ayaka.Nuke.IHaveCodeCoverage
+Ayaka.Nuke.IHaveCodeCoverage.CoverageDirectory.get -> Nuke.Common.IO.AbsolutePath!
+Ayaka.Nuke.IHaveCompileTarget
+Ayaka.Nuke.IHaveCompileTarget.Compile.get -> Nuke.Common.Target!
+Ayaka.Nuke.IHaveGitRepository
+Ayaka.Nuke.IHaveGitRepository.GitRepository.get -> Nuke.Common.Git.GitRepository!
+Ayaka.Nuke.IHaveGitVersion
+Ayaka.Nuke.IHaveGitVersion.Versioning.get -> Nuke.Common.Tools.GitVersion.GitVersion!
+Ayaka.Nuke.IHavePackageArtifacts
+Ayaka.Nuke.IHavePackageArtifacts.PackagesDirectory.get -> Nuke.Common.IO.AbsolutePath!
+Ayaka.Nuke.IHavePackTarget
+Ayaka.Nuke.IHavePackTarget.Pack.get -> Nuke.Common.Target!
+Ayaka.Nuke.IHaveRestoreTarget
+Ayaka.Nuke.IHaveRestoreTarget.Restore.get -> Nuke.Common.Target!
+Ayaka.Nuke.IHaveSolution
+Ayaka.Nuke.IHaveSolution.Solution.get -> Nuke.Common.ProjectModel.Solution!
+Ayaka.Nuke.IHaveSources
+Ayaka.Nuke.IHaveSources.SourceDirectory.get -> Nuke.Common.IO.AbsolutePath!
+Ayaka.Nuke.IHaveTestArtifacts
+Ayaka.Nuke.IHaveTestArtifacts.TestResultsDirectory.get -> Nuke.Common.IO.AbsolutePath!
+Ayaka.Nuke.IHaveTests
+Ayaka.Nuke.IHaveTests.TestsDirectory.get -> Nuke.Common.IO.AbsolutePath!
+Ayaka.Nuke.IHaveTestTarget
+Ayaka.Nuke.IHaveTestTarget.Test.get -> Nuke.Common.Target!
+static Ayaka.Nuke.DotNet.Configuration.Debug -> Ayaka.Nuke.DotNet.Configuration!
+static Ayaka.Nuke.DotNet.Configuration.implicit operator string!(Ayaka.Nuke.DotNet.Configuration! configuration) -> string!
+static Ayaka.Nuke.DotNet.Configuration.Release -> Ayaka.Nuke.DotNet.Configuration!
+static Ayaka.Nuke.Extensions.WhenNotNull<T, TObject>(this T settings, TObject? obj, System.Func<T, TObject, T>! configurator) -> T
