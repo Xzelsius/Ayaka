@@ -1,0 +1,53 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      NUGET_PACKAGES: '${{ github.workspace }}/.nuget/packages'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: NuGet Cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ${{ env.NUGET_PACKAGES }}
+            .nuke/temp
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/global.json', '**/*.csproj', '**/*.props') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+
+      - name: Restore .NET Tools
+        run: |
+          dotnet tool restore
+
+      - name: Restore
+        run: |
+          dotnet nuke Restore --skip
+
+      - name: Compile
+        run: |
+          dotnet nuke Compile --skip
+
+      - name: Test
+        run: |
+          dotnet nuke Test --skip
