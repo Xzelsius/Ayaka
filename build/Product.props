@@ -1,0 +1,24 @@
+<Project>
+
+  <PropertyGroup>
+    <Product>Ayaka</Product>
+    <Authors>Raphael Strotz</Authors>
+    <Copyright>Copyright © Raphael Strotz. All rights reserved.</Copyright>
+    <NeutralLanguage>en-US</NeutralLanguage>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(IsNuGetPackage)' == 'True'">
+    <RepositoryUrl>https://github.com/Xzlesius/Ayaka</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageProjectUrl>https://github.com/Xzelsius/Ayaka</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageDescriptionAppendix>This package is part of Ayaka, a lightweight development kit built to help developing applications using .NET</PackageDescriptionAppendix>
+    <PackageCommonTags>ayaka;sdk</PackageCommonTags>
+    <PackageIcon>logo.png</PackageIcon>
+  </PropertyGroup>
+
+  <ItemGroup Label="PackageIcon" Condition="'$(IsNuGetPackage)' == 'True'">
+    <None Include="$(MSBuildThisFileDirectory)/assets/logo.png" Pack="true" Visible="false" PackagePath=""/>
+  </ItemGroup>
+
+</Project>

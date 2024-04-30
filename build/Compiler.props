@@ -1,0 +1,18 @@
+<Project>
+
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <!-- Compiler options for NuGet packages -->
+  <PropertyGroup Condition="'$(IsNuGetPackage)' == 'True'">
+    <UsePublicApiAnalyzers Condition="'$(UsePublicApiAnalyzers)' == ''">True</UsePublicApiAnalyzers>
+    <!--
+      Force analyzer warnings as errors, more details
+      see https://github.com/dotnet/roslyn-analyzers/blob/main/src/PublicApiAnalyzers/Microsoft.CodeAnalysis.PublicApiAnalyzers.md
+    -->
+    <WarningsAsErrors>$(WarningsAsErrors);RS0016;RS0017;RS0022;RS0024;RS0025;RS0026;RS0027;RS0036;RS0037;RS0041;RS0048;RS0050</WarningsAsErrors>
+  </PropertyGroup>
+
+</Project>

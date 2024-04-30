@@ -1,0 +1,47 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34607.119
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{B7CF0DCF-432F-434F-83F3-97089C111D06}"
+	ProjectSection(SolutionItems) = preProject
+		build\Analyzers.props = build\Analyzers.props
+		build\Compiler.props = build\Compiler.props
+		build\Packages.props = build\Packages.props
+		build\Product.props = build\Product.props
+		build\SourceLink.props = build\SourceLink.props
+		build\TargetFramework.props = build\TargetFramework.props
+		build\Usings.props = build\Usings.props
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assets", "assets", "{D1CD98E8-91B4-4980-9E32-F505175A1DCE}"
+	ProjectSection(SolutionItems) = preProject
+		build\assets\logo.png = build\assets\logo.png
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E3E1A4B0-3D9E-4F1B-9BA2-16E21CEF43D6}"
+	ProjectSection(SolutionItems) = preProject
+		src\Directory.Build.props = src\Directory.Build.props
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{4767B628-8774-4CBA-A1DF-ED27A2CFA272}"
+	ProjectSection(SolutionItems) = preProject
+		test\Directory.Build.props = test\Directory.Build.props
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E47191B9-F1B0-4A60-955E-ACAE410BD5DF}
+	EndGlobalSection
+EndGlobal

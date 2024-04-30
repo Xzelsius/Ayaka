@@ -1,0 +1,12 @@
+<Project>
+
+  <PropertyGroup Condition="'$(IsNuGetPackage)' == 'True'">
+    <IncludeSymbols>True</IncludeSymbols>
+    <SymbolPackagFormat>snupkg</SymbolPackagFormat>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(IsNuGetPackage)' == 'True'">
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
+  </ItemGroup>
+
+</Project>

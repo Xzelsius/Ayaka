@@ -1,0 +1,15 @@
+<Project>
+
+  <PropertyGroup>
+    <IsPackable>False</IsPackable>
+    <IsTestProject>True</IsTestProject>
+  </PropertyGroup>
+
+  <Import Project="..\build\TargetFramework.props" />
+  <Import Project="..\build\Compiler.props" />
+  <Import Project="..\build\Product.props" />
+  <Import Project="..\build\Packages.props" />
+  <Import Project="..\build\Analyzers.props" />
+  <Import Project="..\build\Usings.props" />
+
+</Project>

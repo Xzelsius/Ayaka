@@ -1,0 +1,16 @@
+<Project>
+
+  <PropertyGroup>
+    <IsPackable>True</IsPackable>
+    <IsNuGetPackage>True</IsNuGetPackage>
+  </PropertyGroup>
+
+  <Import Project="..\build\TargetFramework.props" />
+  <Import Project="..\build\Compiler.props" />
+  <Import Project="..\build\Product.props" />
+  <Import Project="..\build\SourceLink.props" />
+  <Import Project="..\build\Packages.props" />
+  <Import Project="..\build\Analyzers.props" />
+  <Import Project="..\build\Usings.props" />
+
+</Project>
