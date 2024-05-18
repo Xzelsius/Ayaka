@@ -49,6 +49,9 @@ public interface ICanDotNetPack
         .Description("Packs the current solution using .NET CLI")
         .Unlisted()
         .DependsOn(DotNetBuild)
+        .WhenNotNull(
+            this as IHaveDotNetTestTarget,
+            (t, o) => t.After(o.DotNetTest))
         .Produces(PackagesDirectory / "*.nupkg")
         .Executes(() =>
         {
