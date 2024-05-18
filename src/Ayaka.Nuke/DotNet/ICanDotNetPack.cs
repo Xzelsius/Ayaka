@@ -2,33 +2,31 @@
 
 namespace Ayaka.Nuke.DotNet;
 
-using Ayaka.Nuke;
 using global::Nuke.Common;
 using global::Nuke.Common.IO;
 using global::Nuke.Common.Tooling;
 using global::Nuke.Common.Tools.DotNet;
 using global::Nuke.Common.Utilities.Collections;
-using static global::Nuke.Common.Tools.DotNet.DotNetTasks;
 
 /// <summary>
-/// Provides a target for packing the current solution using .NET CLI to the <see cref="INukeBuild" />.
+///     Provides a target for packing the current solution using .NET CLI to the <see cref="INukeBuild" />.
 /// </summary>
-public interface ICanPackDotNet
+public interface ICanDotNetPack
     : ICan,
         IHavePackageArtifacts,
         IHaveSolution,
-        IHaveConfiguration,
-        IHaveCompileTarget,
-        IHavePackTarget
+        IHaveDotNetConfiguration,
+        IHaveDotNetBuildTarget,
+        IHaveDotNetPackTarget
 {
     /// <summary>
-    /// Gets the base settings for packing the current solution.
+    ///     Gets the base settings for packing the current solution.
     /// </summary>
-    sealed Configure<DotNetPackSettings> PackSettingsBase
+    sealed Configure<DotNetPackSettings> DotNetPackSettingsBase
         => dotnet => dotnet
             .SetProject(Solution)
-            .SetConfiguration(Configuration)
-            .SetNoBuild(SucceededTargets.Contains(Compile))
+            .SetConfiguration(DotNetConfiguration)
+            .SetNoBuild(SucceededTargets.Contains(DotNetBuild))
             .SetOutputDirectory(PackagesDirectory)
             .WhenNotNull(
                 this as IHaveGitRepository,
@@ -38,25 +36,26 @@ public interface ICanPackDotNet
                 (d, o) => d.SetVersion(o.Versioning.NuGetVersionV2));
 
     /// <summary>
-    /// Gets the additional settings for packing the current solution.
+    ///     Gets the additional settings for packing the current solution.
     /// </summary>
     /// <remarks>
-    /// Override this to provide additional settings for the <see cref="IHavePackTarget.Pack" /> target.
+    ///     Override this to provide additional settings for the <see cref="IHaveDotNetPackTarget.DotNetPack" />.
     /// </remarks>
-    Configure<DotNetPackSettings> PackSettings
+    Configure<DotNetPackSettings> DotNetPackSettings
         => dotnet => dotnet;
 
     /// <inheritdoc />
-    Target IHavePackTarget.Pack => target => target
+    Target IHaveDotNetPackTarget.DotNetPack => target => target
         .Description("Packs the current solution using .NET CLI")
-        .DependsOn(Compile)
+        .Unlisted()
+        .DependsOn(DotNetBuild)
         .Produces(PackagesDirectory / "*.nupkg")
         .Executes(() =>
         {
-            _ = DotNetPack(
+            _ = DotNetTasks.DotNetPack(
                 dotnet => dotnet
-                    .Apply(PackSettingsBase)
-                    .Apply(PackSettings)
+                    .Apply(DotNetPackSettingsBase)
+                    .Apply(DotNetPackSettings)
             );
 
             ReportSummary(

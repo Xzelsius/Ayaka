@@ -40,14 +40,6 @@ jobs:
         run: |
           dotnet tool restore
 
-      - name: Restore
+      - name: Nuke
         run: |
-          dotnet nuke Restore --skip
-
-      - name: Compile
-        run: |
-          dotnet nuke Compile --skip
-
-      - name: Test
-        run: |
-          dotnet nuke Test --skip
+          dotnet nuke

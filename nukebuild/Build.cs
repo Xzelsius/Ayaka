@@ -16,12 +16,33 @@ class Build
         IHaveArtifacts,
         IHaveTestArtifacts,
         IHavePackageArtifacts,
-        IHaveConfiguration,
+        IHaveDotNetConfiguration,
         ICanClean,
-        ICanRestoreDotNet,
-        ICanCompileDotNet,
-        ICanTestDotNet,
-        ICanPackDotNet
+        ICanDotNetRestore,
+        ICanDotNetBuild,
+        ICanDotNetTest,
+        ICanDotNetPack
 {
-    public static int Main() => Execute<Build>(x => ((ICanPackDotNet)x).Pack);
+    public static int Main() => Execute<Build>(x => x.Default);
+
+    Target Default => target => target
+        .Description("Compiles, Tests and Packs everything in the Solution")
+        .DependsOn(Compile)
+        .DependsOn(Test)
+        .DependsOn(Pack);
+
+    Target Compile => target => target
+        .Description("Builds all Projects in the Solution")
+        .DependsOn<IHaveCleanTarget>()
+        .DependsOn<IHaveDotNetBuildTarget>();
+
+    Target Test => target => target
+        .Description("Runs all Tests in the Solution")
+        .DependsOn<IHaveCleanTarget>()
+        .DependsOn<IHaveDotNetTestTarget>();
+
+    Target Pack => target => target
+        .Description("Packs all NuGet packages in the Solution")
+        .DependsOn<IHaveCleanTarget>()
+        .DependsOn<IHaveDotNetPackTarget>();
 }

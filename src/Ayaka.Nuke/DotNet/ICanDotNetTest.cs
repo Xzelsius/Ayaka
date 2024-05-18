@@ -10,31 +10,30 @@ using global::Nuke.Common.Tooling;
 using global::Nuke.Common.Tools.Coverlet;
 using global::Nuke.Common.Tools.DotNet;
 using global::Nuke.Common.Utilities.Collections;
-using static global::Nuke.Common.Tools.DotNet.DotNetTasks;
 
 /// <summary>
 ///     Provides a target for testing all projects in the <see cref="IHaveTests.TestsDirectory" /> using .NET CLI to the
 ///     <see cref="INukeBuild" />.
 /// </summary>
 /// <remarks>
-///     Automatically collects code coverage during test if <see cref="IHaveCodeCoverage"/> is implemented.
+///     Automatically collects code coverage during test if <see cref="IHaveCodeCoverage" /> is implemented.
 /// </remarks>
-public interface ICanTestDotNet
+public interface ICanDotNetTest
     : ICan,
         IHaveTestArtifacts,
         IHaveSolution,
         IHaveTests,
-        IHaveConfiguration,
-        IHaveCompileTarget,
-        IHaveTestTarget
+        IHaveDotNetConfiguration,
+        IHaveDotNetBuildTarget,
+        IHaveDotNetTestTarget
 {
     /// <summary>
     ///     Gets the base settings for testing a project.
     /// </summary>
-    sealed Configure<DotNetTestSettings> TestSettingsBase
+    sealed Configure<DotNetTestSettings> DotNetTestSettingsBase
         => dotnet => dotnet
-            .SetConfiguration(Configuration)
-            .SetNoBuild(SucceededTargets.Contains(Compile))
+            .SetConfiguration(DotNetConfiguration)
+            .SetNoBuild(SucceededTargets.Contains(DotNetBuild))
             .ResetVerbosity()
             .SetResultsDirectory(TestResultsDirectory);
 
@@ -42,15 +41,15 @@ public interface ICanTestDotNet
     ///     Gets the additional settings for testing a project.
     /// </summary>
     /// <remarks>
-    ///     Override this to provide additional settings for the <see cref="IHaveTestTarget.Test" /> target.
+    ///     Override this to provide additional settings for the <see cref="IHaveDotNetTestTarget.DotNetTest" /> target.
     /// </remarks>
-    Configure<DotNetTestSettings> TestSettings
+    Configure<DotNetTestSettings> DotNetTestSettings
         => dotnet => dotnet;
 
     /// <summary>
     ///     Gets the base settings for testing a project scoped to one specific project.
     /// </summary>
-    sealed Configure<DotNetTestSettings, Project> TestProjectSettingsBase
+    sealed Configure<DotNetTestSettings, Project> DotNetTestProjectSettingsBase
         => (dotnet, project) => dotnet
             .SetProjectFile(project)
             .When(
@@ -67,9 +66,9 @@ public interface ICanTestDotNet
     ///     Gets the additional settings for testing a project scoped to one specific project.
     /// </summary>
     /// <remarks>
-    ///     Override this to provide additional settings for the <see cref="IHaveTestTarget.Test" /> target.
+    ///     Override this to provide additional settings for the <see cref="IHaveDotNetTestTarget.DotNetTest" /> target.
     /// </remarks>
-    Configure<DotNetTestSettings, Project> TestProjectSettings
+    Configure<DotNetTestSettings, Project> DotNetTestProjectSettings
         => (dotnet, project) => dotnet;
 
     /// <summary>
@@ -84,9 +83,10 @@ public interface ICanTestDotNet
             .Where(x => TestsDirectory.Contains(x.Path));
 
     /// <inheritdoc />
-    Target IHaveTestTarget.Test => target => target
+    Target IHaveDotNetTestTarget.DotNetTest => target => target
         .Description("Tests all test projects using .NET CLI")
-        .DependsOn(Compile)
+        .Unlisted()
+        .DependsOn(DotNetBuild)
         .Produces(TestResultsDirectory / ".trx")
         .Produces(TestResultsDirectory / ".xml")
         .WhenNotNull(
@@ -97,15 +97,15 @@ public interface ICanTestDotNet
         {
             try
             {
-                _ = DotNetTest(
+                _ = DotNetTasks.DotNetTest(
                     dotnet => dotnet
-                        .Apply(TestSettingsBase)
-                        .Apply(TestSettings)
+                        .Apply(DotNetTestSettingsBase)
+                        .Apply(DotNetTestSettings)
                         .CombineWith(
                             TestProjects,
                             (d, p) => d
-                                .Apply(TestProjectSettingsBase, p)
-                                .Apply(TestProjectSettings, p)),
+                                .Apply(DotNetTestProjectSettingsBase, p)
+                                .Apply(DotNetTestProjectSettings, p)),
                     degreeOfParallelism: 1,
                     completeOnFailure: true
                 );

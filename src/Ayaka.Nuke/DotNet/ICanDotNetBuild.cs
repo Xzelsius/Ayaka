@@ -6,17 +6,16 @@ using global::Nuke.Common;
 using global::Nuke.Common.Tooling;
 using global::Nuke.Common.Tools.DotNet;
 using global::Nuke.Common.Utilities.Collections;
-using static global::Nuke.Common.Tools.DotNet.DotNetTasks;
 
 /// <summary>
 ///     Provides a target for compiling the current solution using .NET CLI to the <see cref="INukeBuild" />.
 /// </summary>
-public interface ICanCompileDotNet
+public interface ICanDotNetBuild
     : ICan,
         IHaveSolution,
-        IHaveConfiguration,
-        IHaveRestoreTarget,
-        IHaveCompileTarget
+        IHaveDotNetConfiguration,
+        IHaveDotNetRestoreTarget,
+        IHaveDotNetBuildTarget
 {
     /// <summary>
     ///     Gets the base settings for compiling the current solution.
@@ -24,11 +23,11 @@ public interface ICanCompileDotNet
     /// <remarks>
     ///     Applies versioning information if <see cref="IHaveGitVersion" /> is implemented.
     /// </remarks>
-    sealed Configure<DotNetBuildSettings> CompileSettingsBase
+    sealed Configure<DotNetBuildSettings> DotNetBuildSettingsBase
         => dotnet => dotnet
             .SetProjectFile(Solution)
-            .SetConfiguration(Configuration)
-            .SetNoRestore(InvokedTargets.Contains(Restore))
+            .SetConfiguration(DotNetConfiguration)
+            .SetNoRestore(InvokedTargets.Contains(DotNetRestore))
             .When(IsServerBuild, x => x.EnableContinuousIntegrationBuild())
             .WhenNotNull(
                 this as IHaveGitVersion,
@@ -41,15 +40,16 @@ public interface ICanCompileDotNet
     ///     Gets the additional settings for compiling the current solution.
     /// </summary>
     /// <remarks>
-    ///     Override this to provide additional settings for the <see cref="IHaveCompileTarget.Compile" /> target.
+    ///     Override this to provide additional settings for the <see cref="IHaveDotNetBuildTarget.DotNetBuild" /> target.
     /// </remarks>
-    Configure<DotNetBuildSettings> CompileSettings
+    Configure<DotNetBuildSettings> DotNetBuildSettings
         => dotnet => dotnet;
 
     /// <inheritdoc />
-    Target IHaveCompileTarget.Compile => target => target
+    Target IHaveDotNetBuildTarget.DotNetBuild => target => target
         .Description("Compiles the current solution using .NET CLI")
-        .DependsOn(Restore)
+        .Unlisted()
+        .DependsOn(DotNetRestore)
         .WhenSkipped(DependencyBehavior.Skip)
         .Executes(() =>
         {
@@ -60,10 +60,10 @@ public interface ICanCompileDotNet
                         (s, o) => s.AddPair("Version", o.Versioning.NuGetVersionV2))
             );
 
-            _ = DotNetBuild(
+            _ = DotNetTasks.DotNetBuild(
                 dotnet => dotnet
-                    .Apply(CompileSettingsBase)
-                    .Apply(CompileSettings)
+                    .Apply(DotNetBuildSettingsBase)
+                    .Apply(DotNetBuildSettings)
             );
         });
 }

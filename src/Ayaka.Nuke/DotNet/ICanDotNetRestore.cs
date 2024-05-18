@@ -5,20 +5,19 @@ namespace Ayaka.Nuke.DotNet;
 using global::Nuke.Common;
 using global::Nuke.Common.Tooling;
 using global::Nuke.Common.Tools.DotNet;
-using static global::Nuke.Common.Tools.DotNet.DotNetTasks;
 
 /// <summary>
 ///     Provides a target for restoring the current solution using .NET CLI to the <see cref="INukeBuild" />.
 /// </summary>
-public interface ICanRestoreDotNet
+public interface ICanDotNetRestore
     : ICan,
         IHaveSolution,
-        IHaveRestoreTarget
+        IHaveDotNetRestoreTarget
 {
     /// <summary>
     ///     Gets the base settings for restoring the current solution.
     /// </summary>
-    sealed Configure<DotNetRestoreSettings> RestoreSettingsBase
+    sealed Configure<DotNetRestoreSettings> DotNetRestoreSettingsBase
         => dotnet => dotnet
             .SetProjectFile(Solution);
 
@@ -26,21 +25,22 @@ public interface ICanRestoreDotNet
     ///     Gets the additional settings for restoring the current solution.
     /// </summary>
     /// <remarks>
-    ///     Override this to provide additional settings for the <see cref="IHaveRestoreTarget.Restore" /> target.
+    ///     Override this to provide additional settings for the <see cref="IHaveDotNetRestoreTarget.DotNetRestore" /> target.
     /// </remarks>
-    Configure<DotNetRestoreSettings> RestoreSettings
+    Configure<DotNetRestoreSettings> DotNetRestoreSettings
         => dotnet => dotnet;
 
     /// <inheritdoc />
-    Target IHaveRestoreTarget.Restore => target => target
+    Target IHaveDotNetRestoreTarget.DotNetRestore => target => target
         .Description("Restores the current solution using .NET CLI")
-        .After<IHaveCleanTarget>()
+        .Unlisted()
+        .TryDependsOn<IHaveCleanTarget>()
         .Executes(() =>
         {
-            _ = DotNetRestore(
+            _ = DotNetTasks.DotNetRestore(
                 dotnet => dotnet
-                    .Apply(RestoreSettingsBase)
-                    .Apply(RestoreSettings)
+                    .Apply(DotNetRestoreSettingsBase)
+                    .Apply(DotNetRestoreSettings)
             );
         });
 }

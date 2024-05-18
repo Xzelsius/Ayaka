@@ -10,17 +10,17 @@
           "type": "string",
           "description": "The directory where artifacts are to be dropped"
         },
-        "Configuration": {
+        "Continue": {
+          "type": "boolean",
+          "description": "Indicates to continue a previously failed build attempt"
+        },
+        "DotNetConfiguration": {
           "type": "string",
           "description": "The .NET build configuration - Default is 'Debug' (local) or 'Release' (server)",
           "enum": [
             "Debug",
             "Release"
           ]
-        },
-        "Continue": {
-          "type": "boolean",
-          "description": "Indicates to continue a previously failed build attempt"
         },
         "Help": {
           "type": "boolean",
@@ -78,8 +78,12 @@
             "enum": [
               "Clean",
               "Compile",
+              "Default",
+              "DotNetBuild",
+              "DotNetPack",
+              "DotNetRestore",
+              "DotNetTest",
               "Pack",
-              "Restore",
               "Test"
             ]
           }
@@ -96,8 +100,12 @@
             "enum": [
               "Clean",
               "Compile",
+              "Default",
+              "DotNetBuild",
+              "DotNetPack",
+              "DotNetRestore",
+              "DotNetTest",
               "Pack",
-              "Restore",
               "Test"
             ]
           }
