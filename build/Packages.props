@@ -8,17 +8,13 @@
     </PackageReference>
     <PackageReference Include="FakeItEasy" Version="8.2.0" />
     <PackageReference Include="FluentAssertions" Version="6.12.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
-    <PackageReference Include="xunit" Version="2.8.0" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.0" />
-  </ItemGroup>
-
-  <!-- Packages for test projects when running in CI -->
-  <ItemGroup Condition="'$(IsTestProject)' == 'True' And '$(ContinuousIntegrationBuild)' == 'True'">
     <PackageReference Include="GitHubActionsTestLogger" Version="2.3.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
+    <PackageReference Include="xunit" Version="2.8.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.0" />
   </ItemGroup>
 
 </Project>
