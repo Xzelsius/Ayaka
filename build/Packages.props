@@ -13,4 +13,12 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.8.0" />
   </ItemGroup>
 
+  <!-- Packages for test projects when running in CI -->
+  <ItemGroup Condition="'$(IsTestProject)' == 'True' And '$(ContinuousIntegrationBuild)' == 'True'">
+    <PackageReference Include="GitHubActionsTestLogger" Version="2.3.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
 </Project>
