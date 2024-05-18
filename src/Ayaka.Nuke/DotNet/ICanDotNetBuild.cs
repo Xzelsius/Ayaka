@@ -27,7 +27,7 @@ public interface ICanDotNetBuild
         => dotnet => dotnet
             .SetProjectFile(Solution)
             .SetConfiguration(DotNetConfiguration)
-            .SetNoRestore(InvokedTargets.Contains(DotNetRestore))
+            .SetNoRestore(SucceededTargets.Contains(DotNetRestore))
             .When(IsServerBuild, x => x.EnableContinuousIntegrationBuild())
             .WhenNotNull(
                 this as IHaveGitVersion,
