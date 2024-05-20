@@ -15,6 +15,7 @@ class Build
         IHaveTests,
         IHaveArtifacts,
         IHaveTestArtifacts,
+        IHaveCodeCoverage,
         IHavePackageArtifacts,
         IHaveDotNetConfiguration,
         ICanClean,
