@@ -20,7 +20,7 @@ Guidelines for bug reports:
 
 1. Check if the issue has already been reported — [Issues]
 
-2. Check if the issue has been fixed — Try to reproduce it using the latest `main` or `dev` branch
+2. Check if the issue has been fixed — Try to reproduce it using the latest `main` branch
 
 3. Isolate the problem
 
@@ -54,11 +54,11 @@ Guidlines for pull requests:
 
 4. Commit your changes in logical chunks
 
-5. Locally rebase the upstream `dev` branch into your topic branch
+5. Locally rebase the upstream `main` branch into your topic branch
 
 6. Push your topic branch up to your fork
 
-7. Open a Pull request against the `dev` branch — [Open a Pull Request]
+7. Open a Pull request against the `main` branch — [Open a Pull Request]
 
 See [About pull requests] for more information.
 
