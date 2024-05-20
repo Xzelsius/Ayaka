@@ -46,10 +46,12 @@ jobs:
 
       - name: Dump
         run: |
-          ls -l ${{ github.workspace }}/artifacts/coverage/
+          ls -l ${{ github.workspace }}/artifacts/coverage
 
       - name: Upload Coverage
         uses: codecov/codecov-action@6d798873df2b1b8e5846dba6fb86631229fbcb17 # v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true
+          directory: ${{ github.workspace }}/artifacts/coverage
+          files: "*.cobertura.xml"
