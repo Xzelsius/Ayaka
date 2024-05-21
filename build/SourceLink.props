@@ -3,6 +3,7 @@
   <PropertyGroup Condition="'$(IsNuGetPackage)' == 'True'">
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <EmbedUntrackedSources>True</EmbedUntrackedSources>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(IsNuGetPackage)' == 'True'">
