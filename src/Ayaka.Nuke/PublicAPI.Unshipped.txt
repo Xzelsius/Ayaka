@@ -7,6 +7,12 @@ Ayaka.Nuke.DotNet.ICanDotNetBuild.DotNetBuildSettingsBase.get -> Nuke.Common.Too
 Ayaka.Nuke.DotNet.ICanDotNetPack
 Ayaka.Nuke.DotNet.ICanDotNetPack.DotNetPackSettings.get -> Nuke.Common.Tooling.Configure<Nuke.Common.Tools.DotNet.DotNetPackSettings!>!
 Ayaka.Nuke.DotNet.ICanDotNetPack.DotNetPackSettingsBase.get -> Nuke.Common.Tooling.Configure<Nuke.Common.Tools.DotNet.DotNetPackSettings!>!
+Ayaka.Nuke.DotNet.ICanDotNetPush
+Ayaka.Nuke.DotNet.ICanDotNetPush.DotNetPushPackageSettings.get -> Nuke.Common.Tooling.Configure<Nuke.Common.Tools.DotNet.DotNetNuGetPushSettings!, Nuke.Common.IO.AbsolutePath!>!
+Ayaka.Nuke.DotNet.ICanDotNetPush.DotNetPushPackageSettingsBase.get -> Nuke.Common.Tooling.Configure<Nuke.Common.Tools.DotNet.DotNetNuGetPushSettings!, Nuke.Common.IO.AbsolutePath!>!
+Ayaka.Nuke.DotNet.ICanDotNetPush.DotNetPushSettings.get -> Nuke.Common.Tooling.Configure<Nuke.Common.Tools.DotNet.DotNetNuGetPushSettings!>!
+Ayaka.Nuke.DotNet.ICanDotNetPush.DotNetPushSettingsBase.get -> Nuke.Common.Tooling.Configure<Nuke.Common.Tools.DotNet.DotNetNuGetPushSettings!>!
+Ayaka.Nuke.DotNet.ICanDotNetPush.NuGetPackages.get -> System.Collections.Generic.IEnumerable<Nuke.Common.IO.AbsolutePath!>!
 Ayaka.Nuke.DotNet.ICanDotNetRestore
 Ayaka.Nuke.DotNet.ICanDotNetRestore.DotNetRestoreSettings.get -> Nuke.Common.Tooling.Configure<Nuke.Common.Tools.DotNet.DotNetRestoreSettings!>!
 Ayaka.Nuke.DotNet.ICanDotNetRestore.DotNetRestoreSettingsBase.get -> Nuke.Common.Tooling.Configure<Nuke.Common.Tools.DotNet.DotNetRestoreSettings!>!
@@ -23,6 +29,8 @@ Ayaka.Nuke.DotNet.IHaveDotNetConfiguration
 Ayaka.Nuke.DotNet.IHaveDotNetConfiguration.DotNetConfiguration.get -> Ayaka.Nuke.DotNet.Configuration!
 Ayaka.Nuke.DotNet.IHaveDotNetPackTarget
 Ayaka.Nuke.DotNet.IHaveDotNetPackTarget.DotNetPack.get -> Nuke.Common.Target!
+Ayaka.Nuke.DotNet.IHaveDotNetPushTarget
+Ayaka.Nuke.DotNet.IHaveDotNetPushTarget.DotNetPush.get -> Nuke.Common.Target!
 Ayaka.Nuke.DotNet.IHaveDotNetRestoreTarget
 Ayaka.Nuke.DotNet.IHaveDotNetRestoreTarget.DotNetRestore.get -> Nuke.Common.Target!
 Ayaka.Nuke.DotNet.IHaveDotNetTestTarget
@@ -51,6 +59,10 @@ Ayaka.Nuke.IHaveTestArtifacts
 Ayaka.Nuke.IHaveTestArtifacts.TestResultsDirectory.get -> Nuke.Common.IO.AbsolutePath!
 Ayaka.Nuke.IHaveTests
 Ayaka.Nuke.IHaveTests.TestsDirectory.get -> Nuke.Common.IO.AbsolutePath!
+Ayaka.Nuke.NuGet.IHaveNuGetConfiguration
+Ayaka.Nuke.NuGet.IHaveNuGetConfiguration.NuGetApiKey.get -> string?
+Ayaka.Nuke.NuGet.IHaveNuGetConfiguration.NuGetSource.get -> string!
+const Ayaka.Nuke.NuGet.IHaveNuGetConfiguration.DefaultNuGetSource = "https://api.nuget.org/v3/index.json" -> string!
 static Ayaka.Nuke.DotNet.Configuration.Debug -> Ayaka.Nuke.DotNet.Configuration!
 static Ayaka.Nuke.DotNet.Configuration.implicit operator string!(Ayaka.Nuke.DotNet.Configuration! configuration) -> string!
 static Ayaka.Nuke.DotNet.Configuration.Release -> Ayaka.Nuke.DotNet.Configuration!

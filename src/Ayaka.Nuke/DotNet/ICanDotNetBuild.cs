@@ -50,7 +50,6 @@ public interface ICanDotNetBuild
         .Description("Compiles the current solution using .NET CLI")
         .Unlisted()
         .DependsOn(DotNetRestore)
-        .WhenSkipped(DependencyBehavior.Skip)
         .Executes(() =>
         {
             ReportSummary(

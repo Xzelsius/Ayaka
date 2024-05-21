@@ -51,3 +51,11 @@ jobs:
           fail_ci_if_error: true
           directory: ${{ github.workspace }}/artifacts/coverage
           files: "*.cobertura.xml"
+
+      - name: Publish NuGet packages
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          dotnet nuke Publish \
+            --nuget-api-key $NUGET_API_KEY
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}

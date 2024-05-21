@@ -51,6 +51,15 @@
           "type": "boolean",
           "description": "Disables displaying the NUKE logo"
         },
+        "NuGetApiKey": {
+          "type": "string",
+          "description": "The NuGet API key",
+          "default": "Secrets must be entered via 'nuke :secrets [profile]'"
+        },
+        "NuGetSource": {
+          "type": "string",
+          "description": "The NuGet server URL - Default is https://api.nuget.org/v3/index.json"
+        },
         "Partition": {
           "type": "string",
           "description": "Partition to use on CI"
@@ -81,9 +90,11 @@
               "Default",
               "DotNetBuild",
               "DotNetPack",
+              "DotNetPush",
               "DotNetRestore",
               "DotNetTest",
               "Pack",
+              "Publish",
               "Test"
             ]
           }
@@ -103,9 +114,11 @@
               "Default",
               "DotNetBuild",
               "DotNetPack",
+              "DotNetPush",
               "DotNetRestore",
               "DotNetTest",
               "Pack",
+              "Publish",
               "Test"
             ]
           }
