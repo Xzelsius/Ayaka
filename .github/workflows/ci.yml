@@ -63,8 +63,8 @@ jobs:
       - name: Output .NET Tool Versions
         id: tool-versions
         run: |
-          dotnetValidateVersion=$(jq '.tools["dotnet-validate"].version' ./.config/dotnet-tools.json)
-          echo "dotnet-validate-version=$dotnetValidateVersion" >> "$GITHUB_OUTPUT"
+          dotnet_validate_version=$(jq -r '.tools["dotnet-validate"].version' ./.config/dotnet-tools.json)
+          echo "dotnet-validate-version=$dotnet_validate_version" >> $GITHUB_OUTPUT
 
       - name: Publish NuGet packages
         if: startsWith(github.ref, 'refs/tags/v')
