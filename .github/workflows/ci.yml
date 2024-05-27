@@ -103,7 +103,7 @@ jobs:
         run: |
           fail_count=0
 
-          for file in "${{ github.workspace }}/packages"/*.nupkg; do
+          for file in "${{ github.workspace }}/*.nupkg"; do
             dotnet validate package local $file
             if [ $? -ne 0 ]; then
               ((fail_count++))
