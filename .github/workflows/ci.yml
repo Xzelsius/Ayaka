@@ -40,7 +40,7 @@ jobs:
         run: |
           dotnet tool restore
 
-      - name: Nuke
+      - name: Build, Test and Pack
         run: |
           dotnet nuke
 
@@ -51,6 +51,13 @@ jobs:
           fail_ci_if_error: true
           directory: ${{ github.workspace }}/artifacts/coverage
           files: "*.cobertura.xml"
+
+      - name: Upload Packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: packages
+          path: ${{ github.workspace }}/artifacts/packages
+          if-no-files-found: error
 
       - name: Publish NuGet packages
         if: startsWith(github.ref, 'refs/tags/v')
