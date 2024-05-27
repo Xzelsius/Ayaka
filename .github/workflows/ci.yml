@@ -95,7 +95,7 @@ jobs:
 
       - name: Install .NET Tools
         run: |
-          dotnet tool install --global dotnet-validate --version ${env.DOTNET_VALIDATE_VERSION}
+          dotnet tool install --global dotnet-validate --version $DOTNET_VALIDATE_VERSION
         env:
           DOTNET_VALIDATE_VERSION: ${{ needs.build.outputs.dotnet-validate-version }}
 
