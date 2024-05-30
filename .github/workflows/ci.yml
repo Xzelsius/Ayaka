@@ -66,14 +66,6 @@ jobs:
           dotnet_validate_version=$(jq -r '.tools["dotnet-validate"].version' ./.config/dotnet-tools.json)
           echo "dotnet-validate-version=$dotnet_validate_version" >> $GITHUB_OUTPUT
 
-      - name: Publish NuGet packages
-        if: startsWith(github.ref, 'refs/tags/v')
-        run: |
-          dotnet nuke Publish \
-            --nuget-api-key $NUGET_API_KEY
-        env:
-          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
-
     outputs:
       dotnet-sdk-version: ${{ steps.setup-dotnet.outputs.dotnet-version }}
       dotnet-validate-version: ${{ steps.tool-versions.outputs.dotnet-validate-version }}
@@ -95,7 +87,10 @@ jobs:
 
       - name: Install .NET Tools
         run: |
-          dotnet tool install --global dotnet-validate --version $DOTNET_VALIDATE_VERSION
+          dotnet tool install \
+            --global \
+            --version $DOTNET_VALIDATE_VERSION \
+            dotnet-validate
         env:
           DOTNET_VALIDATE_VERSION: ${{ needs.build.outputs.dotnet-validate-version }}
 
@@ -114,3 +109,36 @@ jobs:
             echo "::error::Validation failed for $fail_count NuGet package(s)"
             exit 1
           fi
+
+  publish-nuget:
+    runs-on: ubuntu-latest
+    needs: [build, validate-packages]
+
+    # Only publish if build was triggered for a tag
+    if: startsWith(github.ref, 'refs/tags/v')
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4
+        with:
+          fetch-depth: 1
+
+      - name: Download Packages
+        uses: actions/download-artifact@v4
+        with:
+          name: packages
+          path: ${{ github.workspace }}/artifacts/packages
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@4d6c8fcf3c8f7a60068d26b594648e99df24cee3 # v4
+
+      - name: Restore .NET Tools
+        run: |
+          dotnet tool restore
+
+      - name: Publish NuGet packages
+        run: |
+          dotnet nuke Publish \
+            --nuget-api-key $NUGET_API_KEY
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
