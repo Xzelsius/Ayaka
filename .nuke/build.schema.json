@@ -93,6 +93,7 @@
               "DotNetPush",
               "DotNetRestore",
               "DotNetTest",
+              "DotNetValidate",
               "Pack",
               "Publish",
               "Test"
@@ -117,6 +118,7 @@
               "DotNetPush",
               "DotNetRestore",
               "DotNetTest",
+              "DotNetValidate",
               "Pack",
               "Publish",
               "Test"

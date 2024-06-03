@@ -2,6 +2,7 @@
 
 using Ayaka.Nuke;
 using Ayaka.Nuke.DotNet;
+using Ayaka.Nuke.DotNetValidate;
 using Ayaka.Nuke.NuGet;
 using Nuke.Common;
 using Nuke.Common.Tools.DotNet;
@@ -25,6 +26,7 @@ class Build
         ICanDotNetBuild,
         ICanDotNetTest,
         ICanDotNetPack,
+        ICanDotNetValidate,
         ICanDotNetPush
 {
     public static int Main() => Execute<Build>(x => x.Default);
@@ -48,7 +50,8 @@ class Build
     Target Pack => target => target
         .Description("Packs all NuGet packages in the Solution")
         .DependsOn<IHaveCleanTarget>()
-        .DependsOn<IHaveDotNetPackTarget>();
+        .DependsOn<IHaveDotNetPackTarget>()
+        .DependsOn<IHaveDotNetValidateTarget>();
 
     Target Publish => target => target
         .Description("Publishes all NuGet packages in the Solution")

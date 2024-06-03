@@ -35,7 +35,6 @@ jobs:
 
       - name: Setup .NET
         uses: actions/setup-dotnet@4d6c8fcf3c8f7a60068d26b594648e99df24cee3 # v4
-        id: setup-dotnet
 
       - name: Restore .NET Tools
         run: |
@@ -60,59 +59,9 @@ jobs:
           path: ${{ github.workspace }}/artifacts/packages
           if-no-files-found: error
 
-      - name: Output .NET Tool Versions
-        id: tool-versions
-        run: |
-          dotnet_validate_version=$(jq -r '.tools["dotnet-validate"].version' ./.config/dotnet-tools.json)
-          echo "dotnet-validate-version=$dotnet_validate_version" >> $GITHUB_OUTPUT
-
-    outputs:
-      dotnet-sdk-version: ${{ steps.setup-dotnet.outputs.dotnet-version }}
-      dotnet-validate-version: ${{ steps.tool-versions.outputs.dotnet-validate-version }}
-
-  validate-packages:
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
-      - name: Download Packages
-        uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4
-        with:
-          name: packages
-
-      - name: Setup .NET
-        uses: actions/setup-dotnet@4d6c8fcf3c8f7a60068d26b594648e99df24cee3 # v4
-        with:
-          dotnet-version: ${{ needs.build.outputs.dotnet-sdk-version }}
-
-      - name: Install .NET Tools
-        run: |
-          dotnet tool install \
-            --global \
-            --version $DOTNET_VALIDATE_VERSION \
-            dotnet-validate
-        env:
-          DOTNET_VALIDATE_VERSION: ${{ needs.build.outputs.dotnet-validate-version }}
-
-      - name: Validate Packages
-        run: |
-          fail_count=0
-
-          for file in "${{ github.workspace }}/*.nupkg"; do
-            dotnet validate package local $file
-            if [ $? -ne 0 ]; then
-              ((fail_count++))
-            fi
-          done
-
-          if [ $fail_count -ne 0 ]; then
-            echo "::error::Validation failed for $fail_count NuGet package(s)"
-            exit 1
-          fi
-
   publish-packages:
     runs-on: ubuntu-latest
-    needs: [build, validate-packages]
+    needs: [build]
 
     # Only publish if build was triggered for a tag
     if: startsWith(github.ref, 'refs/tags/v')
