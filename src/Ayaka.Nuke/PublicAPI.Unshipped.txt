@@ -12,7 +12,7 @@ Ayaka.Nuke.DotNet.ICanDotNetPush.DotNetPushPackageSettings.get -> Nuke.Common.To
 Ayaka.Nuke.DotNet.ICanDotNetPush.DotNetPushPackageSettingsBase.get -> Nuke.Common.Tooling.Configure<Nuke.Common.Tools.DotNet.DotNetNuGetPushSettings!, Nuke.Common.IO.AbsolutePath!>!
 Ayaka.Nuke.DotNet.ICanDotNetPush.DotNetPushSettings.get -> Nuke.Common.Tooling.Configure<Nuke.Common.Tools.DotNet.DotNetNuGetPushSettings!>!
 Ayaka.Nuke.DotNet.ICanDotNetPush.DotNetPushSettingsBase.get -> Nuke.Common.Tooling.Configure<Nuke.Common.Tools.DotNet.DotNetNuGetPushSettings!>!
-Ayaka.Nuke.DotNet.ICanDotNetPush.NuGetPackages.get -> System.Collections.Generic.IEnumerable<Nuke.Common.IO.AbsolutePath!>!
+Ayaka.Nuke.DotNet.ICanDotNetPush.NuGetPackagesToPush.get -> System.Collections.Generic.IEnumerable<Nuke.Common.IO.AbsolutePath!>!
 Ayaka.Nuke.DotNet.ICanDotNetRestore
 Ayaka.Nuke.DotNet.ICanDotNetRestore.DotNetRestoreSettings.get -> Nuke.Common.Tooling.Configure<Nuke.Common.Tools.DotNet.DotNetRestoreSettings!>!
 Ayaka.Nuke.DotNet.ICanDotNetRestore.DotNetRestoreSettingsBase.get -> Nuke.Common.Tooling.Configure<Nuke.Common.Tools.DotNet.DotNetRestoreSettings!>!
@@ -35,6 +35,20 @@ Ayaka.Nuke.DotNet.IHaveDotNetRestoreTarget
 Ayaka.Nuke.DotNet.IHaveDotNetRestoreTarget.DotNetRestore.get -> Nuke.Common.Target!
 Ayaka.Nuke.DotNet.IHaveDotNetTestTarget
 Ayaka.Nuke.DotNet.IHaveDotNetTestTarget.DotNetTest.get -> Nuke.Common.Target!
+Ayaka.Nuke.DotNetValidate.DotNetValidateLocalPackageSettings
+Ayaka.Nuke.DotNetValidate.DotNetValidateLocalPackageSettings.DotNetValidateLocalPackageSettings() -> void
+Ayaka.Nuke.DotNetValidate.DotNetValidateLocalPackageSettingsExtensions
+Ayaka.Nuke.DotNetValidate.DotNetValidateRemotePackageSettings
+Ayaka.Nuke.DotNetValidate.DotNetValidateRemotePackageSettings.DotNetValidateRemotePackageSettings() -> void
+Ayaka.Nuke.DotNetValidate.DotNetValidateRemotePackageSettingsExtensions
+Ayaka.Nuke.DotNetValidate.DotNetValidateTasks
+Ayaka.Nuke.DotNetValidate.DotNetValidateTasks.DotNetValidateTasks() -> void
+Ayaka.Nuke.DotNetValidate.ICanDotNetValidate
+Ayaka.Nuke.DotNetValidate.ICanDotNetValidate.DotNetValidatePackageSettings.get -> Nuke.Common.Tooling.Configure<Ayaka.Nuke.DotNetValidate.DotNetValidateLocalPackageSettings!, Nuke.Common.IO.AbsolutePath!>!
+Ayaka.Nuke.DotNetValidate.ICanDotNetValidate.DotNetValidatePackageSettingsBase.get -> Nuke.Common.Tooling.Configure<Ayaka.Nuke.DotNetValidate.DotNetValidateLocalPackageSettings!, Nuke.Common.IO.AbsolutePath!>!
+Ayaka.Nuke.DotNetValidate.ICanDotNetValidate.NuGetPackagesToValidate.get -> System.Collections.Generic.IEnumerable<Nuke.Common.IO.AbsolutePath!>!
+Ayaka.Nuke.DotNetValidate.IHaveDotNetValidateTarget
+Ayaka.Nuke.DotNetValidate.IHaveDotNetValidateTarget.DotNetValidate.get -> Nuke.Common.Target!
 Ayaka.Nuke.Extensions
 Ayaka.Nuke.ICan
 Ayaka.Nuke.ICanClean
@@ -62,8 +76,41 @@ Ayaka.Nuke.IHaveTests.TestsDirectory.get -> Nuke.Common.IO.AbsolutePath!
 Ayaka.Nuke.NuGet.IHaveNuGetConfiguration
 Ayaka.Nuke.NuGet.IHaveNuGetConfiguration.NuGetApiKey.get -> string?
 Ayaka.Nuke.NuGet.IHaveNuGetConfiguration.NuGetSource.get -> string!
+const Ayaka.Nuke.DotNetValidate.DotNetValidateTasks.DotNetValidatePackageId = "dotnet-validate" -> string!
 const Ayaka.Nuke.NuGet.IHaveNuGetConfiguration.DefaultNuGetSource = "https://api.nuget.org/v3/index.json" -> string!
+override Ayaka.Nuke.DotNetValidate.DotNetValidateLocalPackageSettings.ConfigureProcessArguments(Nuke.Common.Tooling.Arguments! arguments) -> Nuke.Common.Tooling.Arguments!
+override Ayaka.Nuke.DotNetValidate.DotNetValidateLocalPackageSettings.ProcessExitHandler.get -> System.Action<Nuke.Common.Tooling.ToolSettings!, Nuke.Common.Tooling.IProcess!>!
+override Ayaka.Nuke.DotNetValidate.DotNetValidateLocalPackageSettings.ProcessLogger.get -> System.Action<Nuke.Common.Tooling.OutputType, string!>!
+override Ayaka.Nuke.DotNetValidate.DotNetValidateLocalPackageSettings.ProcessToolPath.get -> string!
+override Ayaka.Nuke.DotNetValidate.DotNetValidateRemotePackageSettings.ConfigureProcessArguments(Nuke.Common.Tooling.Arguments! arguments) -> Nuke.Common.Tooling.Arguments!
+override Ayaka.Nuke.DotNetValidate.DotNetValidateRemotePackageSettings.ProcessExitHandler.get -> System.Action<Nuke.Common.Tooling.ToolSettings!, Nuke.Common.Tooling.IProcess!>!
+override Ayaka.Nuke.DotNetValidate.DotNetValidateRemotePackageSettings.ProcessLogger.get -> System.Action<Nuke.Common.Tooling.OutputType, string!>!
+override Ayaka.Nuke.DotNetValidate.DotNetValidateRemotePackageSettings.ProcessToolPath.get -> string!
 static Ayaka.Nuke.DotNet.Configuration.Debug -> Ayaka.Nuke.DotNet.Configuration!
 static Ayaka.Nuke.DotNet.Configuration.implicit operator string!(Ayaka.Nuke.DotNet.Configuration! configuration) -> string!
 static Ayaka.Nuke.DotNet.Configuration.Release -> Ayaka.Nuke.DotNet.Configuration!
+static Ayaka.Nuke.DotNetValidate.DotNetValidateLocalPackageSettingsExtensions.ResetPackagePath<T>(this T! toolSettings) -> T!
+static Ayaka.Nuke.DotNetValidate.DotNetValidateLocalPackageSettingsExtensions.SetPackagePath<T>(this T! toolSettings, string! packagePath) -> T!
+static Ayaka.Nuke.DotNetValidate.DotNetValidateRemotePackageSettingsExtensions.ResetConfigDirectory<T>(this T! toolSettings) -> T!
+static Ayaka.Nuke.DotNetValidate.DotNetValidateRemotePackageSettingsExtensions.ResetPackageId<T>(this T! toolSettings) -> T!
+static Ayaka.Nuke.DotNetValidate.DotNetValidateRemotePackageSettingsExtensions.ResetPackageVersion<T>(this T! toolSettings) -> T!
+static Ayaka.Nuke.DotNetValidate.DotNetValidateRemotePackageSettingsExtensions.SetConfigDirectory<T>(this T! toolSettings, string! configFile) -> T!
+static Ayaka.Nuke.DotNetValidate.DotNetValidateRemotePackageSettingsExtensions.SetPackageId<T>(this T! toolSettings, string! packageId) -> T!
+static Ayaka.Nuke.DotNetValidate.DotNetValidateRemotePackageSettingsExtensions.SetPackageVersion<T>(this T! toolSettings, string! packageVersion) -> T!
+static Ayaka.Nuke.DotNetValidate.DotNetValidateTasks.DotNetValidate(Nuke.Common.Tooling.ArgumentStringHandler arguments, string? workingDirectory = null, System.Collections.Generic.IReadOnlyDictionary<string!, string!>? environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, System.Action<Nuke.Common.Tooling.OutputType, string!>? logger = null, System.Action<Nuke.Common.Tooling.IProcess!>? exitHandler = null) -> System.Collections.Generic.IReadOnlyCollection<Nuke.Common.Tooling.Output>!
+static Ayaka.Nuke.DotNetValidate.DotNetValidateTasks.DotNetValidateExitHandler.get -> System.Action<Nuke.Common.Tooling.ToolSettings?, Nuke.Common.Tooling.IProcess!>!
+static Ayaka.Nuke.DotNetValidate.DotNetValidateTasks.DotNetValidateExitHandler.set -> void
+static Ayaka.Nuke.DotNetValidate.DotNetValidateTasks.DotNetValidateLocalPackage(Ayaka.Nuke.DotNetValidate.DotNetValidateLocalPackageSettings! toolSettings) -> System.Collections.Generic.IReadOnlyCollection<Nuke.Common.Tooling.Output>!
+static Ayaka.Nuke.DotNetValidate.DotNetValidateTasks.DotNetValidateLocalPackage(Nuke.Common.Tooling.CombinatorialConfigure<Ayaka.Nuke.DotNetValidate.DotNetValidateLocalPackageSettings!>! configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) -> System.Collections.Generic.IEnumerable<(Ayaka.Nuke.DotNetValidate.DotNetValidateLocalPackageSettings! Settings, System.Collections.Generic.IReadOnlyCollection<Nuke.Common.Tooling.Output>! Output)>!
+static Ayaka.Nuke.DotNetValidate.DotNetValidateTasks.DotNetValidateLocalPackage(Nuke.Common.Tooling.Configure<Ayaka.Nuke.DotNetValidate.DotNetValidateLocalPackageSettings!>! configurator) -> System.Collections.Generic.IReadOnlyCollection<Nuke.Common.Tooling.Output>!
+static Ayaka.Nuke.DotNetValidate.DotNetValidateTasks.DotNetValidateLogger.get -> System.Action<Nuke.Common.Tooling.OutputType, string!>!
+static Ayaka.Nuke.DotNetValidate.DotNetValidateTasks.DotNetValidateLogger.set -> void
+static Ayaka.Nuke.DotNetValidate.DotNetValidateTasks.DotNetValidatePath.get -> string!
+static Ayaka.Nuke.DotNetValidate.DotNetValidateTasks.DotNetValidateRemotePackage(Ayaka.Nuke.DotNetValidate.DotNetValidateRemotePackageSettings! toolSettings) -> System.Collections.Generic.IReadOnlyCollection<Nuke.Common.Tooling.Output>!
+static Ayaka.Nuke.DotNetValidate.DotNetValidateTasks.DotNetValidateRemotePackage(Nuke.Common.Tooling.CombinatorialConfigure<Ayaka.Nuke.DotNetValidate.DotNetValidateRemotePackageSettings!>! configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) -> System.Collections.Generic.IEnumerable<(Ayaka.Nuke.DotNetValidate.DotNetValidateRemotePackageSettings! Settings, System.Collections.Generic.IReadOnlyCollection<Nuke.Common.Tooling.Output>! Output)>!
+static Ayaka.Nuke.DotNetValidate.DotNetValidateTasks.DotNetValidateRemotePackage(Nuke.Common.Tooling.Configure<Ayaka.Nuke.DotNetValidate.DotNetValidateRemotePackageSettings!>! configurator) -> System.Collections.Generic.IReadOnlyCollection<Nuke.Common.Tooling.Output>!
 static Ayaka.Nuke.Extensions.WhenNotNull<T, TObject>(this T settings, TObject? obj, System.Func<T, TObject, T>! configurator) -> T
+virtual Ayaka.Nuke.DotNetValidate.DotNetValidateLocalPackageSettings.PackagePath.get -> string?
+virtual Ayaka.Nuke.DotNetValidate.DotNetValidateRemotePackageSettings.ConfigDirectory.get -> string?
+virtual Ayaka.Nuke.DotNetValidate.DotNetValidateRemotePackageSettings.PackageId.get -> string?
+virtual Ayaka.Nuke.DotNetValidate.DotNetValidateRemotePackageSettings.PackageVersion.get -> string?

@@ -53,7 +53,7 @@ public interface ICanDotNetPush
         => (dotnet, packagePath) => dotnet;
 
     /// <summary>
-    ///     Gets all NuGet packages.
+    ///     Gets all NuGet packages to push.
     /// </summary>
     /// <remarks>
     ///     If not overridden, all <c>*.nupkg</c> files in the <see cref="IHavePackageArtifacts.PackagesDirectory" /> are
@@ -62,7 +62,7 @@ public interface ICanDotNetPush
     ///         Please note that symbols packages present in the package directory are pushed automatically.
     ///     </para>
     /// </remarks>
-    IEnumerable<AbsolutePath> NuGetPackages => PackagesDirectory.GlobFiles("*.nupkg");
+    IEnumerable<AbsolutePath> NuGetPackagesToPush => PackagesDirectory.GlobFiles("*.nupkg");
 
     /// <inheritdoc />
     Target IHaveDotNetPushTarget.DotNetPush => target => target
@@ -75,7 +75,7 @@ public interface ICanDotNetPush
                 dotnet => dotnet
                     .Apply(DotNetPushSettingsBase)
                     .Apply(DotNetPushSettings)
-                    .CombineWith(NuGetPackages, (d, f) => d
+                    .CombineWith(NuGetPackagesToPush, (d, f) => d
                         .Apply(DotNetPushPackageSettingsBase, f)
                         .Apply(DotNetPushPackageSettings, f)),
                 degreeOfParallelism: 5,
