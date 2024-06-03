@@ -8,20 +8,6 @@
         "nuke"
       ],
       "rollForward": false
-    },
-    "gitversion.tool": {
-      "version": "5.12.0",
-      "commands": [
-        "dotnet-gitversion"
-      ],
-      "rollForward": false
-    },
-    "dotnet-validate": {
-      "version": "0.0.1-preview.304",
-      "commands": [
-        "dotnet-validate"
-      ],
-      "rollForward": false
     }
   }
 }
