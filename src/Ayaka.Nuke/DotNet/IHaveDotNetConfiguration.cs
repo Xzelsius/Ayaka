@@ -18,5 +18,5 @@ public interface IHaveDotNetConfiguration : IHave
     /// </remarks>
     [Parameter("The .NET build configuration - Default is 'Debug' (local) or 'Release' (server)")]
     Configuration DotNetConfiguration => TryGetValue(() => DotNetConfiguration)
-                                   ?? (IsLocalBuild ? Configuration.Debug : Configuration.Release);
+                                         ?? (IsLocalBuild ? Configuration.Debug : Configuration.Release);
 }

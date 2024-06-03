@@ -26,7 +26,7 @@ public class Configuration : Enumeration
     public static Configuration Release = new() { Value = nameof(Release) };
 
     /// <summary>
-    /// Converts the <see cref="Configuration" /> to a <see cref="string" />.
+    ///     Converts the <see cref="Configuration" /> to a <see cref="string" />.
     /// </summary>
     /// <param name="configuration">The build configuration to convert.</param>
     public static implicit operator string(Configuration configuration) => configuration.Value;

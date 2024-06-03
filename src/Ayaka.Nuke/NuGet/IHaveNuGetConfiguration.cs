@@ -5,23 +5,23 @@ namespace Ayaka.Nuke.NuGet;
 using global::Nuke.Common;
 
 /// <summary>
-///    Provides information about the NuGet configuration in a <see cref="INukeBuild" />.
+///     Provides information about the NuGet configuration in a <see cref="INukeBuild" />.
 /// </summary>
 public interface IHaveNuGetConfiguration : IHave
 {
     /// <summary>
-    /// The default NuGet server URL.
+    ///     The default NuGet server URL.
     /// </summary>
     public const string DefaultNuGetSource = "https://api.nuget.org/v3/index.json";
 
     /// <summary>
-    /// Gets the NuGet server URL.
+    ///     Gets the NuGet server URL.
     /// </summary>
     [Parameter("The NuGet server URL - Default is " + DefaultNuGetSource)]
     string NuGetSource => TryGetValue(() => NuGetSource) ?? DefaultNuGetSource;
 
     /// <summary>
-    /// Gets the NuGet API key.
+    ///     Gets the NuGet API key.
     /// </summary>
     [Parameter("The NuGet API key")]
     [Secret]

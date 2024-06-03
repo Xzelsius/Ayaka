@@ -9,23 +9,23 @@ public sealed class ExtensionsTest
         [Fact]
         public void Does_invoke_configurator_if_obj_is_not_null()
         {
-            var settings = new TestSettings(false);
+            var settings = new TestSettings(Flag: false);
             var obj = new object();
 
             var actual = settings.WhenNotNull(obj, (s, o) => s.EnableFlag());
 
-            actual.Should().BeEquivalentTo(new TestSettings(true));
+            actual.Should().BeEquivalentTo(new TestSettings(Flag: true));
         }
 
         [Fact]
         public void Does_not_invoke_configurator_if_obj_is_null()
         {
-            var settings = new TestSettings(false);
+            var settings = new TestSettings(Flag: false);
             object? obj = null;
 
             var actual = settings.WhenNotNull(obj, (s, o) => s.EnableFlag());
 
-            actual.Should().BeEquivalentTo(new TestSettings(false));
+            actual.Should().BeEquivalentTo(new TestSettings(Flag: false));
         }
 
         private sealed record TestSettings(bool Flag)
@@ -34,6 +34,4 @@ public sealed class ExtensionsTest
                 => this with { Flag = true };
         }
     }
-
-
 }

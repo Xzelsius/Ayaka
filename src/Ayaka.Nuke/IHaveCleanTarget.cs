@@ -10,7 +10,7 @@ using global::Nuke.Common;
 public interface IHaveCleanTarget : IHave
 {
     /// <summary>
-    ///    Gets the target for cleaning up directories.
+    ///     Gets the target for cleaning up directories.
     /// </summary>
     Target Clean { get; }
 }
