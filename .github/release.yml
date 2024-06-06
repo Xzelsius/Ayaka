@@ -1,20 +1,20 @@
 changelog:
   categories:
-    - title: 💥 Breaking Changes
+    - title: :boom: Breaking Changes
       labels:
         - "breaking-change"
-    - title: 💡 Features
+    - title: :bulb: Features
       labels:
         - "enhancement"
-    - title: 🐞 Fixes
+    - title: :lady_beetle: Fixes
       labels:
         - "bug"
-    - title: 📦 Dependencies
+    - title: :package: Dependencies
       labels: 
         - "dependencies"
-    - title: 📖 Documentation
+    - title: :book: Documentation
       labels:
         - "documentation"
-    - title: 🛠 Others
+    - title: :hammer_and_wrench: Others
       labels:
         - "*"
