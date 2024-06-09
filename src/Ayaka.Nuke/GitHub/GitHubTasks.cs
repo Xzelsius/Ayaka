@@ -24,11 +24,11 @@ public static class GitHubTasks
         var client = CreateGitHubClient(settings.Token!, settings.BaseUrl);
 
         Log.Debug("Checking whether release with tag '{TagName}' already exists...", settings.Tag);
-        
+
         var existingReleases = await client.Repository.Release.GetAll(
             settings.RepositoryOwner!,
             settings.RepositoryName!);
-        
+
         if (existingReleases.Any(x => x.TagName == settings.Tag))
         {
             Log.Warning("Release with tag '{TagName}' already exists. No GitHub release is created", settings.Tag);

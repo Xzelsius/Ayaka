@@ -1,3 +1,5 @@
+// Copyright (c) Raphael Strotz. All rights reserved.
+
 namespace Ayaka.Nuke.GitHub;
 
 using global::Nuke.Common.Tooling;
