@@ -22,6 +22,14 @@
             "Release"
           ]
         },
+        "GitHubBaseUrl": {
+          "type": "string"
+        },
+        "GitHubToken": {
+          "type": "string",
+          "description": "The GitHub API token",
+          "default": "Secrets must be entered via 'nuke :secrets [profile]'"
+        },
         "Help": {
           "type": "boolean",
           "description": "Shows the help text for this build assembly"
@@ -87,6 +95,7 @@
             "enum": [
               "Clean",
               "Compile",
+              "CreateRelease",
               "Default",
               "DotNetBuild",
               "DotNetPack",
@@ -94,6 +103,7 @@
               "DotNetRestore",
               "DotNetTest",
               "DotNetValidate",
+              "GitHubRelease",
               "Pack",
               "Publish",
               "Test"
@@ -112,6 +122,7 @@
             "enum": [
               "Clean",
               "Compile",
+              "CreateRelease",
               "Default",
               "DotNetBuild",
               "DotNetPack",
@@ -119,6 +130,7 @@
               "DotNetRestore",
               "DotNetTest",
               "DotNetValidate",
+              "GitHubRelease",
               "Pack",
               "Publish",
               "Test"

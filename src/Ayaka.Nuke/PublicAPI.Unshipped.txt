@@ -50,6 +50,27 @@ Ayaka.Nuke.DotNetValidate.ICanDotNetValidate.NuGetPackagesToValidate.get -> Syst
 Ayaka.Nuke.DotNetValidate.IHaveDotNetValidateTarget
 Ayaka.Nuke.DotNetValidate.IHaveDotNetValidateTarget.DotNetValidate.get -> Nuke.Common.Target!
 Ayaka.Nuke.Extensions
+Ayaka.Nuke.GitHub.GitHubReleaseNotesSettings
+Ayaka.Nuke.GitHub.GitHubReleaseNotesSettings.GitHubReleaseNotesSettings() -> void
+Ayaka.Nuke.GitHub.GitHubReleaseNotesSettingsExtensions
+Ayaka.Nuke.GitHub.GitHubReleaseSettings
+Ayaka.Nuke.GitHub.GitHubReleaseSettings.GitHubReleaseSettings() -> void
+Ayaka.Nuke.GitHub.GitHubReleaseSettingsExtensions
+Ayaka.Nuke.GitHub.GitHubSettings
+Ayaka.Nuke.GitHub.GitHubSettings.GitHubSettings() -> void
+Ayaka.Nuke.GitHub.GitHubSettings.Validate() -> void
+Ayaka.Nuke.GitHub.GitHubSettingsExtensions
+Ayaka.Nuke.GitHub.GitHubTasks
+Ayaka.Nuke.GitHub.ICanGitHubRelease
+Ayaka.Nuke.GitHub.ICanGitHubRelease.GitHubReleaseNotesSettings.get -> Nuke.Common.Tooling.Configure<Ayaka.Nuke.GitHub.GitHubReleaseNotesSettings!>!
+Ayaka.Nuke.GitHub.ICanGitHubRelease.GitHubReleaseNotesSettingsBase.get -> Nuke.Common.Tooling.Configure<Ayaka.Nuke.GitHub.GitHubReleaseNotesSettings!>!
+Ayaka.Nuke.GitHub.ICanGitHubRelease.GitHubReleaseSettings.get -> Nuke.Common.Tooling.Configure<Ayaka.Nuke.GitHub.GitHubReleaseSettings!>!
+Ayaka.Nuke.GitHub.ICanGitHubRelease.GitHubReleaseSettingsBase.get -> Nuke.Common.Tooling.Configure<Ayaka.Nuke.GitHub.GitHubReleaseSettings!>!
+Ayaka.Nuke.GitHub.IHaveGitHubReleaseTarget
+Ayaka.Nuke.GitHub.IHaveGitHubReleaseTarget.GitHubRelease.get -> Nuke.Common.Target!
+Ayaka.Nuke.GitHub.IHaveGitHubToken
+Ayaka.Nuke.GitHub.IHaveGitHubToken.GitHubBaseUrl.get -> string?
+Ayaka.Nuke.GitHub.IHaveGitHubToken.GitHubToken.get -> string?
 Ayaka.Nuke.ICan
 Ayaka.Nuke.ICanClean
 Ayaka.Nuke.IHave
@@ -86,6 +107,8 @@ override Ayaka.Nuke.DotNetValidate.DotNetValidateRemotePackageSettings.Configure
 override Ayaka.Nuke.DotNetValidate.DotNetValidateRemotePackageSettings.ProcessExitHandler.get -> System.Action<Nuke.Common.Tooling.ToolSettings!, Nuke.Common.Tooling.IProcess!>!
 override Ayaka.Nuke.DotNetValidate.DotNetValidateRemotePackageSettings.ProcessLogger.get -> System.Action<Nuke.Common.Tooling.OutputType, string!>!
 override Ayaka.Nuke.DotNetValidate.DotNetValidateRemotePackageSettings.ProcessToolPath.get -> string!
+override Ayaka.Nuke.GitHub.GitHubReleaseNotesSettings.AssertValid() -> void
+override Ayaka.Nuke.GitHub.GitHubReleaseSettings.AssertValid() -> void
 static Ayaka.Nuke.DotNet.Configuration.Debug -> Ayaka.Nuke.DotNet.Configuration!
 static Ayaka.Nuke.DotNet.Configuration.implicit operator string!(Ayaka.Nuke.DotNet.Configuration! configuration) -> string!
 static Ayaka.Nuke.DotNet.Configuration.Release -> Ayaka.Nuke.DotNet.Configuration!
@@ -110,7 +133,60 @@ static Ayaka.Nuke.DotNetValidate.DotNetValidateTasks.DotNetValidateRemotePackage
 static Ayaka.Nuke.DotNetValidate.DotNetValidateTasks.DotNetValidateRemotePackage(Nuke.Common.Tooling.CombinatorialConfigure<Ayaka.Nuke.DotNetValidate.DotNetValidateRemotePackageSettings!>! configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) -> System.Collections.Generic.IEnumerable<(Ayaka.Nuke.DotNetValidate.DotNetValidateRemotePackageSettings! Settings, System.Collections.Generic.IReadOnlyCollection<Nuke.Common.Tooling.Output>! Output)>!
 static Ayaka.Nuke.DotNetValidate.DotNetValidateTasks.DotNetValidateRemotePackage(Nuke.Common.Tooling.Configure<Ayaka.Nuke.DotNetValidate.DotNetValidateRemotePackageSettings!>! configurator) -> System.Collections.Generic.IReadOnlyCollection<Nuke.Common.Tooling.Output>!
 static Ayaka.Nuke.Extensions.WhenNotNull<T, TObject>(this T settings, TObject? obj, System.Func<T, TObject, T>! configurator) -> T
+static Ayaka.Nuke.GitHub.GitHubReleaseNotesSettingsExtensions.ResetConfigFile<T>(this T! settings) -> T!
+static Ayaka.Nuke.GitHub.GitHubReleaseNotesSettingsExtensions.ResetPreviousTag<T>(this T! settings) -> T!
+static Ayaka.Nuke.GitHub.GitHubReleaseNotesSettingsExtensions.ResetTag<T>(this T! settings) -> T!
+static Ayaka.Nuke.GitHub.GitHubReleaseNotesSettingsExtensions.ResetTargetCommitish<T>(this T! settings) -> T!
+static Ayaka.Nuke.GitHub.GitHubReleaseNotesSettingsExtensions.SetConfigFile<T>(this T! settings, string! configFile) -> T!
+static Ayaka.Nuke.GitHub.GitHubReleaseNotesSettingsExtensions.SetPreviousTag<T>(this T! settings, string! previousTag) -> T!
+static Ayaka.Nuke.GitHub.GitHubReleaseNotesSettingsExtensions.SetTag<T>(this T! settings, string! tagName) -> T!
+static Ayaka.Nuke.GitHub.GitHubReleaseNotesSettingsExtensions.SetTargetCommitish<T>(this T! settings, string! targetCommitish) -> T!
+static Ayaka.Nuke.GitHub.GitHubReleaseSettingsExtensions.AddArtifactPath<T>(this T! settings, string! artifactPath) -> T!
+static Ayaka.Nuke.GitHub.GitHubReleaseSettingsExtensions.ClearArtifactPaths<T>(this T! settings) -> T!
+static Ayaka.Nuke.GitHub.GitHubReleaseSettingsExtensions.ResetBody<T>(this T! settings) -> T!
+static Ayaka.Nuke.GitHub.GitHubReleaseSettingsExtensions.ResetDraft<T>(this T! settings) -> T!
+static Ayaka.Nuke.GitHub.GitHubReleaseSettingsExtensions.ResetGenerateReleaseNotes<T>(this T! settings) -> T!
+static Ayaka.Nuke.GitHub.GitHubReleaseSettingsExtensions.ResetName<T>(this T! settings) -> T!
+static Ayaka.Nuke.GitHub.GitHubReleaseSettingsExtensions.ResetPreRelease<T>(this T! settings) -> T!
+static Ayaka.Nuke.GitHub.GitHubReleaseSettingsExtensions.ResetTag<T>(this T! settings) -> T!
+static Ayaka.Nuke.GitHub.GitHubReleaseSettingsExtensions.ResetTargetCommitish<T>(this T! settings) -> T!
+static Ayaka.Nuke.GitHub.GitHubReleaseSettingsExtensions.SetBody<T>(this T! settings, string! body) -> T!
+static Ayaka.Nuke.GitHub.GitHubReleaseSettingsExtensions.SetDraft<T>(this T! settings, bool draft) -> T!
+static Ayaka.Nuke.GitHub.GitHubReleaseSettingsExtensions.SetGenerateReleaseNotes<T>(this T! settings, bool generateReleaseNotes) -> T!
+static Ayaka.Nuke.GitHub.GitHubReleaseSettingsExtensions.SetName<T>(this T! settings, string! name) -> T!
+static Ayaka.Nuke.GitHub.GitHubReleaseSettingsExtensions.SetPreRelease<T>(this T! settings, bool preRelease) -> T!
+static Ayaka.Nuke.GitHub.GitHubReleaseSettingsExtensions.SetTag<T>(this T! settings, string! tagName) -> T!
+static Ayaka.Nuke.GitHub.GitHubReleaseSettingsExtensions.SetTargetCommitish<T>(this T! settings, string! targetCommitish) -> T!
+static Ayaka.Nuke.GitHub.GitHubSettingsExtensions.ResetBaseUrl<T>(this T! settings) -> T!
+static Ayaka.Nuke.GitHub.GitHubSettingsExtensions.ResetRepositoryName<T>(this T! settings) -> T!
+static Ayaka.Nuke.GitHub.GitHubSettingsExtensions.ResetRepositoryOwner<T>(this T! settings) -> T!
+static Ayaka.Nuke.GitHub.GitHubSettingsExtensions.ResetToken<T>(this T! settings) -> T!
+static Ayaka.Nuke.GitHub.GitHubSettingsExtensions.SetBaseUrl<T>(this T! settings, string! baseUrl) -> T!
+static Ayaka.Nuke.GitHub.GitHubSettingsExtensions.SetRepositoryName<T>(this T! settings, string! repositoryName) -> T!
+static Ayaka.Nuke.GitHub.GitHubSettingsExtensions.SetRepositoryOwner<T>(this T! settings, string! repositoryOwner) -> T!
+static Ayaka.Nuke.GitHub.GitHubSettingsExtensions.SetToken<T>(this T! settings, string! token) -> T!
+static Ayaka.Nuke.GitHub.GitHubTasks.CreateRelease(Ayaka.Nuke.GitHub.GitHubReleaseSettings! settings) -> System.Threading.Tasks.Task!
+static Ayaka.Nuke.GitHub.GitHubTasks.CreateRelease(Nuke.Common.Tooling.Configure<Ayaka.Nuke.GitHub.GitHubReleaseSettings!>! configure) -> System.Threading.Tasks.Task!
+static Ayaka.Nuke.GitHub.GitHubTasks.GenerateReleaseNotes(Ayaka.Nuke.GitHub.GitHubReleaseNotesSettings! settings) -> System.Threading.Tasks.Task<(string! Name, string! Body)>!
+static Ayaka.Nuke.GitHub.GitHubTasks.GenerateReleaseNotes(Nuke.Common.Tooling.Configure<Ayaka.Nuke.GitHub.GitHubReleaseNotesSettings!>! configure) -> System.Threading.Tasks.Task<(string! Name, string! Body)>!
 virtual Ayaka.Nuke.DotNetValidate.DotNetValidateLocalPackageSettings.PackagePath.get -> string?
 virtual Ayaka.Nuke.DotNetValidate.DotNetValidateRemotePackageSettings.ConfigDirectory.get -> string?
 virtual Ayaka.Nuke.DotNetValidate.DotNetValidateRemotePackageSettings.PackageId.get -> string?
 virtual Ayaka.Nuke.DotNetValidate.DotNetValidateRemotePackageSettings.PackageVersion.get -> string?
+virtual Ayaka.Nuke.GitHub.GitHubReleaseNotesSettings.ConfigFile.get -> string?
+virtual Ayaka.Nuke.GitHub.GitHubReleaseNotesSettings.PreviousTag.get -> string?
+virtual Ayaka.Nuke.GitHub.GitHubReleaseNotesSettings.Tag.get -> string?
+virtual Ayaka.Nuke.GitHub.GitHubReleaseNotesSettings.TargetCommitish.get -> string?
+virtual Ayaka.Nuke.GitHub.GitHubReleaseSettings.ArtifactPaths.get -> System.Collections.Generic.IReadOnlyList<string!>!
+virtual Ayaka.Nuke.GitHub.GitHubReleaseSettings.Body.get -> string?
+virtual Ayaka.Nuke.GitHub.GitHubReleaseSettings.Draft.get -> bool?
+virtual Ayaka.Nuke.GitHub.GitHubReleaseSettings.GenerateReleaseNotes.get -> bool?
+virtual Ayaka.Nuke.GitHub.GitHubReleaseSettings.Name.get -> string?
+virtual Ayaka.Nuke.GitHub.GitHubReleaseSettings.PreRelease.get -> bool?
+virtual Ayaka.Nuke.GitHub.GitHubReleaseSettings.Tag.get -> string?
+virtual Ayaka.Nuke.GitHub.GitHubReleaseSettings.TargetCommitish.get -> string?
+virtual Ayaka.Nuke.GitHub.GitHubSettings.AssertValid() -> void
+virtual Ayaka.Nuke.GitHub.GitHubSettings.BaseUrl.get -> string?
+virtual Ayaka.Nuke.GitHub.GitHubSettings.RepositoryName.get -> string?
+virtual Ayaka.Nuke.GitHub.GitHubSettings.RepositoryOwner.get -> string?
+virtual Ayaka.Nuke.GitHub.GitHubSettings.Token.get -> string?
