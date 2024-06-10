@@ -17,6 +17,7 @@ public interface ICanDotNetRestore
     /// <summary>
     ///     Gets the base settings for restoring the current solution.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     sealed Configure<DotNetRestoreSettings> DotNetRestoreSettingsBase
         => dotnet => dotnet
             .SetProjectFile(Solution);
@@ -27,10 +28,12 @@ public interface ICanDotNetRestore
     /// <remarks>
     ///     Override this to provide additional settings for the <see cref="IHaveDotNetRestoreTarget.DotNetRestore" /> target.
     /// </remarks>
+    [ExcludeFromCodeCoverage]
     Configure<DotNetRestoreSettings> DotNetRestoreSettings
         => dotnet => dotnet;
 
     /// <inheritdoc />
+    [ExcludeFromCodeCoverage]
     Target IHaveDotNetRestoreTarget.DotNetRestore => target => target
         .Description("Restores the current solution using .NET CLI")
         .Unlisted()

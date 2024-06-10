@@ -16,5 +16,6 @@ public interface IHaveCodeCoverage : IHaveArtifacts
     /// <remarks>
     ///     If not overriden, defaults to <c><see cref="IHaveArtifacts.ArtifactsDirectory" />/coverage</c>.
     /// </remarks>
+    [ExcludeFromCodeCoverage]
     AbsolutePath CoverageDirectory => ArtifactsDirectory / "coverage";
 }

@@ -17,6 +17,7 @@ public interface IHaveArtifacts : IHave
     ///     If not overriden, defaults to <c><see cref="INukeBuild.RootDirectory" />/artifacts</c>.
     /// </remarks>
     [Parameter("The directory where artifacts are to be dropped", Name = "Artifacts")]
+    [ExcludeFromCodeCoverage]
     AbsolutePath ArtifactsDirectory => TryGetValue(() => ArtifactsDirectory)
                                        ?? RootDirectory / "artifacts";
 }

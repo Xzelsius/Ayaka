@@ -30,6 +30,7 @@ public interface ICanDotNetTest
     /// <summary>
     ///     Gets the base settings for testing a project.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     sealed Configure<DotNetTestSettings> DotNetTestSettingsBase
         => dotnet => dotnet
             .SetConfiguration(DotNetConfiguration)
@@ -43,12 +44,14 @@ public interface ICanDotNetTest
     /// <remarks>
     ///     Override this to provide additional settings for the <see cref="IHaveDotNetTestTarget.DotNetTest" /> target.
     /// </remarks>
+    [ExcludeFromCodeCoverage]
     Configure<DotNetTestSettings> DotNetTestSettings
         => dotnet => dotnet;
 
     /// <summary>
     ///     Gets the base settings for testing a project scoped to one specific project.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     sealed Configure<DotNetTestSettings, Project> DotNetTestProjectSettingsBase
         => (dotnet, project) => dotnet
             .SetProjectFile(project)
@@ -68,6 +71,7 @@ public interface ICanDotNetTest
     /// <remarks>
     ///     Override this to provide additional settings for the <see cref="IHaveDotNetTestTarget.DotNetTest" /> target.
     /// </remarks>
+    [ExcludeFromCodeCoverage]
     Configure<DotNetTestSettings, Project> DotNetTestProjectSettings
         => (dotnet, project) => dotnet;
 
@@ -77,12 +81,14 @@ public interface ICanDotNetTest
     /// <remarks>
     ///     If not overridden, all projects in the <see cref="IHaveTests.TestsDirectory" /> are considered test projects.
     /// </remarks>
+    [ExcludeFromCodeCoverage]
     IEnumerable<Project> TestProjects
         => Solution
             .AllProjects
             .Where(x => TestsDirectory.Contains(x.Path));
 
     /// <inheritdoc />
+    [ExcludeFromCodeCoverage]
     Target IHaveDotNetTestTarget.DotNetTest => target => target
         .Description("Tests all test projects using .NET CLI")
         .Unlisted()
@@ -129,6 +135,7 @@ public interface ICanDotNetTest
     ///         Use <c>.AddLoggers($"trx;LogFileName={project.Name}.trx")</c> on the per-project test settings to enable this.
     ///     </para>
     /// </remarks>
+    [ExcludeFromCodeCoverage]
     void ReportTestCount()
     {
         static IEnumerable<string> GetOutcomes(AbsolutePath file)

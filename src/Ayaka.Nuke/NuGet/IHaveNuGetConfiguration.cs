@@ -18,6 +18,7 @@ public interface IHaveNuGetConfiguration : IHave
     ///     Gets the NuGet server URL.
     /// </summary>
     [Parameter("The NuGet server URL - Default is " + DefaultNuGetSource)]
+    [ExcludeFromCodeCoverage]
     string NuGetSource => TryGetValue(() => NuGetSource) ?? DefaultNuGetSource;
 
     /// <summary>
@@ -25,5 +26,6 @@ public interface IHaveNuGetConfiguration : IHave
     /// </summary>
     [Parameter("The NuGet API key")]
     [Secret]
+    [ExcludeFromCodeCoverage]
     string? NuGetApiKey => TryGetValue(() => NuGetApiKey);
 }

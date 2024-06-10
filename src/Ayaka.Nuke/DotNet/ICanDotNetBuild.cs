@@ -23,6 +23,7 @@ public interface ICanDotNetBuild
     /// <remarks>
     ///     Applies versioning information if <see cref="IHaveGitVersion" /> is implemented.
     /// </remarks>
+    [ExcludeFromCodeCoverage]
     sealed Configure<DotNetBuildSettings> DotNetBuildSettingsBase
         => dotnet => dotnet
             .SetProjectFile(Solution)
@@ -42,10 +43,12 @@ public interface ICanDotNetBuild
     /// <remarks>
     ///     Override this to provide additional settings for the <see cref="IHaveDotNetBuildTarget.DotNetBuild" /> target.
     /// </remarks>
+    [ExcludeFromCodeCoverage]
     Configure<DotNetBuildSettings> DotNetBuildSettings
         => dotnet => dotnet;
 
     /// <inheritdoc />
+    [ExcludeFromCodeCoverage]
     Target IHaveDotNetBuildTarget.DotNetBuild => target => target
         .Description("Compiles the current solution using .NET CLI")
         .Unlisted()

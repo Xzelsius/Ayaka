@@ -17,6 +17,7 @@ public interface ICanClean
         IHaveCleanTarget
 {
     /// <inheritdoc />
+    [ExcludeFromCodeCoverage]
     Target IHaveCleanTarget.Clean => target => target
         .Description("Cleans up various build directories")
         .Executes(() =>

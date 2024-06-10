@@ -36,5 +36,6 @@ public interface IHaveGitVersion : IHave
     /// </summary>
     [GitVersion(NoFetch = true)]
     [Required]
+    [ExcludeFromCodeCoverage]
     GitVersion Versioning => TryGetValue(() => Versioning)!;
 }

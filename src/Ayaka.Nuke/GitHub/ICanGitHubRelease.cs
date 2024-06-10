@@ -19,6 +19,7 @@ public interface ICanGitHubRelease
     /// <summary>
     ///     Gets the base settings for creating release notes.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     sealed Configure<GitHubReleaseNotesSettings> GitHubReleaseNotesSettingsBase
         => notes => notes
             .SetRepositoryOwner(GitRepository.GetGitHubOwner())
@@ -33,12 +34,14 @@ public interface ICanGitHubRelease
     /// <remarks>
     ///     Override this to provide additional settings for the <see cref="IHaveGitHubReleaseTarget.GitHubRelease" /> target.
     /// </remarks>
+    [ExcludeFromCodeCoverage]
     Configure<GitHubReleaseNotesSettings> GitHubReleaseNotesSettings
         => notes => notes;
 
     /// <summary>
     ///     Gets the base settings for creating a GitHub release.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     sealed Configure<GitHubReleaseSettings> GitHubReleaseSettingsBase
         => release => release
             .SetRepositoryOwner(GitRepository.GetGitHubOwner())
@@ -54,10 +57,12 @@ public interface ICanGitHubRelease
     /// <remarks>
     ///     Override this to provide additional settings for the <see cref="IHaveGitHubReleaseTarget.GitHubRelease" /> target.
     /// </remarks>
+    [ExcludeFromCodeCoverage]
     Configure<GitHubReleaseSettings> GitHubReleaseSettings
         => release => release;
 
     /// <inheritdoc />
+    [ExcludeFromCodeCoverage]
     Target IHaveGitHubReleaseTarget.GitHubRelease => target => target
         .Description("")
         .Unlisted()
