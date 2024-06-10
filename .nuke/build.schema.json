@@ -93,6 +93,7 @@
           "items": {
             "type": "string",
             "enum": [
+              "AfterRelease",
               "Clean",
               "Compile",
               "CreateRelease",
@@ -106,6 +107,7 @@
               "GitHubRelease",
               "Pack",
               "Publish",
+              "ShipPublicApis",
               "Test"
             ]
           }
@@ -120,6 +122,7 @@
           "items": {
             "type": "string",
             "enum": [
+              "AfterRelease",
               "Clean",
               "Compile",
               "CreateRelease",
@@ -133,6 +136,7 @@
               "GitHubRelease",
               "Pack",
               "Publish",
+              "ShipPublicApis",
               "Test"
             ]
           }
