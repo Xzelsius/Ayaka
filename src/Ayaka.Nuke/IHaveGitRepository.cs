@@ -15,5 +15,6 @@ public interface IHaveGitRepository : IHave
     /// </summary>
     [GitRepository]
     [Required]
+    [ExcludeFromCodeCoverage]
     GitRepository GitRepository => TryGetValue(() => GitRepository)!;
 }

@@ -22,6 +22,7 @@ public interface ICanDotNetPack
     /// <summary>
     ///     Gets the base settings for packing the current solution.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     sealed Configure<DotNetPackSettings> DotNetPackSettingsBase
         => dotnet => dotnet
             .SetProject(Solution)
@@ -41,10 +42,12 @@ public interface ICanDotNetPack
     /// <remarks>
     ///     Override this to provide additional settings for the <see cref="IHaveDotNetPackTarget.DotNetPack" />.
     /// </remarks>
+    [ExcludeFromCodeCoverage]
     Configure<DotNetPackSettings> DotNetPackSettings
         => dotnet => dotnet;
 
     /// <inheritdoc />
+    [ExcludeFromCodeCoverage]
     Target IHaveDotNetPackTarget.DotNetPack => target => target
         .Description("Packs the current solution using .NET CLI")
         .Unlisted()

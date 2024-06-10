@@ -6,6 +6,7 @@ using global::Nuke.Common;
 using global::Nuke.Common.IO;
 using static global::Nuke.Common.IO.FileSystemTasks;
 
+[ExcludeFromCodeCoverage]
 internal static class TargetDefinitionExtensions
 {
     /// <summary>

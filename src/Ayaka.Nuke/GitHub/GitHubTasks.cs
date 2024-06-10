@@ -10,6 +10,7 @@ using Serilog;
 /// <summary>
 ///     Provides tasks for interacting with the GitHub API.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public static class GitHubTasks
 {
     /// <summary>

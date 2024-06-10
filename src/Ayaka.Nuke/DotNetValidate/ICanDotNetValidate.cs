@@ -18,6 +18,7 @@ public interface ICanDotNetValidate
     /// <summary>
     ///     Gets the base settings for validating a specific NuGet package.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     sealed Configure<DotNetValidateLocalPackageSettings, AbsolutePath> DotNetValidatePackageSettingsBase
         => (dotnetValidate, packagePath) => dotnetValidate
             .SetPackagePath(packagePath);
@@ -29,6 +30,7 @@ public interface ICanDotNetValidate
     ///     Override this to provide additional settings for the <see cref="IHaveDotNetValidateTarget.DotNetValidate" />
     ///     target.
     /// </remarks>
+    [ExcludeFromCodeCoverage]
     Configure<DotNetValidateLocalPackageSettings, AbsolutePath> DotNetValidatePackageSettings
         => (dotnetValidate, packagePath) => dotnetValidate;
 
@@ -39,9 +41,11 @@ public interface ICanDotNetValidate
     ///     If not overridden, all <c>*.nupkg</c> files in the <see cref="IHavePackageArtifacts.PackagesDirectory" /> are
     ///     considered packages.
     /// </remarks>
+    [ExcludeFromCodeCoverage]
     IEnumerable<AbsolutePath> NuGetPackagesToValidate => PackagesDirectory.GlobFiles("*.nupkg");
 
     /// <inheritdoc />
+    [ExcludeFromCodeCoverage]
     Target IHaveDotNetValidateTarget.DotNetValidate => target => target
         .Description("Validates all NuGet packages using 'dotnet-validate' CLI tool")
         .Unlisted()

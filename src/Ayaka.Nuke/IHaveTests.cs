@@ -15,5 +15,6 @@ public interface IHaveTests : IHave
     /// <remarks>
     ///     If not overriden, defaults to <c><see cref="IHave.RootDirectory" />/tests</c>.
     /// </remarks>
+    [ExcludeFromCodeCoverage]
     AbsolutePath TestsDirectory => RootDirectory / "test";
 }

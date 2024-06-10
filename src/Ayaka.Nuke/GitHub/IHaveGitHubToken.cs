@@ -17,6 +17,7 @@ public interface IHaveGitHubToken
     /// <remarks>
     /// </remarks>
     [Parameter]
+    [ExcludeFromCodeCoverage]
     string? GitHubBaseUrl => TryGetValue(() => GitHubBaseUrl);
 
     /// <summary>
@@ -24,6 +25,7 @@ public interface IHaveGitHubToken
     /// </summary>
     [Parameter("The GitHub API token")]
     [Secret]
+    [ExcludeFromCodeCoverage]
     string? GitHubToken => TryGetValue(() => GitHubToken)
                            ?? GitHubActions.Instance?.Token;
 }

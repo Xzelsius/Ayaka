@@ -16,5 +16,6 @@ public interface IHavePackageArtifacts : IHaveArtifacts
     /// <remarks>
     ///     If not overriden, defaults to <c><see cref="IHaveArtifacts.ArtifactsDirectory" />/packages</c>.
     /// </remarks>
+    [ExcludeFromCodeCoverage]
     AbsolutePath PackagesDirectory => ArtifactsDirectory / "packages";
 }

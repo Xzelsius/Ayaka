@@ -15,5 +15,6 @@ public interface IHaveSolution : IHave
     /// </summary>
     [Solution]
     [Required]
+    [ExcludeFromCodeCoverage]
     Solution Solution => TryGetValue(() => Solution)!;
 }

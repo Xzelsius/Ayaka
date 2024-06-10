@@ -16,5 +16,6 @@ public interface IHaveTestArtifacts : IHaveArtifacts
     /// <remarks>
     ///     If not overriden, defaults to <c><see cref="IHaveArtifacts.ArtifactsDirectory" />/test-results</c>.
     /// </remarks>
+    [ExcludeFromCodeCoverage]
     AbsolutePath TestResultsDirectory => ArtifactsDirectory / "test-results";
 }

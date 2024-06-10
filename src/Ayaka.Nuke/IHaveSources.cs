@@ -16,5 +16,6 @@ public interface IHaveSources : IHave
     /// <remarks>
     ///     If not overriden, defaults to <c><see cref="IHave.RootDirectory" />/src</c>.
     /// </remarks>
+    [ExcludeFromCodeCoverage]
     AbsolutePath SourceDirectory => RootDirectory / "src";
 }

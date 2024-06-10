@@ -21,6 +21,7 @@ public interface ICanDotNetPush
     /// <summary>
     ///     Gets the base settings for pushing NuGet packages.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     sealed Configure<DotNetNuGetPushSettings> DotNetPushSettingsBase
         => dotnet => dotnet
             .SetSource(NuGetSource)
@@ -33,12 +34,14 @@ public interface ICanDotNetPush
     /// <remarks>
     ///     Override this to provide additional settings for the <see cref="IHaveDotNetPushTarget.DotNetPush" /> target.
     /// </remarks>
+    [ExcludeFromCodeCoverage]
     Configure<DotNetNuGetPushSettings> DotNetPushSettings
         => dotnet => dotnet;
 
     /// <summary>
     ///     Gets the base settings for pushing a specific NuGet package.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     sealed Configure<DotNetNuGetPushSettings, AbsolutePath> DotNetPushPackageSettingsBase
         => (dotnet, packagePath) => dotnet
             .SetTargetPath(packagePath);
@@ -49,6 +52,7 @@ public interface ICanDotNetPush
     /// <remarks>
     ///     Override this to provide additional settings for the <see cref="IHaveDotNetPushTarget.DotNetPush" /> target.
     /// </remarks>
+    [ExcludeFromCodeCoverage]
     Configure<DotNetNuGetPushSettings, AbsolutePath> DotNetPushPackageSettings
         => (dotnet, packagePath) => dotnet;
 
@@ -62,9 +66,11 @@ public interface ICanDotNetPush
     ///         Please note that symbols packages present in the package directory are pushed automatically.
     ///     </para>
     /// </remarks>
+    [ExcludeFromCodeCoverage]
     IEnumerable<AbsolutePath> NuGetPackagesToPush => PackagesDirectory.GlobFiles("*.nupkg");
 
     /// <inheritdoc />
+    [ExcludeFromCodeCoverage]
     Target IHaveDotNetPushTarget.DotNetPush => target => target
         .Description("Pushes all NuGet packages using .NET CLI")
         .Unlisted()

@@ -8,6 +8,7 @@ using global::Nuke.Common.Tooling;
 ///     Provides tasks for validating NuGet packages using <c>dotnet-validate</c> CLI tool.
 /// </summary>
 [NuGetPackageRequirement(DotNetValidatePackageId)]
+[ExcludeFromCodeCoverage]
 public class DotNetValidateTasks
     : IRequireNuGetPackage
 {
