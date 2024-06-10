@@ -3,8 +3,6 @@ name: release
 on:
   workflow_dispatch:
 
-permissions: {}
-
 env:
   NUGET_PACKAGES: '${{ github.workspace }}/.nuget/packages'
 
@@ -15,10 +13,6 @@ jobs:
       concurrency:
         group: ${{ github.workflow }}
         cancel-in-progress: false
-
-      permissions:
-        contents: write
-        issues: write
 
       steps:
         - name: Checkout
@@ -48,4 +42,4 @@ jobs:
             dotnet nuke CreateRelease \
               --github-token $GITHUB_TOKEN
           env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            GITHUB_TOKEN: ${{ secrets.GH_RELEASE_TOKEN }}
