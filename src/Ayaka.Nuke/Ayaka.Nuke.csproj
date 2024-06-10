@@ -4,6 +4,10 @@
     <TargetFramework>$(DotNetTargetFramework)</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="Ayaka.Nuke.Tests" />
+  </ItemGroup>
+
   <PropertyGroup>
     <PackageDescription>Provides various opinionated NUKE build components for simpler build automation. $(PackageDescriptionAppendix)</PackageDescription>
     <PackageTags>$(PackageCommonTags);nuke;build;automation;continuous-integration;tools;orchestration</PackageTags>

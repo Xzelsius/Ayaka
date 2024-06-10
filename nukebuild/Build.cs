@@ -5,6 +5,7 @@ using Ayaka.Nuke.DotNet;
 using Ayaka.Nuke.DotNetValidate;
 using Ayaka.Nuke.GitHub;
 using Ayaka.Nuke.NuGet;
+using Ayaka.Nuke.PublicApi;
 using Nuke.Common;
 using Nuke.Common.Tools.DotNet;
 
@@ -30,7 +31,8 @@ class Build
         ICanDotNetPack,
         ICanDotNetValidate,
         ICanDotNetPush,
-        ICanGitHubRelease
+        ICanGitHubRelease,
+        ICanShipPublicApis
 {
     public static int Main() => Execute<Build>(x => x.Default);
 
@@ -63,4 +65,8 @@ class Build
     Target CreateRelease => target => target
         .Description("Creates a new GitHub Release based on the current commit")
         .DependsOn<IHaveGitHubReleaseTarget>();
+
+    Target AfterRelease => target => target
+        .Description("Ships all Public APIs")
+        .DependsOn<IHaveShipPublicApisTarget>();
 }
