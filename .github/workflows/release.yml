@@ -15,10 +15,18 @@ jobs:
         cancel-in-progress: false
 
       steps:
+        - name: Use GitHub App
+          uses: actions/create-github-app-token@v1
+          id: app
+          with:          
+            app-id: ${{ vars.AYAKA_RELEASES_APP_ID }}
+            private-key: ${{ secrets.AYAKA_RELEASES_PRIVATE_KEY }}
+          
         - name: Checkout
           uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
           with:
             fetch-depth: 0
+            token: ${{ steps.app.outputs.token }}
 
         - name: NuGet Cache
           uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4
@@ -42,4 +50,4 @@ jobs:
             dotnet nuke CreateRelease \
               --github-token $GITHUB_TOKEN
           env:
-            GITHUB_TOKEN: ${{ secrets.GH_RELEASE_TOKEN }}
+            GITHUB_TOKEN: ${{ steps.app.outputs.token }}
