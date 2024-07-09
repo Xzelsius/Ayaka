@@ -43,8 +43,8 @@ public class GitHubPullRequestSettings : GitHubSettings
     {
         base.AssertValid();
 
-        _ = Head.MustNotBeNullOrEmpty();
-        _ = Base.MustNotBeNullOrEmpty();
-        _ = Title.MustNotBeNullOrEmpty();
+        Head.MustNotBeNullOrEmpty();
+        Base.MustNotBeNullOrEmpty();
+        Title.MustNotBeNullOrEmpty();
     }
 }
