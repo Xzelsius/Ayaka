@@ -50,10 +50,17 @@ public interface ICanShipPublicApis
 
                 var baselineFile = project.Directory / "PublicAPI.Shipped.txt";
                 Log.Debug("Using {BaselineFile} as baseline", baselineFile);
-                var baseline = (await File.ReadAllLinesAsync(baselineFile)).ToList();
 
                 var additionsFile = project.Directory / "PublicAPI.Unshipped.txt";
                 Log.Debug("Using {AdditionsFile} for additions", additionsFile);
+
+                if (!File.Exists(baselineFile) || !File.Exists(additionsFile))
+                {
+                    Log.Warning("Baseline or additions file found. Skipping");
+                    continue;
+                }
+
+                var baseline = (await File.ReadAllLinesAsync(baselineFile)).ToList();
                 var additions = (await File.ReadAllLinesAsync(additionsFile)).ToList();
 
                 var index = additions.FirstOrDefault() == "#nullable enable" ? 1 : 0;
