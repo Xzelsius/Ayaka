@@ -10,7 +10,7 @@ using global::Nuke.Common.Tooling;
 public static class GitHubPullRequestSettingsExtensions
 {
     /// <summary>
-    /// Sets the name of the branch where changes are implemented.
+    ///     Sets the name of the branch where changes are implemented.
     /// </summary>
     /// <param name="settings">The settings instance to adjust.</param>
     /// <param name="head">The name of the branch where changes are implemented.</param>
@@ -24,7 +24,7 @@ public static class GitHubPullRequestSettingsExtensions
     }
 
     /// <summary>
-    /// Resets the name of the branch where changes are implemented to <c>null</c>.
+    ///     Resets the name of the branch where changes are implemented to <c>null</c>.
     /// </summary>
     /// <param name="settings">The settings instance to adjust.</param>
     public static T ResetHead<T>(this T settings)
@@ -37,7 +37,7 @@ public static class GitHubPullRequestSettingsExtensions
     }
 
     /// <summary>
-    /// Sets the name of the branch where change should be pulled into.
+    ///     Sets the name of the branch where change should be pulled into.
     /// </summary>
     /// <param name="settings">The settings instance to adjust.</param>
     /// <param name="base">The name of the branch where change should be pulled into.</param>
@@ -51,7 +51,7 @@ public static class GitHubPullRequestSettingsExtensions
     }
 
     /// <summary>
-    /// Resets the name of the branch where change should be pulled into to <c>null</c>.
+    ///     Resets the name of the branch where change should be pulled into to <c>null</c>.
     /// </summary>
     /// <param name="settings">The settings instance to adjust.</param>
     public static T ResetBase<T>(this T settings)
