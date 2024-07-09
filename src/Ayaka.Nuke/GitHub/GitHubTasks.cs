@@ -146,6 +146,50 @@ public static class GitHubTasks
     public static Task<(string Name, string Body)> GenerateReleaseNotes(Configure<GitHubReleaseNotesSettings> configure)
         => GenerateReleaseNotes(configure(new GitHubReleaseNotesSettings()));
 
+    /// <summary>
+    ///     Creates a new GitHub pull request using the GitHub API.
+    /// </summary>
+    /// <param name="settings">The settings to for creating the pull request.</param>
+    /// <returns>A <see cref="Task" /> representing the asynchronous operation.</returns>
+    public static async Task CreatePullRequest(GitHubPullRequestSettings settings)
+    {
+        settings.Validate();
+
+        var client = CreateGitHubClient(settings.Token!, settings.BaseUrl);
+
+        var newPullRequest = new NewPullRequest(settings.Title, settings.Head, settings.Base)
+        {
+            Body = settings.Body,
+            Draft = settings.Draft
+        };
+
+        Log.Information("Creating pull request with title '{Title}'...", newPullRequest.Title);
+        Log.Verbose("  Head: {Head}", newPullRequest.Head);
+        Log.Verbose("  Base: {Base}", newPullRequest.Base);
+        Log.Verbose("  Body: {Body}", newPullRequest.Body);
+        Log.Verbose("  Draft: {Draft}", newPullRequest.Draft);
+
+        var pullRequest = await client.PullRequest.Create(
+            settings.RepositoryOwner!,
+            settings.RepositoryName!,
+            newPullRequest);
+
+        Log.Information("Pull request with title '{Title}' created", pullRequest.Title);
+        Log.Verbose("  Head: {Head}", pullRequest.Head);
+        Log.Verbose("  Base: {Base}", pullRequest.Base);
+        Log.Verbose("  Body: {Body}", pullRequest.Body);
+        Log.Verbose("  Draft: {Draft}", pullRequest.Draft);
+        Log.Verbose("  URL: {Url}", pullRequest.HtmlUrl);
+    }
+
+    /// <summary>
+    ///     Creates a new GitHub pull request using the GitHub API.
+    /// </summary>
+    /// <param name="configure">A method to use for configuring the settings of the pull request.</param>
+    /// <returns>A <see cref="Task" /> representing the asynchronous operation.</returns>
+    public static Task CreatePullRequest(Configure<GitHubPullRequestSettings> configure)
+        => CreatePullRequest(configure(new GitHubPullRequestSettings()));
+
     private static GitHubClient CreateGitHubClient(string token, string? baseAddress)
     {
         var productInformation = new ProductHeaderValue(Assembly.GetExecutingAssembly().GetName().Name);
