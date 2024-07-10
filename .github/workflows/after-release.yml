@@ -1,0 +1,64 @@
+name: after-release
+
+on:
+  release:
+    types: [ published ]
+
+env:
+  NUGET_PACKAGES: '${{ github.workspace }}/.nuget/packages'
+
+jobs:
+  after-release:
+    runs-on: ubuntu-latest
+
+    concurrency:
+      group: ${{ github.workflow }}
+      cancel-in-progress: false
+
+    steps:
+      - name: Use GitHub App
+        uses: actions/create-github-app-token@c8f55efbd427e7465d6da1106e7979bc8aaee856 # v1
+        id: app
+        with:
+          app-id: ${{ vars.AYAKA_RELEASES_APP_ID }}
+          private-key: ${{ secrets.AYAKA_RELEASES_PRIVATE_KEY }}
+
+      - name: Calculate Git User
+        id: git-config
+        run: |
+          echo "email=${{ steps.app.outputs.installation-id }}+${{ steps.app.outputs.app-slug }}[bot]@users.noreply.github.com" >> "$GITHUB_OUTPUT"
+          echo "name=${{ steps.app.outputs.app-slug }}[bot]" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
+        with:
+          fetch-depth: 0
+          token: ${{ steps.app.outputs.token }}
+
+      - name: NuGet Cache
+        uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4
+        with:
+          path: |
+            ${{ env.NUGET_PACKAGES }}
+            .nuke/temp
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/global.json', '**/*.csproj', '**/*.props') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@4d6c8fcf3c8f7a60068d26b594648e99df24cee3 # v4
+
+      - name: Restore .NET Tools
+        run: |
+          dotnet tool restore
+
+      - name: Publish After-Release Changes
+        run: |
+          dotnet nuke AfterRelease \
+            --github-token $GITHUB_TOKEN \
+            --git-user-email $GIT_CONFIG_EMAIL \
+            --git-user-name $GIT_CONFIG_NAME
+        env:
+          GITHUB_TOKEN: ${{ steps.app.outputs.token }}
+          GIT_CONFIG_EMAIL: ${{ steps.git-config.outputs.email }}
+          GIT_CONFIG_NAME: ${{ steps.git-config.outputs.name }}

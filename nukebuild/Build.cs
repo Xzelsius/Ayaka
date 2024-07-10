@@ -10,7 +10,7 @@ using Nuke.Common;
 using Nuke.Common.Tools.DotNet;
 
 [DotNetVerbosityMapping]
-class Build
+partial class Build
     : NukeBuild,
         IHaveGitRepository,
         IHaveGitVersion,
@@ -67,6 +67,6 @@ class Build
         .DependsOn<IHaveGitHubReleaseTarget>();
 
     Target AfterRelease => target => target
-        .Description("Ships all Public APIs")
-        .DependsOn<IHaveShipPublicApisTarget>();
+        .Description("Performs after-release steps and create a pull-request")
+        .DependsOn(CreateAfterReleasePullRequest);
 }

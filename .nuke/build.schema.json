@@ -30,6 +30,14 @@
           "description": "The GitHub API token",
           "default": "Secrets must be entered via 'nuke :secrets [profile]'"
         },
+        "GitUserEmail": {
+          "type": "string",
+          "description": "The Git user email address"
+        },
+        "GitUserName": {
+          "type": "string",
+          "description": "The Git user name"
+        },
         "Help": {
           "type": "boolean",
           "description": "Shows the help text for this build assembly"
@@ -95,7 +103,10 @@
             "enum": [
               "AfterRelease",
               "Clean",
+              "CommitAndPushAfterReleaseChanges",
               "Compile",
+              "CreateAfterReleaseBranch",
+              "CreateAfterReleasePullRequest",
               "CreateRelease",
               "Default",
               "DotNetBuild",
@@ -124,7 +135,10 @@
             "enum": [
               "AfterRelease",
               "Clean",
+              "CommitAndPushAfterReleaseChanges",
               "Compile",
+              "CreateAfterReleaseBranch",
+              "CreateAfterReleasePullRequest",
               "CreateRelease",
               "Default",
               "DotNetBuild",
