@@ -26,8 +26,13 @@ jobs:
       - name: Calculate Git User
         id: git-config
         run: |
-          echo "email=${{ steps.app.outputs.installation-id }}+${{ steps.app.outputs.app-slug }}[bot]@users.noreply.github.com" >> "$GITHUB_OUTPUT"
+          # Read the user info for the app, e.g. /users/renovate[bot]
+          userId=$(gh api "/users/${{ steps.app.outputs.app-slug }}[bot]" --jq .id)
+
+          echo "email=$userId+${{ steps.app.outputs.app-slug }}[bot]@users.noreply.github.com" >> "$GITHUB_OUTPUT"
           echo "name=${{ steps.app.outputs.app-slug }}[bot]" >> "$GITHUB_OUTPUT"
+        env:
+          GH_TOKEN: ${{ steps.app.outputs.token }}
 
       - name: Checkout
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
