@@ -15,10 +15,15 @@
     <PackageDescriptionAppendix>This package is part of Ayaka, a lightweight development kit built to help developing applications using .NET</PackageDescriptionAppendix>
     <PackageCommonTags>ayaka;sdk</PackageCommonTags>
     <PackageIcon>logo.png</PackageIcon>
+    <PackageReadmeFile Condition="Exists('$(MSBuildProjectDirectory)/PACKAGE.md')">PACKAGE.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup Label="PackageIcon" Condition="'$(IsNuGetPackage)' == 'True'">
     <None Include="$(MSBuildThisFileDirectory)/assets/logo.png" Pack="true" Visible="false" PackagePath="" />
+  </ItemGroup>
+
+  <ItemGroup Label="PackageReadme" Condition="'$(IsNuGetPackage)' == 'True' And Exists('$(MSBuildProjectDirectory)/PACKAGE.md')">
+    <None Include="$(MSBuildProjectDirectory)/PACKAGE.md" Pack="true" Visible="true" PackagePath="" />
   </ItemGroup>
 
 </Project>
