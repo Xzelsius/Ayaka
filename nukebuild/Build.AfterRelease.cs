@@ -50,6 +50,8 @@ partial class Build
     [Parameter("The Git user name")]
     string? GitUserName;
 
+    bool skipPullRequest; // will be set to true if no after-release changes were detected
+
     Target CommitAndPushAfterReleaseChanges => target => target
         .Unlisted()
         .DependsOn(CreateAfterReleaseBranch)
@@ -72,6 +74,16 @@ partial class Build
                     _ = GitTasks.Git($"add {file}");
                 });
 
+            Log.Information("Checking if there are staged changes");
+
+            var hasChanges = GitTasks.Git("status --porcelain --untracked-files no").Any();
+            if (!hasChanges)
+            {
+                Log.Warning("No after release changes detected. Skipping commit & push");
+                skipPullRequest = true;
+                return;
+            }
+
             const string message = "chore: ship public apis";
 
             Log.Information("Commiting staged changes on PublicAPI.*.txt files");
@@ -91,6 +103,7 @@ partial class Build
         .Unlisted()
         .DependsOn(CommitAndPushAfterReleaseChanges)
         .Requires(() => From<IHaveGitHubToken>().GitHubToken)
+        .OnlyWhenDynamic(() => !skipPullRequest)
         .Executes(async () =>
         {
             await GitHubTasks.CreatePullRequest(
