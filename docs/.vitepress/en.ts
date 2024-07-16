@@ -47,6 +47,13 @@ function nav(): DefaultTheme.NavItem[] {
 
 function guideSidebar(): DefaultTheme.SidebarItem[] {
     return [
+        {
+            text: 'Guide',
+            collapsed: false,
+            items: [
+                { text: 'Compatibility', link: 'compatibility' }
+            ]
+        }
     ];
 }
 
