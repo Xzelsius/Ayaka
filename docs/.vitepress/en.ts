@@ -51,6 +51,7 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
             text: 'Guide',
             collapsed: false,
             items: [
+                { text: 'Packages', link: 'packages' },
                 { text: 'Compatibility', link: 'compatibility' }
             ]
         }
