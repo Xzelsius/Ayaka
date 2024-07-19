@@ -6,6 +6,7 @@ using Ayaka.Nuke.DotNetValidate;
 using Ayaka.Nuke.GitHub;
 using Ayaka.Nuke.NuGet;
 using Ayaka.Nuke.PublicApi;
+using Ayaka.Nuke.VitePress;
 using Nuke.Common;
 using Nuke.Common.Tools.DotNet;
 
@@ -17,10 +18,12 @@ partial class Build
         IHaveSolution,
         IHaveSources,
         IHaveTests,
+        IHaveDocumentation,
         IHaveArtifacts,
         IHaveTestArtifacts,
         IHaveCodeCoverage,
         IHavePackageArtifacts,
+        IHaveDocumentationArtifacts,
         IHaveDotNetConfiguration,
         IHaveNuGetConfiguration,
         IHaveGitHubToken,
@@ -31,6 +34,8 @@ partial class Build
         ICanDotNetPack,
         ICanDotNetValidate,
         ICanDotNetPush,
+        ICanVitePressInstall,
+        ICanVitePressBuild,
         ICanGitHubRelease,
         ICanShipPublicApis
 {
@@ -61,6 +66,10 @@ partial class Build
     Target Publish => target => target
         .Description("Publishes all NuGet packages in the Solution")
         .DependsOn<IHaveDotNetPushTarget>();
+
+    Target Docs => target => target
+        .Description("Builds the Documentation")
+        .DependsOn<IHaveVitePressBuildTarget>();
 
     Target CreateRelease => target => target
         .Description("Creates a new GitHub Release based on the current commit")
