@@ -14,4 +14,4 @@ The list of packages thate are currently part of Ayaka
 
 | Package            | Description                                                                            | NuGet                                                                                             |
 |--------------------|----------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------|
-| [Ayaka.Nuke](nuke) | Provides various opinionated build components for simpler build automation using NUKE. | [![Ayaka.Nuke](https://img.shields.io/nuget/v/Ayaka.Nuke)](https://nuget.org/packages/Ayaka.Nuke) |
+| [Ayaka.Nuke](../nuke/index.md) | Provides various opinionated build components for simpler build automation using NUKE. | [![Ayaka.Nuke](https://img.shields.io/nuget/v/Ayaka.Nuke)](https://nuget.org/packages/Ayaka.Nuke) |
