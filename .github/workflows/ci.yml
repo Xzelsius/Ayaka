@@ -14,7 +14,7 @@ env:
   NUGET_PACKAGES: '${{ github.workspace }}/.nuget/packages'
 
 jobs:
-  build:
+  build-packages:
     runs-on: ubuntu-latest
 
     steps:
@@ -59,9 +59,57 @@ jobs:
           path: ${{ github.workspace }}/artifacts/packages
           if-no-files-found: error
 
+  build-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
+        with:
+          fetch-depth: 0
+
+      - name: NPM Cache
+        uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts'
+
+      - name: NuGet Cache
+        uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4
+        with:
+          path: |
+            ${{ env.NUGET_PACKAGES }}
+            .nuke/temp
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/global.json', '**/*.csproj', '**/*.props') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@6bd8b7f7774af54e05809fcc5431931b3eb1ddee # v4
+
+      - name: Restore .NET Tools
+        run: |
+          dotnet tool restore
+
+      - name: Build Docs
+        run: |
+          dotnet nuke Docs
+
+      - name: Upload Docs
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ${{ github.workspace }}/artifacts/docs
+
   publish-packages:
     runs-on: ubuntu-latest
-    needs: [build]
+    needs: [build-packages]
 
     # Only publish if build was triggered for a tag
     if: startsWith(github.ref, 'refs/tags/v')
@@ -91,3 +139,23 @@ jobs:
             --nuget-api-key $NUGET_API_KEY
         env:
           NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+
+  publish-docs:
+    runs-on: ubuntu-latest
+    needs: [build-docs]
+
+    # Only publish if build was triggered for a tag
+    if: startsWith(github.ref, 'refs/tags/v')
+
+    permissions:
+      pages: write    # to deploy to pages
+      id-token: write # to verify the deployment originates from an appropriate source
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
+        id: deployment
