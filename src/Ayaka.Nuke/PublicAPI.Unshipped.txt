@@ -1,3 +1,5 @@
 ﻿#nullable enable
 Ayaka.Nuke.IHaveDocumentation
 Ayaka.Nuke.IHaveDocumentation.DocsDirectory.get -> Nuke.Common.IO.AbsolutePath!
+Ayaka.Nuke.IHaveDocumentationArtifacts
+Ayaka.Nuke.IHaveDocumentationArtifacts.DocsArtifactsDirectory.get -> Nuke.Common.IO.AbsolutePath!
