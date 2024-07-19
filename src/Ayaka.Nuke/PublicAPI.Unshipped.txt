@@ -1,1 +1,3 @@
 ﻿#nullable enable
+Ayaka.Nuke.IHaveDocumentation
+Ayaka.Nuke.IHaveDocumentation.DocsDirectory.get -> Nuke.Common.IO.AbsolutePath!
