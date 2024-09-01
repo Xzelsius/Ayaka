@@ -22,7 +22,7 @@ export const shared = defineConfig({
     },
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/vuejs/vitepress' },
+      { icon: 'github', link: 'https://github.com/Xzelsius/Ayaka' },
     ],
   },
 });
