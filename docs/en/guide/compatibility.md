@@ -10,7 +10,7 @@ See [.NET and .NET Core Support Policy](https://dotnet.microsoft.com/en-us/platf
 > ![.NET Release Cadence](https://placehold.co/600x400/EEE/31343C){.release-cadence}
 
 ::: info
-There are no plans for any multi-target builds, as we don't want the additional complexity of such.
+There are no plans for any multi-target builds, as I don't want the additional complexity of such.
 :::
 
 <style>
