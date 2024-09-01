@@ -39,7 +39,7 @@ function nav(): DefaultTheme.NavItem[] {
     },
     {
       text: 'Contributing',
-      link: '/contributing',
+      link: '/contributing/sources',
       activeMatch: '/contributing/',
     },
   ];
@@ -60,5 +60,24 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
 }
 
 function contributingSidebar(): DefaultTheme.SidebarItem[] {
-  return [];
+  return [
+    {
+      text: 'Overview',
+      collapsed: false,
+      items: [
+        { text: 'Sources', link: 'sources' },
+        { text: 'Code Guidelines', link: 'code-guidelines' },
+        { text: 'Renovate', link: 'renovate' },
+      ],
+    },
+    {
+      text: 'Contributing',
+      collapsed: false,
+      items: [
+        { text: 'Bug Reports', link: 'bug-reports' },
+        { text: 'Feature Requests', link: 'feature-requests' },
+        { text: 'Pull Requests', link: 'pull-requests' },
+      ],
+    }
+  ];
 }
