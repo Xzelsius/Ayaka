@@ -78,6 +78,6 @@ function contributingSidebar(): DefaultTheme.SidebarItem[] {
         { text: 'Feature Requests', link: 'feature-requests' },
         { text: 'Pull Requests', link: 'pull-requests' },
       ],
-    }
+    },
   ];
 }
