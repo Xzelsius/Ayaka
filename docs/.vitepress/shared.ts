@@ -3,7 +3,7 @@ import { defineConfig } from 'vitepress';
 export const shared = defineConfig({
   title: 'Ayaka',
 
-  base: '/ayaka/',
+  base: '/Ayaka/',
 
   rewrites: {
     'en/:rest*': ':rest*',
