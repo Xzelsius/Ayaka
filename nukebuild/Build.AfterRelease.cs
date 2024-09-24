@@ -76,7 +76,7 @@ partial class Build
 
             Log.Information("Checking if there are staged changes");
 
-            var hasChanges = GitTasks.Git("status --porcelain --untracked-files no").Any();
+            var hasChanges = GitTasks.Git("status --porcelain --untracked-files=no").Any();
             if (!hasChanges)
             {
                 Log.Warning("No after release changes detected. Skipping commit & push");
@@ -116,7 +116,7 @@ partial class Build
                     .SetTitle("chore: after release changes")
                     .SetBody("""
                              **This PR was automatically generated after the release**
-                             
+
                              - Ships the public APIs for the latest release.
                              """));
         });
