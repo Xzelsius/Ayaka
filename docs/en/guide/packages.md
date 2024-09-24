@@ -4,7 +4,7 @@ Ayaka tries to split functionality in to small packages to keep dependencies to 
 
 Generally, I structure the packages around features, similar to the official Microsoft NuGet packages.
 
-* All our packages are prefixed with `Ayaka`
+* All packages are prefixed with `Ayaka`
 * The remaining name parts represent the feature that the package extends or provides
 * A package may end with `.Abstractions` which indicates a feature that may have different implementations but common abstractions
 
