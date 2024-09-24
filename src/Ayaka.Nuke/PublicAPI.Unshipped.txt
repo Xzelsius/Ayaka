@@ -1,1 +1,15 @@
-﻿#nullable enable
+#nullable enable
+Ayaka.Nuke.IHaveDocumentation
+Ayaka.Nuke.IHaveDocumentation.DocsDirectory.get -> Nuke.Common.IO.AbsolutePath!
+Ayaka.Nuke.IHaveDocumentationArtifacts
+Ayaka.Nuke.IHaveDocumentationArtifacts.DocsArtifactsDirectory.get -> Nuke.Common.IO.AbsolutePath!
+Ayaka.Nuke.VitePress.ICanVitePressBuild
+Ayaka.Nuke.VitePress.ICanVitePressBuild.VitePressBuildSettings.get -> Nuke.Common.Tooling.Configure<Nuke.Common.Tools.Npm.NpmRunSettings!>!
+Ayaka.Nuke.VitePress.ICanVitePressBuild.VitePressBuildSettingsBase.get -> Nuke.Common.Tooling.Configure<Nuke.Common.Tools.Npm.NpmRunSettings!>!
+Ayaka.Nuke.VitePress.ICanVitePressInstall
+Ayaka.Nuke.VitePress.ICanVitePressInstall.VitePressInstallSettings.get -> Nuke.Common.Tooling.Configure<Nuke.Common.Tools.Npm.NpmCiSettings!>!
+Ayaka.Nuke.VitePress.ICanVitePressInstall.VitePressInstallSettingsBase.get -> Nuke.Common.Tooling.Configure<Nuke.Common.Tools.Npm.NpmCiSettings!>!
+Ayaka.Nuke.VitePress.IHaveVitePressBuildTarget
+Ayaka.Nuke.VitePress.IHaveVitePressBuildTarget.VitePressBuild.get -> Nuke.Common.Target!
+Ayaka.Nuke.VitePress.IHaveVitePressInstallTarget
+Ayaka.Nuke.VitePress.IHaveVitePressInstallTarget.VitePressInstall.get -> Nuke.Common.Target!
