@@ -66,7 +66,6 @@ function contributingSidebar(): DefaultTheme.SidebarItem[] {
       collapsed: false,
       items: [
         { text: 'Sources', link: 'sources' },
-        { text: 'Code Guidelines', link: 'code-guidelines' },
         { text: 'Renovate', link: 'renovate' },
       ],
     },
@@ -74,6 +73,7 @@ function contributingSidebar(): DefaultTheme.SidebarItem[] {
       text: 'Contributing',
       collapsed: false,
       items: [
+        { text: 'Code Guidelines', link: 'code-guidelines' },
         { text: 'Bug Reports', link: 'bug-reports' },
         { text: 'Feature Requests', link: 'feature-requests' },
         { text: 'Pull Requests', link: 'pull-requests' },
