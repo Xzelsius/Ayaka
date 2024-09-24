@@ -83,6 +83,10 @@ Ayaka.Nuke.IHaveCleanTarget
 Ayaka.Nuke.IHaveCleanTarget.Clean.get -> Nuke.Common.Target!
 Ayaka.Nuke.IHaveCodeCoverage
 Ayaka.Nuke.IHaveCodeCoverage.CoverageDirectory.get -> Nuke.Common.IO.AbsolutePath!
+Ayaka.Nuke.IHaveDocumentation
+Ayaka.Nuke.IHaveDocumentation.DocsDirectory.get -> Nuke.Common.IO.AbsolutePath!
+Ayaka.Nuke.IHaveDocumentationArtifacts
+Ayaka.Nuke.IHaveDocumentationArtifacts.DocsArtifactsDirectory.get -> Nuke.Common.IO.AbsolutePath!
 Ayaka.Nuke.IHaveGitRepository
 Ayaka.Nuke.IHaveGitRepository.GitRepository.get -> Nuke.Common.Git.GitRepository!
 Ayaka.Nuke.IHaveGitVersion
@@ -104,6 +108,16 @@ Ayaka.Nuke.PublicApi.ICanShipPublicApis
 Ayaka.Nuke.PublicApi.ICanShipPublicApis.PublicApiProjects.get -> System.Collections.Generic.IEnumerable<Nuke.Common.ProjectModel.Project!>!
 Ayaka.Nuke.PublicApi.IHaveShipPublicApisTarget
 Ayaka.Nuke.PublicApi.IHaveShipPublicApisTarget.ShipPublicApis.get -> Nuke.Common.Target!
+Ayaka.Nuke.VitePress.ICanVitePressBuild
+Ayaka.Nuke.VitePress.ICanVitePressBuild.VitePressBuildSettings.get -> Nuke.Common.Tooling.Configure<Nuke.Common.Tools.Npm.NpmRunSettings!>!
+Ayaka.Nuke.VitePress.ICanVitePressBuild.VitePressBuildSettingsBase.get -> Nuke.Common.Tooling.Configure<Nuke.Common.Tools.Npm.NpmRunSettings!>!
+Ayaka.Nuke.VitePress.ICanVitePressInstall
+Ayaka.Nuke.VitePress.ICanVitePressInstall.VitePressInstallSettings.get -> Nuke.Common.Tooling.Configure<Nuke.Common.Tools.Npm.NpmCiSettings!>!
+Ayaka.Nuke.VitePress.ICanVitePressInstall.VitePressInstallSettingsBase.get -> Nuke.Common.Tooling.Configure<Nuke.Common.Tools.Npm.NpmCiSettings!>!
+Ayaka.Nuke.VitePress.IHaveVitePressBuildTarget
+Ayaka.Nuke.VitePress.IHaveVitePressBuildTarget.VitePressBuild.get -> Nuke.Common.Target!
+Ayaka.Nuke.VitePress.IHaveVitePressInstallTarget
+Ayaka.Nuke.VitePress.IHaveVitePressInstallTarget.VitePressInstall.get -> Nuke.Common.Target!
 const Ayaka.Nuke.DotNetValidate.DotNetValidateTasks.DotNetValidatePackageId = "dotnet-validate" -> string!
 const Ayaka.Nuke.NuGet.IHaveNuGetConfiguration.DefaultNuGetSource = "https://api.nuget.org/v3/index.json" -> string!
 override Ayaka.Nuke.DotNetValidate.DotNetValidateLocalPackageSettings.ConfigureProcessArguments(Nuke.Common.Tooling.Arguments! arguments) -> Nuke.Common.Tooling.Arguments!
