@@ -13,7 +13,7 @@ See [.NET and .NET Core Support Policy](https://dotnet.microsoft.com/en-us/platf
 There are no plans for any multi-target builds, as I don't want the additional complexity of such.
 :::
 
-<style>
+<style scoped>
 img.release-cadence {
     content: url(https://dotnet.microsoft.com/blob-assets/images/illustrations/release-schedule.svg);
 }
