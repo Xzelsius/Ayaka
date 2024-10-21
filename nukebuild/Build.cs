@@ -8,7 +8,9 @@ using Ayaka.Nuke.NuGet;
 using Ayaka.Nuke.PublicApi;
 using Ayaka.Nuke.VitePress;
 using Nuke.Common;
+using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
+using Nuke.Common.Tools.Npm;
 
 [DotNetVerbosityMapping]
 partial class Build
@@ -35,6 +37,7 @@ partial class Build
         ICanDotNetValidate,
         ICanDotNetPush,
         ICanVitePressInstall,
+        ICanVitePressLint,
         ICanVitePressBuild,
         ICanGitHubRelease,
         ICanShipPublicApis
@@ -66,6 +69,11 @@ partial class Build
     Target Publish => target => target
         .Description("Publishes all NuGet packages in the Solution")
         .DependsOn<IHaveDotNetPushTarget>();
+
+    // Customize the VitePress linting
+    Configure<NpmRunSettings> ICanVitePressLint.VitePressLintSettings
+        => run => run
+            .SetCommand("lint:js");
 
     Target Docs => target => target
         .Description("Builds the Documentation")
