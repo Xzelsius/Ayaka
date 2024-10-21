@@ -1,1 +1,1 @@
-﻿# VitePress Build Components
+# VitePress Build Components

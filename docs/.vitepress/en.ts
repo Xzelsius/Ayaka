@@ -66,38 +66,38 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
           items: [
             {
               text: 'General',
-              link: 'packages/nuke/build-components/general'
+              link: 'packages/nuke/build-components/general',
             },
             {
               text: '.NET',
-              link: 'packages/nuke/build-components/dotnet'
+              link: 'packages/nuke/build-components/dotnet',
             },
             {
               text: 'VitePress',
-              link: 'packages/nuke/build-components/vitepress'
+              link: 'packages/nuke/build-components/vitepress',
             },
             {
               text: 'GitHub',
-              link: 'packages/nuke/build-components/github'
-            }
-          ]
+              link: 'packages/nuke/build-components/github',
+            },
+          ],
         },
         {
           text: 'Build Tasks',
           items: [
             {
               text: '.NET',
-              link: 'packages/nuke/build-tasks/dotnet'
+              link: 'packages/nuke/build-tasks/dotnet',
             },
             {
               text: 'GitHub',
-              link: 'packages/nuke/build-tasks/github'
-            }
-          ]
+              link: 'packages/nuke/build-tasks/github',
+            },
+          ],
         },
         { text: 'Utilities', link: 'packages/nuke/utilities' },
-      ]
-    }
+      ],
+    },
   ];
 }
 

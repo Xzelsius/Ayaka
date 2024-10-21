@@ -1,1 +1,1 @@
-﻿# GitHub Build Components
+# GitHub Build Components

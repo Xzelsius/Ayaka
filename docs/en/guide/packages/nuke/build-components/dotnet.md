@@ -1,1 +1,1 @@
-﻿# .NET Build Components
+# .NET Build Components

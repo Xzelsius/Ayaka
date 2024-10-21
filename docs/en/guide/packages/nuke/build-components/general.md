@@ -1,1 +1,1 @@
-﻿# General Build Components
+# General Build Components

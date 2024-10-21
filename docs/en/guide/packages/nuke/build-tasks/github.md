@@ -1,1 +1,1 @@
-﻿# GitHub Build Tasks
+# GitHub Build Tasks

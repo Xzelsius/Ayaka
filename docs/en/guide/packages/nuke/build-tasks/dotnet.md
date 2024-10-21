@@ -1,1 +1,1 @@
-﻿# .NET Build Tasks
+# .NET Build Tasks
