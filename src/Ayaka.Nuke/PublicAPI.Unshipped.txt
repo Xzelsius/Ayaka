@@ -1,6 +1,1 @@
 ﻿#nullable enable
-Ayaka.Nuke.VitePress.ICanVitePressLint
-Ayaka.Nuke.VitePress.ICanVitePressLint.VitePressLintSettings.get -> Nuke.Common.Tooling.Configure<Nuke.Common.Tools.Npm.NpmRunSettings!>!
-Ayaka.Nuke.VitePress.ICanVitePressLint.VitePressLintSettingsBase.get -> Nuke.Common.Tooling.Configure<Nuke.Common.Tools.Npm.NpmRunSettings!>!
-Ayaka.Nuke.VitePress.IHaveVitePressLintTarget
-Ayaka.Nuke.VitePress.IHaveVitePressLintTarget.VitePressLint.get -> Nuke.Common.Target!
