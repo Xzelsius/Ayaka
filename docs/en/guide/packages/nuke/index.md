@@ -69,3 +69,8 @@ await CreateRelease(new GitHubReleaseSettings
     // ...
 });
 ```
+
+::: tip
+If you still struggle to understand how this all works, have a look at Ayaka's own NUKE build project.
+It uses `Ayaka.Nuke` (eat your own dog food) and is a good starting point to see how to use the build components and tasks.
+:::
