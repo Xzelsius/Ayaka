@@ -1,10 +1,12 @@
-## About
+# Ayaka.Nuke
 
 Provides various opinionated build components for simpler build automation using [NUKE](https://nuke.build/).
 
 ## Key Features
 
-Provides build components like:
+`Ayaka.Nuke` is all about reusable build components and tasks to make your life easier.
+
+The build components and tasks follow a simple naming convention:
 
 * `IHave...` to extend the build with additional context. For example
   * `IHaveSources`, `IHaveTests`, `IHaveArtifacts`, etc. to provide conventional paths for sources, tests, artifacts and other directories to the build
@@ -19,11 +21,15 @@ Provides build components like:
   * `ICanVitePress...` to lint and build a VitePress site
   * `ICanShipPublicApis` to ship public APIs from `PublicAPI.Unshipped.txt` to `PublicAPI.Shipped.txt`
   * and many more
+* `...Tasks` to provide build tasks that wrap other tools or APIs. For example
+  * `GitHubTasks` to create pull requests, generate release notes or create new releases using the GitHub API
+  * `DotNetValidateTasks` to validate .NET NuGet packages using `dotnet-validate` tool
+  * and many more
 
-Additionally, provides build tasks that wrap other tools or APIs like:
-
-* `GitHubTasks` to create pull requests, generate release notes or create new releases
-* `DotNetValidateTasks` to validate .NET NuGet packages using `dotnet-validate` tool
+::: tip
+In a NUKE build project, a build component represents additional build context or targets that can be added to a build,
+whereas a build task is a method that can be executed as part of target.
+:::
 
 ## How to Use
 
@@ -44,12 +50,22 @@ class Build
 }
 ```
 
-_Note: You can either use `ICanDotNetRestore` or `IHaveDotNetRestoreTarget` to use the target with `.DependsOn()`._
+Using any of the build tasks is the same as calling a static method in .NET
 
-## Additional Documentation
+```csharp
+await GitHubTasks.CreateRelease(new GitHubReleaseSettings
+{
+    // ...
+});
+```
 
-See [the documentation](https://xzelsius.github.io/Ayaka/guide/packages/nuke) for more details.
+or with a `static using`
 
-## Feedback & Contributing
+```csharp
+using static Ayaka.Nuke.GitHub.GitHubTasks;
 
-`Ayaka.Nuke` is an open-source project and welcomes contributions. If you have any ideas, improvements or issues, please open an issue or a pull request at [the GitHub repository](https://github.com/Xzelsius/Ayaka).
+await CreateRelease(new GitHubReleaseSettings
+{
+    // ...
+});
+```
