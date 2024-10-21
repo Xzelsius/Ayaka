@@ -88,7 +88,8 @@
         "ShipPublicApis",
         "Test",
         "VitePressBuild",
-        "VitePressInstall"
+        "VitePressInstall",
+        "VitePressLint"
       ]
     },
     "Verbosity": {

@@ -46,6 +46,7 @@ public interface ICanVitePressBuild
         .Description("Builds the VitePress site")
         .Unlisted()
         .DependsOn<IHaveVitePressInstallTarget>()
+        .TryDependsOn<IHaveVitePressLintTarget>()
         .Executes(() =>
         {
             _ = NpmTasks.NpmRun(
