@@ -25,6 +25,10 @@ export const shared = defineConfig({
       { icon: 'github', link: 'https://github.com/Xzelsius/Ayaka' },
     ],
 
+    search: {
+      provider: 'local'
+    },
+
     outline: 'deep',
   },
 });
