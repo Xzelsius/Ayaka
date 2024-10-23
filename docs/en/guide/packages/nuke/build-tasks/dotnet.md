@@ -22,7 +22,6 @@ properties which can be set:
 |----------------|----------|-------------------------------------------------|
 | `PackagePath`  | `true`   | The path to the local NuGet package to validate |
 
-
 ::: code-group
 
 ```csharp [Usage]

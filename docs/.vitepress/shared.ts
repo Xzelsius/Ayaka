@@ -26,7 +26,7 @@ export const shared = defineConfig({
     ],
 
     search: {
-      provider: 'local'
+      provider: 'local',
     },
 
     outline: 'deep',
