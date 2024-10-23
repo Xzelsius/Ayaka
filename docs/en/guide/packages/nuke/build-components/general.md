@@ -17,7 +17,7 @@ The `IHaveGitRepository` build component decorates the build with information ab
 | `GitRepository` | Yes      | Information about the current Git repository |
 
 ::: info
-It uses the `[GitRepository]` functionality from the `Nuke.Common` package internally,
+It uses the `[GitRepository]` functionality from the `Nuke.Common` NuGet package internally,
 which loads the information based on the local root directory.
 :::
 
@@ -49,7 +49,7 @@ computed using `GitVersion`.
 | `GitVersion`    | Yes      | The version numbers computed by `GitVersion` |
 
 ::: info
-It uses the `[GitVersion]` functionality from the `Nuke.Common` package internally,
+It uses the `[GitVersion]` functionality from the `Nuke.Common` NuGet package internally,
 which loads the information based on the local Git repository.
 :::
 
@@ -151,9 +151,9 @@ class Build
 The `IHaveTests` build component decorates the build with information about where to find the test
 code of the application.
 
-| Property         | Default                | Description                                    |
-|------------------|------------------------|------------------------------------------------|
-| `TestsDirectory` | `{RootDirectory}/test` | The directory where the test code is located   |
+| Property         | Default                | Description                                  |
+|------------------|------------------------|----------------------------------------------|
+| `TestsDirectory` | `{RootDirectory}/test` | The directory where the test code is located |
 
 ::: code-group
 
@@ -257,7 +257,7 @@ class Build
 }
 ```
 
-```csharp{7} [Change the path in code]
+```csharp{7} [Change the path in Code]
 class Build
     : NukeBuild,
         IHaveArtifacts
@@ -314,7 +314,7 @@ class Build
 }
 ```
 
-```csharp{7} [Change the path in code]
+```csharp{7} [Change the path in Code]
 class Build
     : NukeBuild,
         IHaveTestArtifacts
@@ -361,7 +361,7 @@ class Build
 }
 ```
 
-```csharp{7} [Change the path in code]
+```csharp{7} [Change the path in Code]
 class Build
     : NukeBuild,
         IHaveCodeCoverage
@@ -408,7 +408,7 @@ class Build
 }
 ```
 
-```csharp{7} [Change the path in code]
+```csharp{7} [Change the path in Code]
 class Build
     : NukeBuild,
         IHavePackageArtifacts
@@ -455,7 +455,7 @@ class Build
 }
 ```
 
-```csharp{7} [Change the path in code]
+```csharp{7} [Change the path in Code]
 class Build
     : NukeBuild,
         IHaveDocumentationArtifacts
@@ -479,11 +479,12 @@ The build target components extend the build with additional targets that can be
 or as part of other targets.
 
 Although, not required by NUKE, Ayaka provides a definition and one or more implementations for each target.
-The definitions are named using the `IHave...Target` patter, for example `IHaveCleanTarget`). The implementations
-use the `ICan...` patter, for example `ICanClean`.
+The definitions are named using the `IHave...Target` pattern, for example `IHaveCleanTarget`. The implementations
+use the `ICan...` pattern, for example `ICanClean`.
 
-This allows to create custom targets that depend on definition, but not on a strict implementation of it. For example,
-an implementation from Ayaka does suit your needs, and you want to create your own implementation based on Ayaka's definition.
+This allows you to create custom targets that depend on a definition, but not on a strict implementation of it.
+For example, an implementation from Ayaka does not suit your needs, and you want to create your own implementation
+based on Ayaka's definition.
 
 ### ICanClean
 
@@ -495,7 +496,7 @@ Depending on the build context components the build is decorated with, it does c
 * `IHaveTests`: The directory located at `TestsDirectory`
 * `IHaveArtifacts`: The directory located at `ArtifactsDirectory`
 
-The `ICanClean` target implements the `IHaveCleanTarget`.
+The `ICanClean` target implements the `IHaveCleanTarget` build target definition.
 
 ::: code-group
 
@@ -524,10 +525,12 @@ The `ICanShipPublicApis` build target ships your public APIs.
 It does so iterating over all projects specified by `PublicApiProjects` and moving everything from
 `PublicAPI.Unshipped.txt` to `PublicAPI.Shipped.txt`.
 
-By default, `PublicApiProjects` represents all projects within the `SourceDirectory` of the [`IHaveSources`](./general#ihavesources)
-build context component.
+By default, `PublicApiProjects` represents all projects within the `SourceDirectory` directory of the
+[`IHaveSources`](./general#ihavesources) build context component.
 
 The build target maintains the alphabetical order of the public APIs files and recognizes the `#nullable enable` flag.
+
+The `ICanShipPublicApis` implements the `IHaveShipPublicApiTarget` build target definition.
 
 ::: code-group
 
@@ -547,7 +550,7 @@ class Build
 }
 ```
 
-```csharp {7-10} [Change the projects in code]
+```csharp {7-10} [Change the projects in Code]
 class Build
     : NukeBuild,
         ICanShipPublicApis
