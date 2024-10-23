@@ -76,7 +76,7 @@ when pushing packages to a NuGet feed.
 
 ::: code-group
 
-```csharp {3,9-10} [Usage]
+```csharp {3,9} [Usage]
 class Build
     : NukeBuild,
         IHaveNuGetConfiguration
@@ -86,7 +86,6 @@ class Build
     Target Default => _ => _
         .Executes(() => {
             Log.Information($"NuGet Source: {((IHaveNuGetConfiguration)this).NuGetSource}");
-            Log.Information($"NuGet API Key: {((IHaveNuGetConfiguration)this).NuGetApiKey}");
         });
 }
 ```
@@ -104,7 +103,6 @@ class Build
     Target Default => _ => _
         .Executes(() => {
             Log.Information($"NuGet Source: {((IHaveNuGetConfiguration)this).NuGetSource}");
-            Log.Information($"NuGet API Key: {((IHaveNuGetConfiguration)this).NuGetApiKey}");
         });
 }
 ```
