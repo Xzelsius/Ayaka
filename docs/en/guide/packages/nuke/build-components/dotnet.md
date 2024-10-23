@@ -72,7 +72,7 @@ when pushing packages to a NuGet feed.
 | Property      | Description                                                                  |
 |---------------|------------------------------------------------------------------------------|
 | `NuGetSource` | The URL of the NuGet feed. Defaults to `https://api.nuget.org/v3/index.json` |
-| `NuGetApiKey` | The API key used to authenticate when accessing the above NuGet feed         |
+| `NuGetApiKey` | The API key used to authenticate with the NuGet feed                         |
 
 ::: code-group
 
