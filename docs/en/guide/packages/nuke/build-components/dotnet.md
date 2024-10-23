@@ -1,6 +1,6 @@
 # .NET Build Components
 
-The general build components are suitable for .NET based applications.
+The .NET build components are suitable for .NET based applications.
 
 ## Build Context
 
