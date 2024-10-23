@@ -19,7 +19,7 @@ properties which can be set:
 | Parameter              | Required | Description                                                                                                                                           |
 |------------------------|----------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `RepositoryOwner`      | `true`   | The account owner of the repository                                                                                                                   |
-| `RepositoryName`       | `true`   | The name of the repository ithout the .git extension                                                                                                  |
+| `RepositoryName`       | `true`   | The name of the repository without the .git extension                                                                                                 |
 | `Token`                | `true`   | The GitHub token used to authenticate with the GitHub API                                                                                             |
 | `BaseUrl`              | `false`  | The base URL for the GitHub API. Defaults to the Octokit default value                                                                                |
 | `Tag`                  | `true`   | The tag name for the release                                                                                                                          |
@@ -57,7 +57,7 @@ properties which can be set:
 | Parameter              | Required | Description                                                                                                                                                                                                                    |
 |------------------------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `RepositoryOwner`      | `true`   | The account owner of the repository                                                                                                                                                                                            |
-| `RepositoryName`       | `true`   | The name of the repository ithout the .git extension                                                                                                                                                                           |
+| `RepositoryName`       | `true`   | The name of the repository without the .git extension                                                                                                                                                                          |
 | `Token`                | `true`   | The GitHub token used to authenticate with the GitHub API                                                                                                                                                                      |
 | `BaseUrl`              | `false`  | The base URL for the GitHub API. Defaults to the Octokit default value                                                                                                                                                         |
 | `Tag`                  | `true`   | The tag name for the release                                                                                                                                                                                                   |
@@ -98,7 +98,7 @@ properties which can be set:
 | Parameter              | Required | Description                                                                            |
 |------------------------|----------|----------------------------------------------------------------------------------------|
 | `RepositoryOwner`      | `true`   | The account owner of the repository                                                    |
-| `RepositoryName`       | `true`   | The name of the repository ithout the .git extension                                   |
+| `RepositoryName`       | `true`   | The name of the repository without the .git extension                                  |
 | `Token`                | `true`   | The GitHub token used to authenticate with the GitHub API                              |
 | `BaseUrl`              | `false`  | The base URL for the GitHub API. Defaults to the Octokit default value                 |
 | `Head`                 | `true`   | The name of the branch where your changes are implemented                              |
