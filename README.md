@@ -6,19 +6,22 @@ Ayaka is a collection of packages, aiming to help developing applications using 
 
 ## Compatibility
 
-We aim to support the latest non-preview version of .NET.
-See [.NET and .NET Core Support Policy] for more information.
+Ayaka aims to support the latest non-preview version of .NET.
+Check the [Compatibility Documentation] for more information.
 
-There are no plans for any multi-target builds, as we don't want the additional complexity of such.
+There are no plans for any multi-target builds, as I don't want the additional complexity of such.
 
-## Getting started
+## Documentation
 
-Soon... :)
+I hope my [documentation] should help you get started with Ayaka.
+If you still have any questions, feel free to ask in the [Discussions].
 
 ## Contributing
 
 Interested in contributing to Ayaka?
-Read our [contributing guide] to learn about our development process and how to propose bug fixes and improvements.
+Read our [contributing guide] to learn about Ayaka's development process and how to propose bug fixes and improvements.
 
-[.NET and .NET Core Support Policy]: https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core
 [contributing guide]: https://github.com/Xzelsius/Ayaka/blob/main/.github/CONTRIBUTING.md
+[Compatibility Documentation]: https://xzelsius.github.io/Ayaka/guide/compatibility
+[documentation]: https://xzelsius.github.io/Ayaka
+[Discussions]: https://github.com/Xzelsius/Ayaka/discussions
