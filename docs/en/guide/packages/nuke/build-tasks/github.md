@@ -3,7 +3,7 @@
 The GitHub builds tasks are methods that are meant be executed as part of a target.
 
 It interacts with the GitHub API using the `Octokit` NuGet package provided by the people behind
-[Octokit](https://github.com/octokit/octokit.net).
+[Octokit].
 
 ## Releases
 
@@ -121,3 +121,5 @@ GitHubTasks.CreatePullRequest(
 ```
 
 :::
+
+[Octokit]: https://github.com/octokit/octokit.net

@@ -63,10 +63,10 @@ based on Ayaka's definition.
 
 The `ICanGitHubRelease` build target generates release notes and then creates a GitHub release.
 
-It does so by calling the GitHub API using the [`GitHubTasks`](../build-tasks/github#releases) build tasks.
+It does so by calling the GitHub API using the [`GitHubTasks`] build tasks.
 
-By default, it uses repository information from the [`IHaveGitRepository`](./general#ihavegitrepository) build context
-component and version information from the [`IHaveGitVersion`](./general#ihavegitversion) build context component.
+By default, it uses repository information from the [`IHaveGitRepository`] build context
+component and version information from the [`IHaveGitVersion`] build context component.
 
 The release's tag and name will use the `v{Major.Minor.Patch}` pattern. If this does not suit your needs, you can
 change this by providing custom settings.
@@ -116,3 +116,7 @@ class Build
 ```
 
 :::
+
+[`GitHubTasks`]: ../build-tasks/github#releases
+[`IHaveGitRepository`]: ./general#ihavegitrepository
+[`IHaveGitVersion`]: ./general#ihavegitversion

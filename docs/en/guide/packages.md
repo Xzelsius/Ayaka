@@ -12,6 +12,8 @@ Generally, I structure the packages around features, similar to the official Mic
 
 The list of packages thate are currently part of Ayaka
 
-| Package                              | Description                                                                            | NuGet                                                                                             |
-|--------------------------------------|----------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------|
-| [Ayaka.Nuke](packages/nuke/index.md) | Provides various opinionated build components for simpler build automation using NUKE. | [![Ayaka.Nuke](https://img.shields.io/nuget/v/Ayaka.Nuke)](https://nuget.org/packages/Ayaka.Nuke) |
+| Package      | Description                                                                            | NuGet                                                                                             |
+|--------------|----------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------|
+| [Ayaka.Nuke] | Provides various opinionated build components for simpler build automation using NUKE. | [![Ayaka.Nuke](https://img.shields.io/nuget/v/Ayaka.Nuke)](https://nuget.org/packages/Ayaka.Nuke) |
+
+[Ayaka.Nuke]: ./packages/nuke/index

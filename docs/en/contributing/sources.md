@@ -1,6 +1,6 @@
 # Sources
 
-Ayaka sources are available on [GitHub](https://github.com/Xzelsius/Ayaka) under the [MIT license](https://github.com/Xzelsius/Ayaka?tab=MIT-1-ov-file#readme).
+Ayaka sources are available on [GitHub] under the [MIT license].
 
 ## Repository structure
 
@@ -33,4 +33,8 @@ The repository is structured as follows:
     └── ...                     # Each package has its own directory (e.g. Ayaka.Nuke.Tests)
 ```
 
-If you have any questions or need help to find something, feel free to ask at [GitHub discussions](https://github.com/Xzelsius/Ayaka/discussions).
+If you have any questions or need help to find something, feel free to ask at [GitHub discussions].
+
+[GitHub]: https://github.com/Xzelsius/Ayaka
+[MIT license]: https://github.com/Xzelsius/Ayaka?tab=MIT-1-ov-file#readme
+[GitHub discussions]: https://github.com/Xzelsius/Ayaka/discussions
