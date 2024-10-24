@@ -189,15 +189,14 @@ The `ICanDotNetBuild` build target builds the solution specified in the build pa
 It does so by executing the `dotnet build` command for the entire solution.
 By default, it automatically uses the following parameters when building the solution:
 
-* Uses the configuration specified with the [`IHaveDotNetConfiguration`](./dotnet#ihavedotnetconfiguration)
-  build context component
-* Uses `--no-restore` if the [`IHaveDotNetRestoreTarget`](./dotnet#ihavedotnetrestoretarget) build target succeeded
+* Uses the configuration specified with the [`IHaveDotNetConfiguration`] build context component
+* Uses `--no-restore` if the [`IHaveDotNetRestoreTarget`] build target succeeded
 * Sets the `ContinuousIntegrationBuild` to `true` if `IsServerBuild` is `true`
-* Sets the assembly, file and informational version if the build is decorated with the
-  [`IHaveGitVersion`](./general#ihavegitversion) build context component
+* Sets the assembly, file and informational version if the build is decorated with the [`IHaveGitVersion`]
+  build context component
 
 Once finished, it reports the `NuGetVersionV2` as `Version` to the target summary if the build is decorated
-with the [`IHaveGitVersion`](./general#ihavegitversion) build context component.
+with the [`IHaveGitVersion`] build context component.
 
 The `ICanDotNetBuild` target implements the `IHaveDotNetBuildTarget` build target definition.
 
@@ -247,7 +246,7 @@ The `ICanDotNetTest` build target runs the tests in all configured test projects
 
 It does so by executing the `dotnet test` command for all test projects specified by `TestProjects`.
 By default, `TestProjects` represents all projects within the `TestsDirectory` directory of the
-[`IHaveTests`](./general#ihavetests) build context component.
+[`IHaveTests`] build context component.
 
 The following loggers are used when running the tests:
 
@@ -255,7 +254,7 @@ The following loggers are used when running the tests:
 * `GitHubActions;report-warnings=false`: If building with GitHub Actions and the test project references
    the `GitHubActionsTestLogger` NuGet package
 
-If the build is decorated with the [`IHaveCodeCoverage`](./general#ihavecodecoverage) build context component and the test project
+If the build is decorated with the [`IHaveCodeCoverage`] build context component and the test project
 references the `coverlet.collector` NuGet package, code coverage is collected using the `XPlat Code Coverage`
 collector and source link is enabled.
 
@@ -340,12 +339,12 @@ It does so by executing the `dotnet pack` command for the entire solution. Only 
 
 By default, it automatically uses the following parameters when packing the projects:
 
-* Uses the configuration specified with the [`IHaveDotNetConfiguration`](./dotnet#ihavedotnetconfiguration) build context component
-* Uses `--no-build` if the [`IHaveDotNetBuildTarget`](./dotnet#ihavedotnetbuildtarget) build target succeeded
-* Sets the output directory to the `PackagesDirectory` of the [`IHavePackageArtifacts`](./general#ihavepackageartifacts) build context component
+* Uses the configuration specified with the [`IHaveDotNetConfiguration`] build context component
+* Uses `--no-build` if the [`IHaveDotNetBuildTarget`] build target succeeded
+* Sets the output directory to the `PackagesDirectory` of the [`IHavePackageArtifacts`] build context component
 * Sets `RepositoryUrl` property to the HTTPS URL of the current repository if the build is decorated with the
-  [`IHaveGitRepository`](./general#ihavegitrepository) build context component
-* Sets the `Version` property to the `NuGetVersionV2` if the build is decorated with the [`IHaveGitVersion`](./general#ihavegitversion)
+  [`IHaveGitRepository`] build context component
+* Sets the `Version` property to the `NuGetVersionV2` if the build is decorated with the [`IHaveGitVersion`]
   build context component
 
 Once finished, it reports the amount of created packages as `Packages` to the target summary.
@@ -397,7 +396,7 @@ The `ICanDotNetPush` build target pushes all configured packages to the configur
 It does so by executing the `dotnet nuget push` command for all packages specified by `NuGetPackagesToPush`.
 
 By default, `NuGetPackagesToPush` represents all packages (`*.nupkg`) within the `PackagesDirectory` directory of the
-[`IHavePackageArtifacts`](./general#ihavepackageartifacts) build context component.
+[`IHavePackageArtifacts`] build context component.
 
 ::: tip
 The `dotnet nuget push` command automatically pushes the symbols package if a symbols package is found in the
@@ -405,7 +404,7 @@ same directory as the NuGet package that is being pushed.
 :::
 
 The target feed and API key is specified by the `NuGetSource` and `NuGetApiKey` property of the
-[`IHaveNuGetConfiguration`](./dotnet#ihavenugetconfiguration) build context component.
+[`IHaveNuGetConfiguration`] build context component.
 
 The `ICanDotNetPush` target implements the `IHaveDotNetPushTarget` build target definition.
 
@@ -482,8 +481,8 @@ The `ICanDotNetValidate` build target validates created NuGet packages.
 
 It does so by executing the `dotnet-validate` CLI command for all packages specified by `NuGetPackagesToValidate`.
 
-`dotnet-validate` is provided by people behind [NuGetPackageExplorer](https://github.com/NuGetPackageExplorer/NuGetPackageExplorer)
-and makes sure that your packages meet certain requirements like being deterministic or having symbols.
+`dotnet-validate` is provided by people behind [NuGetPackageExplorer] and makes sure that your packages
+meet certain requirements like being deterministic or having symbols.
 
 ::: warning
 You may need to install the `dotnet-validate` CLI tool before using this target.
@@ -491,11 +490,11 @@ You may need to install the `dotnet-validate` CLI tool before using this target.
 The simplest way to do this is by adding `<PackageDownload Include="dotnet-validate" Version="..." />` to your
 build project file.
 
-See [Executing CLI Tools](https://nuke.build/docs/common/cli-tools) for more information.
+See [Executing CLI Tools] for more information.
 :::
 
 By default, `NuGetPackagesToPush` represents all packages (`*.nupkg`) within the `PackagesDirectory` directory of the
-[`IHavePackageArtifacts`](./general#ihavepackageartifacts) build context component.
+[`IHavePackageArtifacts`] build context component.
 
 The `ICanDotNetValidate` target implements the `IHaveDotNetValidateTarget` build target definition.
 
@@ -562,3 +561,17 @@ class Build
 ```
 
 :::
+
+[`IHaveGitRepository`]: ./general#ihavegitrepository
+[`IHaveGitVersion`]: ./general#ihavegitversion
+[`IHaveSources`]: ./general#ihavesource
+[`IHaveTests`]: ./general#ihavetests
+[`IHaveArtifacts`]: ./general#ihaveartifacts
+[`IHavePackageArtifacts`]: ./general#ihavepackageartifacts
+[`IHaveCodeCoverage`]: ./general#ihavecodecoverage
+[`IHaveDotNetConfiguration`]: ./dotnet#ihavedotnetconfiguration
+[`IHaveDotNetRestoreTarget`]: ./dotnet#icandotnetrestore
+[`IHaveDotNetBuildTarget`]: ./dotnet#icandotnetbuild
+[`IHaveNuGetConfiguration`]: ./dotnet#ihavenugetconfiguration
+[NuGetPackageExplorer]: https://github.com/NuGetPackageExplorer/NuGetPackageExplorer
+[Executing CLI Tools]: https://nuke.build/docs/common/cli-tools

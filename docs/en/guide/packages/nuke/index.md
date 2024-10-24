@@ -1,6 +1,6 @@
 # Ayaka.Nuke
 
-Provides various opinionated build components for simpler build automation using [NUKE](https://nuke.build/).
+Provides various opinionated build components for simpler build automation using [NUKE].
 
 ## Key Features
 
@@ -74,3 +74,5 @@ await CreateRelease(new GitHubReleaseSettings
 If you still struggle to understand how this all works, have a look at Ayaka's own NUKE build project.
 It uses `Ayaka.Nuke` (eat your own dog food) and is a good starting point to see how to use the build components and tasks.
 :::
+
+[NUKE]: https://nuke.build/

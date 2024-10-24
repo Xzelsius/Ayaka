@@ -20,7 +20,7 @@ based on Ayaka's definition.
 The `ICanVitePressInstall` build targets installs the dependencies for a VitePress site.
 
 Its does so by executing `npm ci` command in the directory specified by `DocsDirectory` of the
-[`IHaveDocumentation`](./general#ihavedocumentation) build context component.
+[`IHaveDocumentation`] build context component.
 
 The `ICanVitePressInstall` target implements the `IHaveVitePressInstallTarget` build target definition.
 
@@ -69,7 +69,7 @@ class Build
 The `ICanVitePressLint` build target lints a VitePress site.
 
 It does so by executing the `npm run lint` command in the directory specified by `DocsDirectory` of the
-[`IHaveDocumentation`](./general#ihavedocumentation) build context component.
+[`IHaveDocumentation`] build context component.
 
 ::: info
 Since the build target just executes a NPM script, you can use whatever linter you want
@@ -125,7 +125,7 @@ class Build
 The `ICanVitePressBuild` build target builds a VitePress site.
 
 It does so by executing the `npm run build` command in the directory specified by `DocsDirectory` of the
-[`IHaveDocumentation`](./general#ihavedocumentation) build context component.
+[`IHaveDocumentation`] build context component.
 
 ::: info
 Since the build target just executes a NPM script, you can use whatever command you want
@@ -135,7 +135,7 @@ Interactive stuff is not suitable for build scripts, as they are meant to be run
 :::
 
 By default, the build target expects the command behind `npm run build` to be `vitepress build` and based
-on this uses the directory specified by `DocsArtifactsDirectory` of the [`IHaveDocumentationArtifacts`](./general#ihavedocumentationartifacts)
+on this uses the directory specified by `DocsArtifactsDirectory` of the [`IHaveDocumentationArtifacts`]
 build context component as the output directory (`--outDir`).
 
 The `ICanVitePressBuild` target implements the `IHaveVitePressBuildTarget` build target definition.
@@ -179,3 +179,6 @@ class Build
 ```
 
 :::
+
+[`IHaveDocumentation`]: ./general#ihavedocumentation
+[`IHaveDocumentationArtifacts`]: ./general#ihavedocumentationartifacts

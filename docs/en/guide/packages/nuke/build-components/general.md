@@ -295,7 +295,7 @@ artifacts created during the build process.
 | `TestResultsDirectory` | `{ArtifactsDirectory}/test-results` | The directory where the test results are located |
 
 ::: info
-Implicitly decorates the build with [`IHaveArtifacts`](./general#ihaveartifacts) to use the `ArtifactsDirectory`.
+Implicitly decorates the build with [`IHaveArtifacts`] to use the `ArtifactsDirectory`.
 :::
 
 ::: code-group
@@ -342,7 +342,7 @@ coverage artifacts created during the build process.
 | `CoverageDirectory` | `{ArtifactsDirectory}/coverage` | The directory where the code coverage is located |
 
 ::: info
-Implicitly decorates the build with [`IHaveArtifacts`](./general#ihaveartifacts) to use the `ArtifactsDirectory`.
+Implicitly decorates the build with [`IHaveArtifacts`] to use the `ArtifactsDirectory`.
 :::
 
 ::: code-group
@@ -389,7 +389,7 @@ package artifacts created during the build process.
 | `PackagesDirectory`   | `{ArtifactsDirectory}/packages` | The directory where the package artifacts are located |
 
 ::: info
-Implicitly decorates the build with [`IHaveArtifacts`](./general#ihaveartifacts) to use the `ArtifactsDirectory`.
+Implicitly decorates the build with [`IHaveArtifacts`] to use the `ArtifactsDirectory`.
 :::
 
 ::: code-group
@@ -436,7 +436,7 @@ documentation artifacts created during the build process.
 | `DocsArtifactsDirectory` | `{ArtifactsDirectory}/docs` | The directory where the documentation artifacts are located |
 
 ::: info
-Implicitly decorates the build with [`IHaveArtifacts`](./general#ihaveartifacts) to use the `ArtifactsDirectory`.
+Implicitly decorates the build with [`IHaveArtifacts`] to use the `ArtifactsDirectory`.
 :::
 
 ::: code-group
@@ -492,9 +492,9 @@ The `ICanClean` build target cleans various directories configured in the build.
 
 Depending on the build context components the build is decorated with, it does clean the following directories:
 
-* `IHaveSources`: The directory located at `SourceDirectory`
-* `IHaveTests`: The directory located at `TestsDirectory`
-* `IHaveArtifacts`: The directory located at `ArtifactsDirectory`
+* [`IHaveSources`]: The directory located at `SourceDirectory`
+* [`IHaveTests`]: The directory located at `TestsDirectory`
+* [`IHaveArtifacts`]: The directory located at `ArtifactsDirectory`
 
 The `ICanClean` target implements the `IHaveCleanTarget` build target definition.
 
@@ -526,7 +526,7 @@ It does so iterating over all projects specified by `PublicApiProjects` and movi
 `PublicAPI.Unshipped.txt` to `PublicAPI.Shipped.txt`.
 
 By default, `PublicApiProjects` represents all projects within the `SourceDirectory` directory of the
-[`IHaveSources`](./general#ihavesources) build context component.
+[`IHaveSources`] build context component.
 
 The build target maintains the alphabetical order of the public APIs files and recognizes the `#nullable enable` flag.
 
@@ -572,3 +572,7 @@ class Build
 ```
 
 :::
+
+[`IHaveSources`]: ./general#ihavesources
+[`IHaveTests`]: ./general#ihavetests
+[`IHaveArtifacts`]: ./general#ihaveartifacts

@@ -2,7 +2,7 @@
 
 Ayaka is a collection of packages, aiming to help developing applications using .NET.
 
-Don't hesitate and check out the [packages](./packages) to see what's available and if there is something
+Don't hesitate and check out the [packages] to see what's available and if there is something
 for you.
 
 ## Introduction
@@ -21,4 +21,7 @@ working in .NET.
 
 ## License
 
-Ayaka is licensed under the [MIT License](https://github.com/Xzelsius/Ayaka?tab=MIT-1-ov-file#readme).
+Ayaka is licensed under the [MIT license].
+
+[packages]: ./packages
+[MIT license]: https://github.com/Xzelsius/Ayaka?tab=MIT-1-ov-file#readme

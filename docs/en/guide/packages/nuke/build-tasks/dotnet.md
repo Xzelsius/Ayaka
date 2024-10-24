@@ -11,6 +11,15 @@ If they don't suit your needs, you can override them by setting the `DotNetValid
 `DotNetValidateExitHandler` properties to something different. It's also possible to override them for an individual task
 execution by passing them as arguments to the task method.
 
+::: warning
+You may need to install the `dotnet-validate` CLI tool before using this target.
+
+The simplest way to do this is by adding `<PackageDownload Include="dotnet-validate" Version="..." />` to your
+build project file.
+
+See [Executing CLI Tools] for more information.
+:::
+
 ### Validate Local Package
 
 Using `DotNetValidateLocalPackage()` you can validate a local NuGet package.
@@ -53,3 +62,5 @@ DotNetValidateTasks.DotNetValidateRemotePackage(
         .SetPackageId("PackageId")
         .SetPackageVersion("1.2.3"));
 ```
+
+[Executing CLI Tools]: https://nuke.build/docs/common/cli-tools
