@@ -52,4 +52,5 @@ See [the documentation](https://xzelsius.github.io/Ayaka/guide/packages/nuke) fo
 
 ## Feedback & Contributing
 
-`Ayaka.Nuke` is an open-source project and welcomes contributions. If you have any ideas, improvements or issues, please open an issue or a pull request at [the GitHub repository](https://github.com/Xzelsius/Ayaka).
+`Ayaka` is an open-source project and welcomes contributions. If you have any ideas, improvements or issues, please open an issue
+or a pull request at [the GitHub repository](https://github.com/Xzelsius/Ayaka).
