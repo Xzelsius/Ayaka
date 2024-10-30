@@ -103,6 +103,7 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
       collapsed: true,
       items: [
         { text: 'Overview', link: 'packages/multi-tenancy' },
+        { text: 'Tenant Context', link: 'packages/multi-tenancy/tenant-context' },
       ],
     },
   ];
