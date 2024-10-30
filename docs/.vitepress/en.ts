@@ -98,6 +98,13 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
         { text: 'Utilities', link: 'packages/nuke/utilities' },
       ],
     },
+    {
+      text: 'Ayaka.MultiTenancy',
+      collapsed: true,
+      items: [
+        { text: 'Overview', link: 'packages/multi-tenancy' },
+      ],
+    },
   ];
 }
 
