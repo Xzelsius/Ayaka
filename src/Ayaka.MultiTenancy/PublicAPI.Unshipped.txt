@@ -1,0 +1,7 @@
+#nullable enable
+Ayaka.MultiTenancy.AsyncLocalTenantContextAccessor
+Ayaka.MultiTenancy.AsyncLocalTenantContextAccessor.AsyncLocalTenantContextAccessor() -> void
+Ayaka.MultiTenancy.AsyncLocalTenantContextAccessor.TenantContext.get -> Ayaka.MultiTenancy.TenantContext?
+Ayaka.MultiTenancy.AsyncLocalTenantContextAccessor.TenantContext.set -> void
+Ayaka.MultiTenancy.ServiceCollectionExtensions
+static Ayaka.MultiTenancy.ServiceCollectionExtensions.AddTenantContextAccessor(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!

@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>$(DotNetTargetFramework)</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!--  Remove the .Abstractions from the root namespace  -->
+    <RootNamespace>Ayaka.MultiTenancy</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageDescription>Provides abstractions for multi-tenanted applications. $(PackageDescriptionAppendix)</PackageDescription>
+    <PackageTags>$(PackageCommonTags);multi-tenancy</PackageTags>
+  </PropertyGroup>
+
+</Project>
