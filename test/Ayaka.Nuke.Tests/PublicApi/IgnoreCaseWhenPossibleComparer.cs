@@ -15,7 +15,7 @@ public sealed class IgnoreCaseWhenPossibleComparerTest
             "Ayaka.Nuke.DotNet.IHaveDotNetPackTarget",
             "Ayaka.Nuke.DotNet.ICanDotNetBuild.DotNetBuildSettingsBase.get -> Nuke.Common.Tooling.Configure<Nuke.Common.Tools.DotNet.DotNetBuildSettings!>!",
             "Ayaka.Nuke.DotNet.ICanDotNetBuild",
-            "ayaka.nuke.extensions",
+            "Ayaka.Nuke.Extensions",
             "Ayaka.Nuke.DotNet.ICanDotNetBuild.DotNetBuildSettings.get -> Nuke.Common.Tooling.Configure<Nuke.Common.Tools.DotNet.DotNetBuildSettings!>!"
         ];
 
@@ -30,7 +30,30 @@ public sealed class IgnoreCaseWhenPossibleComparerTest
                     "Ayaka.Nuke.DotNet.ICanDotNetBuild.DotNetBuildSettings.get -> Nuke.Common.Tooling.Configure<Nuke.Common.Tools.DotNet.DotNetBuildSettings!>!",
                     "Ayaka.Nuke.DotNet.ICanDotNetBuild.DotNetBuildSettingsBase.get -> Nuke.Common.Tooling.Configure<Nuke.Common.Tools.DotNet.DotNetBuildSettings!>!",
                     "Ayaka.Nuke.DotNet.IHaveDotNetPackTarget",
-                    "ayaka.nuke.extensions"
+                    "Ayaka.Nuke.Extensions"
+                ],
+                o => o.WithStrictOrdering());
+    }
+
+    [Fact]
+    public void Does_fallback_to_case_sensitive()
+    {
+        List<string> lines =
+        [
+            "ayaka.nuke.extensions",
+            "Ayaka.Nuke.DotNet.ICanDotNetBuild",
+            "Ayaka.Nuke.Extensions"
+        ];
+
+        lines.Sort(IgnoreCaseWhenPossibleComparer.Instance);
+
+        lines
+            .Should()
+            .BeEquivalentTo(
+                [
+                    "Ayaka.Nuke.DotNet.ICanDotNetBuild",
+                    "Ayaka.Nuke.Extensions",
+                    "ayaka.nuke.extensions",
                 ],
                 o => o.WithStrictOrdering());
     }
