@@ -1,48 +1,5 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "properties": {
-    "Artifacts": {
-      "type": "string",
-      "description": "The directory where artifacts are to be dropped"
-    },
-    "DotNetConfiguration": {
-      "type": "string",
-      "description": "The .NET build configuration - Default is 'Debug' (local) or 'Release' (server)",
-      "enum": [
-        "Debug",
-        "Release"
-      ]
-    },
-    "GitHubBaseUrl": {
-      "type": "string"
-    },
-    "GitHubToken": {
-      "type": "string",
-      "description": "The GitHub API token",
-      "default": "Secrets must be entered via 'nuke :secrets [profile]'"
-    },
-    "GitUserEmail": {
-      "type": "string",
-      "description": "The Git user email address"
-    },
-    "GitUserName": {
-      "type": "string",
-      "description": "The Git user name"
-    },
-    "NuGetApiKey": {
-      "type": "string",
-      "description": "The NuGet API key",
-      "default": "Secrets must be entered via 'nuke :secrets [profile]'"
-    },
-    "NuGetSource": {
-      "type": "string",
-      "description": "The NuGet server URL - Default is https://api.nuget.org/v3/index.json"
-    },
-    "Solution": {
-      "type": "string",
-      "description": "Path to a solution file that is automatically loaded"
-    }
-  },
   "definitions": {
     "Host": {
       "type": "string",
@@ -160,5 +117,54 @@
       }
     }
   },
-  "$ref": "#/definitions/NukeBuild"
+  "allOf": [
+    {
+      "properties": {
+        "Artifacts": {
+          "type": "string",
+          "description": "The directory where artifacts are to be dropped"
+        },
+        "DotNetConfiguration": {
+          "type": "string",
+          "description": "The .NET build configuration - Default is 'Debug' (local) or 'Release' (server)",
+          "enum": [
+            "Debug",
+            "Release"
+          ]
+        },
+        "GitHubBaseUrl": {
+          "type": "string"
+        },
+        "GitHubToken": {
+          "type": "string",
+          "description": "The GitHub API token",
+          "default": "Secrets must be entered via 'nuke :secrets [profile]'"
+        },
+        "GitUserEmail": {
+          "type": "string",
+          "description": "The Git user email address"
+        },
+        "GitUserName": {
+          "type": "string",
+          "description": "The Git user name"
+        },
+        "NuGetApiKey": {
+          "type": "string",
+          "description": "The NuGet API key",
+          "default": "Secrets must be entered via 'nuke :secrets [profile]'"
+        },
+        "NuGetSource": {
+          "type": "string",
+          "description": "The NuGet server URL - Default is https://api.nuget.org/v3/index.json"
+        },
+        "Solution": {
+          "type": "string",
+          "description": "Path to a solution file that is automatically loaded"
+        }
+      }
+    },
+    {
+      "$ref": "#/definitions/NukeBuild"
+    }
+  ]
 }
