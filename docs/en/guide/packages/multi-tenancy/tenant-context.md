@@ -21,6 +21,10 @@ After that you can inject it into your services and access the current tenant co
 
 ::: code-group
 
+```bash [Package Installation]
+dotnet add package Ayaka.MultiTenancy
+```
+
 ```csharp [Service Registration]
 services.AddTenantContextAccessor();
 ```
