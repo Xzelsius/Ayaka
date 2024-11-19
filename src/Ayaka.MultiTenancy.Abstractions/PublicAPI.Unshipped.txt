@@ -1,4 +1,6 @@
 #nullable enable
+Ayaka.MultiTenancy.DependencyInjection.IMultiTenancyBuilder
+Ayaka.MultiTenancy.DependencyInjection.IMultiTenancyBuilder.Services.get -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
 Ayaka.MultiTenancy.ITenantContextAccessor
 Ayaka.MultiTenancy.ITenantContextAccessor.TenantContext.get -> Ayaka.MultiTenancy.TenantContext?
 Ayaka.MultiTenancy.ITenantContextAccessor.TenantContext.set -> void
