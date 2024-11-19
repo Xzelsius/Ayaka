@@ -4,4 +4,5 @@ Ayaka.MultiTenancy.AsyncLocalTenantContextAccessor.AsyncLocalTenantContextAccess
 Ayaka.MultiTenancy.AsyncLocalTenantContextAccessor.TenantContext.get -> Ayaka.MultiTenancy.TenantContext?
 Ayaka.MultiTenancy.AsyncLocalTenantContextAccessor.TenantContext.set -> void
 Ayaka.MultiTenancy.ServiceCollectionExtensions
+static Ayaka.MultiTenancy.ServiceCollectionExtensions.AddMultiTenancy(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services) -> Ayaka.MultiTenancy.DependencyInjection.IMultiTenancyBuilder!
 static Ayaka.MultiTenancy.ServiceCollectionExtensions.AddTenantContextAccessor(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
