@@ -1,1 +1,3 @@
 ﻿#nullable enable
+Ayaka.MultiTenancy.TenantContext.DisplayName.get -> string?
+Ayaka.MultiTenancy.TenantContext.TenantContext(string! Id, string? DisplayName) -> void
