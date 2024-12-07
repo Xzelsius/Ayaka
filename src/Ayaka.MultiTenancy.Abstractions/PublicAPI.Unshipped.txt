@@ -11,5 +11,9 @@ Ayaka.MultiTenancy.Management.Tenant.DisplayName.init -> void
 Ayaka.MultiTenancy.Management.Tenant.Id.get -> string!
 Ayaka.MultiTenancy.Management.Tenant.Id.init -> void
 Ayaka.MultiTenancy.Management.Tenant.Tenant(string! Id, string? DisplayName = null, System.Collections.Immutable.IImmutableDictionary<string!, string!>? Attributes = null) -> void
+Ayaka.MultiTenancy.Management.TenantManagementException
+Ayaka.MultiTenancy.Management.TenantManagementException.TenantManagementException() -> void
+Ayaka.MultiTenancy.Management.TenantManagementException.TenantManagementException(string! message) -> void
+Ayaka.MultiTenancy.Management.TenantManagementException.TenantManagementException(string! message, System.Exception! innerException) -> void
 Ayaka.MultiTenancy.TenantContext.DisplayName.get -> string?
 Ayaka.MultiTenancy.TenantContext.TenantContext(string! Id, string? DisplayName) -> void
