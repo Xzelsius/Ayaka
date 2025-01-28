@@ -493,6 +493,13 @@ build project file.
 See [Executing CLI Tools] for more information.
 :::
 
+::: warning
+Please note that `dotnet-validate` with version `0.0.1-preview.304` and below still requires .NET 6 SDK installed
+on the build system.
+
+Since the support for .NET 6 ended in Nov 2024, you likely have to install it manually.
+:::
+
 By default, `NuGetPackagesToPush` represents all packages (`*.nupkg`) within the `PackagesDirectory` directory of the
 [`IHavePackageArtifacts`] build context component.
 
