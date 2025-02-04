@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>$(DotNetTargetFramework)</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Ayaka.MultiTenancy.AspNetCore\Ayaka.MultiTenancy.AspNetCore.csproj" />
+  </ItemGroup>
+
+</Project>

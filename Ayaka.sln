@@ -43,6 +43,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ayaka.MultiTenancy", "src\A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ayaka.MultiTenancy.Tests", "test\Ayaka.MultiTenancy.Tests\Ayaka.MultiTenancy.Tests.csproj", "{D446A2EF-62AC-4F9A-AE2B-85A712BCC6E4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ayaka.MultiTenancy.AspNetCore", "src\Ayaka.MultiTenancy.AspNetCore\Ayaka.MultiTenancy.AspNetCore.csproj", "{CA0F2000-FC57-44DE-8103-F0372D003EF8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ayaka.MultiTenancy.AspNetCore.Tests", "test\Ayaka.MultiTenancy.AspNetCore.Tests\Ayaka.MultiTenancy.AspNetCore.Tests.csproj", "{26A65F54-5CDD-4970-96DA-0B2ADE3BD64E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +75,14 @@ Global
 		{D446A2EF-62AC-4F9A-AE2B-85A712BCC6E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D446A2EF-62AC-4F9A-AE2B-85A712BCC6E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D446A2EF-62AC-4F9A-AE2B-85A712BCC6E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA0F2000-FC57-44DE-8103-F0372D003EF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA0F2000-FC57-44DE-8103-F0372D003EF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA0F2000-FC57-44DE-8103-F0372D003EF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA0F2000-FC57-44DE-8103-F0372D003EF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26A65F54-5CDD-4970-96DA-0B2ADE3BD64E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26A65F54-5CDD-4970-96DA-0B2ADE3BD64E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26A65F54-5CDD-4970-96DA-0B2ADE3BD64E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26A65F54-5CDD-4970-96DA-0B2ADE3BD64E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -83,6 +95,8 @@ Global
 		{6779F6F7-2E31-4D9C-9DA2-0097444C3113} = {E3E1A4B0-3D9E-4F1B-9BA2-16E21CEF43D6}
 		{AD16ED8A-F3F3-4D60-BA3E-4C143680DDE5} = {E3E1A4B0-3D9E-4F1B-9BA2-16E21CEF43D6}
 		{D446A2EF-62AC-4F9A-AE2B-85A712BCC6E4} = {4767B628-8774-4CBA-A1DF-ED27A2CFA272}
+		{CA0F2000-FC57-44DE-8103-F0372D003EF8} = {E3E1A4B0-3D9E-4F1B-9BA2-16E21CEF43D6}
+		{26A65F54-5CDD-4970-96DA-0B2ADE3BD64E} = {4767B628-8774-4CBA-A1DF-ED27A2CFA272}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E47191B9-F1B0-4A60-955E-ACAE410BD5DF}

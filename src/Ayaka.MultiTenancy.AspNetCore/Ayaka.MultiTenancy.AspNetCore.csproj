@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>$(DotNetTargetFramework)</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <VersionSuffix>preview</VersionSuffix>
+    <PackageDescription>Provides ASP.NET core specific extensions for multi-tenanted applications. $(PackageDescriptionAppendix)</PackageDescription>
+    <PackageTags>$(PackageCommonTags);multi-tenancy;asp.net core</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ayaka.MultiTenancy.Abstractions\Ayaka.MultiTenancy.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>
