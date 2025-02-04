@@ -1,1 +1,6 @@
 #nullable enable
+Ayaka.MultiTenancy.AspNetCore.Detection.FromRequestHostStrategy
+Ayaka.MultiTenancy.AspNetCore.Detection.FromRequestHostStrategy.FromRequestHostStrategy() -> void
+Ayaka.MultiTenancy.AspNetCore.Detection.FromRequestHostStrategy.TryDetectAsync(Microsoft.AspNetCore.Http.HttpContext! context) -> System.Threading.Tasks.Task<string?>!
+Ayaka.MultiTenancy.AspNetCore.Detection.ITenantDetectionStrategy
+Ayaka.MultiTenancy.AspNetCore.Detection.ITenantDetectionStrategy.TryDetectAsync(Microsoft.AspNetCore.Http.HttpContext! context) -> System.Threading.Tasks.Task<string?>!
