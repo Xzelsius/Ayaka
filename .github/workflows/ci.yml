@@ -50,6 +50,7 @@ jobs:
       - name: Upload Coverage
         uses: codecov/codecov-action@13ce06bfc6bbe3ecf90edbbf1bc32fe5978ca1d3 # v5
         with:
+          version: v10.0.1 # Later versions break file search
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true
           directory: ${{ github.workspace }}/artifacts/coverage
@@ -60,7 +61,7 @@ jobs:
         with:
           name: packages
           path: ${{ github.workspace }}/artifacts/packages
-          if-no-files-found: error
+          if-no-files-found: error          
 
   build-docs:
     runs-on: ubuntu-latest
