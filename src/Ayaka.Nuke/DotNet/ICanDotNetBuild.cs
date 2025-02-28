@@ -59,7 +59,7 @@ public interface ICanDotNetBuild
                 summary => summary
                     .WhenNotNull(
                         this as IHaveGitVersion,
-                        (s, o) => s.AddPair("Version", o.Versioning.NuGetVersionV2))
+                        (s, o) => s.AddPair("Version", o.Versioning.SemVer))
             );
 
             _ = DotNetTasks.DotNetBuild(

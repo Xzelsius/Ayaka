@@ -34,7 +34,7 @@ public interface ICanDotNetPack
                 (d, o) => d.SetRepositoryUrl(o.GitRepository.HttpsUrl))
             .WhenNotNull(
                 this as IHaveGitVersion,
-                (d, o) => d.SetVersion(o.Versioning.NuGetVersionV2));
+                (d, o) => d.SetVersion(o.Versioning.SemVer));
 
     /// <summary>
     ///     Gets the additional settings for packing the current solution.
