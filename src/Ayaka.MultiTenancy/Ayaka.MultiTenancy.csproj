@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <PropertyGroup>
+    <VersionSuffix>preview</VersionSuffix>
     <PackageDescription>Provides functionality for creating multi-tenanted applications. $(PackageDescriptionAppendix)</PackageDescription>
     <PackageTags>$(PackageCommonTags);multi-tenancy</PackageTags>
   </PropertyGroup>

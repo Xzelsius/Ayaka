@@ -60,6 +60,26 @@ partial class Build
         .DependsOn<IHaveCleanTarget>()
         .DependsOn<IHaveDotNetTestTarget>();
 
+    Configure<DotNetPackSettings> ICanDotNetPack.DotNetPackSettings
+        => settings => settings
+            .WhenNotNull(
+                this as IHaveGitVersion,
+                (d, o) =>
+                {
+                    // If GitVersion evaluates a pre-release label, we use --version
+                    // which will prevent any VersionSuffix set somewhere to be ignored
+                    // See https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-pack
+                    if (!string.IsNullOrEmpty(o.Versioning.PreReleaseLabel))
+                    {
+                        return d.SetVersion(o.Versioning.SemVer);
+                    }
+
+                    // But if we have no pre-release label (e.g. when the current commit is tagged)
+                    // We reset any previously set --version and use --version-prefix,
+                    // thus allowing individual packages to use a preview-label
+                    return d.ResetVersion().SetVersionPrefix(o.Versioning.SemVer);
+                });
+
     Target Pack => target => target
         .Description("Packs all NuGet packages in the Solution")
         .DependsOn<IHaveCleanTarget>()
