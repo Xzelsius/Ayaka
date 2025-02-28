@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
+    <VersionSuffix>preview</VersionSuffix>
     <PackageDescription>Provides abstractions for multi-tenanted applications. $(PackageDescriptionAppendix)</PackageDescription>
     <PackageTags>$(PackageCommonTags);multi-tenancy</PackageTags>
   </PropertyGroup>
