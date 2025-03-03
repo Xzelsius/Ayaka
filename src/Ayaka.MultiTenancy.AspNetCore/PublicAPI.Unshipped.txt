@@ -8,3 +8,9 @@ Ayaka.MultiTenancy.AspNetCore.Detection.FromRequestHostStrategy.FromRequestHostS
 Ayaka.MultiTenancy.AspNetCore.Detection.FromRequestHostStrategy.TryDetectAsync(Microsoft.AspNetCore.Http.HttpContext! context) -> System.Threading.Tasks.Task<string?>!
 Ayaka.MultiTenancy.AspNetCore.Detection.ITenantDetectionStrategy
 Ayaka.MultiTenancy.AspNetCore.Detection.ITenantDetectionStrategy.TryDetectAsync(Microsoft.AspNetCore.Http.HttpContext! context) -> System.Threading.Tasks.Task<string?>!
+Ayaka.MultiTenancy.AspNetCore.RequestTenancyOptions
+Ayaka.MultiTenancy.AspNetCore.RequestTenancyOptions.RequestTenancyOptions() -> void
+Ayaka.MultiTenancy.DependencyInjection.MultiTenancyBuilderExtensions
+Ayaka.MultiTenancy.DependencyInjection.RequestTenancyBuilder
+Ayaka.MultiTenancy.DependencyInjection.RequestTenancyBuilder.MultiTenancy.get -> Ayaka.MultiTenancy.DependencyInjection.IMultiTenancyBuilder!
+static Ayaka.MultiTenancy.DependencyInjection.MultiTenancyBuilderExtensions.ConfigureRequestTenancy(this Ayaka.MultiTenancy.DependencyInjection.IMultiTenancyBuilder! builder, System.Action<Ayaka.MultiTenancy.DependencyInjection.RequestTenancyBuilder!>! configure) -> Ayaka.MultiTenancy.DependencyInjection.IMultiTenancyBuilder!
