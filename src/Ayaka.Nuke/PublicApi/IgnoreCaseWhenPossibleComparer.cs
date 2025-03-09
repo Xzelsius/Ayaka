@@ -2,7 +2,7 @@
 
 namespace Ayaka.Nuke.PublicApi;
 
-internal class IgnoreCaseWhenPossibleComparer : IComparer<string>
+internal sealed class IgnoreCaseWhenPossibleComparer : IComparer<string>
 {
     /// <summary>
     ///     Gets a <see cref="StringComparer" /> object that performs a case-insensitive ordinal string comparison first, then
