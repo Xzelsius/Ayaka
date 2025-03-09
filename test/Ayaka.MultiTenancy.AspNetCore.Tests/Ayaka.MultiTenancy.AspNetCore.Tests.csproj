@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>$(DotNetTargetFramework)</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Ayaka.MultiTenancy.AspNetCore\Ayaka.MultiTenancy.AspNetCore.csproj" />
+    <ProjectReference Include="..\..\src\Ayaka.MultiTenancy\Ayaka.MultiTenancy.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="8.0.13" />
+  </ItemGroup>
+
+</Project>
