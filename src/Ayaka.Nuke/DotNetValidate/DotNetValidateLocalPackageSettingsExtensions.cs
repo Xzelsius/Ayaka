@@ -14,25 +14,26 @@ public static class DotNetValidateLocalPackageSettingsExtensions
     /// </summary>
     /// <param name="toolSettings">The settings instance to adjust.</param>
     /// <param name="packagePath">The path to the package to validate.</param>
+    [Builder(
+        Type = typeof(DotNetValidateLocalPackageSettings),
+        Property = nameof(DotNetValidateLocalPackageSettings.PackagePath))]
     public static T SetPackagePath<T>(this T toolSettings, string packagePath)
         where T : DotNetValidateLocalPackageSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PackagePath = packagePath;
-
-        return toolSettings;
-    }
+        => toolSettings.Modify(
+            x => x.Set(
+                () => toolSettings.PackagePath,
+                packagePath));
 
     /// <summary>
     ///     Resets the path of the package to validate to <c>null</c>.
     /// </summary>
     /// <param name="toolSettings">The settings instance to adjust.</param>
+    [Builder(
+        Type = typeof(DotNetValidateLocalPackageSettings),
+        Property = nameof(DotNetValidateLocalPackageSettings.PackagePath))]
     public static T ResetPackagePath<T>(this T toolSettings)
         where T : DotNetValidateLocalPackageSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PackagePath = null;
-
-        return toolSettings;
-    }
+        => toolSettings.Modify(
+            x => x.Remove(
+                () => toolSettings.PackagePath));
 }

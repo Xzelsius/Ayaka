@@ -8,38 +8,17 @@ using global::Nuke.Common.Tooling;
 ///     Provides settings for validating a remote NuGet package using <c>dotnet-validate</c> CLI tool.
 /// </summary>
 [Serializable]
-public class DotNetValidateRemotePackageSettings : ToolSettings
+[Command(
+    Type = typeof(DotNetValidateTasks),
+    Command = nameof(DotNetValidateTasks.DotNetValidateRemotePackage),
+    Arguments = "package remote")]
+public class DotNetValidateRemotePackageSettings : ToolOptions
 {
-    /// <summary>
-    ///     Gets the path to the executable of <c>dotnet-validate</c>.
-    /// </summary>
-    /// <remarks>
-    ///     Defaults to <see cref="DotNetValidateTasks.DotNetValidatePath" />.
-    /// </remarks>
-    public override string ProcessToolPath => base.ProcessToolPath ?? DotNetValidateTasks.DotNetValidatePath;
-
-    /// <summary>
-    ///     Gets the process logger
-    /// </summary>
-    /// <remarks>
-    ///     Defaults to <see cref="DotNetValidateTasks.DotNetValidateLogger" />.
-    /// </remarks>
-    public override Action<OutputType, string> ProcessLogger =>
-        base.ProcessLogger ?? DotNetValidateTasks.DotNetValidateLogger;
-
-    /// <summary>
-    ///     Gets the process exit handler.
-    /// </summary>
-    /// <remarks>
-    ///     Defaults to <see cref="DotNetValidateTasks.DotNetValidateExitHandler" />.
-    /// </remarks>
-    public override Action<ToolSettings, IProcess> ProcessExitHandler =>
-        base.ProcessExitHandler ?? DotNetValidateTasks.DotNetValidateExitHandler;
-
     /// <summary>
     ///     Gets the identifier of the package to validate.
     /// </summary>
-    public virtual string? PackageId { get; internal set; }
+    [Argument(Format = "{value}", Position = 1)]
+    public string PackageId => Get<string>(() => PackageId);
 
     /// <summary>
     ///     Gets the optional version of the package to validate.
@@ -47,7 +26,8 @@ public class DotNetValidateRemotePackageSettings : ToolSettings
     /// <remarks>
     ///     Defaults to the latest package version.
     /// </remarks>
-    public virtual string? PackageVersion { get; internal set; }
+    [Argument(Format = "--version {value}")]
+    public string? PackageVersion => Get<string?>(() => PackageVersion);
 
     /// <summary>
     ///     Gets the directory from where the NuGet configuration file is loaded.
@@ -55,17 +35,6 @@ public class DotNetValidateRemotePackageSettings : ToolSettings
     /// <remarks>
     ///     Defaults to the current directory.
     /// </remarks>
-    public virtual string? ConfigDirectory { get; internal set; }
-
-    /// <inheritdoc />
-    protected override Arguments ConfigureProcessArguments(Arguments arguments)
-    {
-        _ = arguments
-            .Add("dotnet-validate package remote")
-            .Add("{value}", PackageId)
-            .Add("--version {value}", PackageVersion)
-            .Add("--nuget-config-directory {value}", ConfigDirectory);
-
-        return base.ConfigureProcessArguments(arguments);
-    }
+    [Argument(Format = "--nuget-config-directory {value}")]
+    public string? ConfigDirectory => Get<string?>(() => ConfigDirectory);
 }

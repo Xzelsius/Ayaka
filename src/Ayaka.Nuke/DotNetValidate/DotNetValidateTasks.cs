@@ -7,10 +7,11 @@ using global::Nuke.Common.Tooling;
 /// <summary>
 ///     Provides tasks for validating NuGet packages using <c>dotnet-validate</c> CLI tool.
 /// </summary>
-[NuGetPackageRequirement(DotNetValidatePackageId)]
+[NuGetTool(Id = DotNetValidatePackageId, Executable = DotNetValidateExecutablePath)]
 [ExcludeFromCodeCoverage]
 public class DotNetValidateTasks
-    : IRequireNuGetPackage
+    : ToolTasks,
+        IRequireNuGetPackage
 {
     /// <summary>
     ///     The identifier of the <c>dotnet-validate</c> NuGet package.
@@ -18,32 +19,9 @@ public class DotNetValidateTasks
     public const string DotNetValidatePackageId = "dotnet-validate";
 
     /// <summary>
-    ///     Gets the path to the executable of <c>dotnet-validate</c>.
+    ///     The path to the executable of <c>dotnet-validate</c>.
     /// </summary>
-    /// <remarks>
-    ///     Tries to resolve by environment variable <c>DOTNET_VALIDATE_EXE</c> and if not found, by <c>dotnet-validate.dll</c>
-    ///     from within the NuGet package.
-    /// </remarks>
-    public static string DotNetValidatePath
-        => ToolPathResolver.TryGetEnvironmentExecutable("DOTNET_VALIDATE_EXE")
-           ?? NuGetToolPathResolver.GetPackageExecutable(DotNetValidatePackageId, "dotnet-validate.dll");
-
-    /// <summary>
-    ///     Gets or sets default process logger for <c>dotnet-validate</c>.
-    /// </summary>
-    /// <remarks>
-    ///     Defaults to <see cref="ProcessTasks.DefaultLogger" />.
-    /// </remarks>
-    public static Action<OutputType, string> DotNetValidateLogger { get; set; } = ProcessTasks.DefaultLogger;
-
-    /// <summary>
-    ///     Gets or sets the default process exit handler for <c>dotnet-validate</c>.
-    /// </summary>
-    /// <remarks>
-    ///     Defaults to <see cref="ProcessTasks.DefaultExitHandler" />.
-    /// </remarks>
-    public static Action<ToolSettings?, IProcess> DotNetValidateExitHandler { get; set; } =
-        ProcessTasks.DefaultExitHandler;
+    public const string DotNetValidateExecutablePath = "dotnet-validate.dll";
 
     /// <summary>
     ///     Validates NuGet package health using <c>dotnet-validate</c> CLI tool.
@@ -70,23 +48,17 @@ public class DotNetValidateTasks
         bool? logOutput = null,
         bool? logInvocation = null,
         Action<OutputType, string>? logger = null,
-        Action<IProcess>? exitHandler = null)
-    {
-        using var process = ProcessTasks.StartProcess(
-            DotNetValidatePath,
-            arguments,
-            workingDirectory,
-            environmentVariables,
-            timeout,
-            logOutput,
-            logInvocation,
-            logger ?? DotNetValidateLogger);
-
-        (exitHandler ?? (p => DotNetValidateExitHandler.Invoke(arg1: null, p)))
-            .Invoke(process.AssertWaitForExit());
-
-        return process.Output;
-    }
+        Func<IProcess, object>? exitHandler = null)
+        => new DotNetValidateTasks()
+            .Run(
+                arguments,
+                workingDirectory,
+                environmentVariables,
+                timeout,
+                logOutput,
+                logInvocation,
+                logger,
+                exitHandler);
 
     /// <summary>
     ///     Validates NuGet package health for a local package file using <c>dotnet-validate</c> CLI tool.
@@ -99,13 +71,7 @@ public class DotNetValidateTasks
     /// <param name="toolSettings">The settings to use for the process.</param>
     /// <returns>A <see cref="IReadOnlyCollection{Output}" /> containing the process output.</returns>
     public static IReadOnlyCollection<Output> DotNetValidateLocalPackage(DotNetValidateLocalPackageSettings toolSettings)
-    {
-        using var process = ProcessTasks.StartProcess(toolSettings);
-
-        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
-
-        return process.Output;
-    }
+        => new DotNetValidateTasks().Run(toolSettings);
 
     /// <summary>
     ///     Validates NuGet package health for a local package file using <c>dotnet-validate</c> CLI tool.
@@ -140,10 +106,9 @@ public class DotNetValidateTasks
             bool completeOnFailure = false)
         => configurator.Invoke(
             DotNetValidateLocalPackage,
-            DotNetValidateLogger,
             degreeOfParallelism,
             completeOnFailure);
-
+    //
     /// <summary>
     ///     Validates NuGet package health for a remote package using <c>dotnet-validate</c> CLI tool.
     ///     Ensures your package meets the .NET foundation's guidelines for secure packages.
@@ -155,13 +120,7 @@ public class DotNetValidateTasks
     /// <param name="toolSettings">The settings to use for the process.</param>
     /// <returns>A <see cref="IReadOnlyCollection{Output}" /> containing the process output.</returns>
     public static IReadOnlyCollection<Output> DotNetValidateRemotePackage(DotNetValidateRemotePackageSettings toolSettings)
-    {
-        using var process = ProcessTasks.StartProcess(toolSettings);
-
-        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
-
-        return process.Output;
-    }
+        => new DotNetValidateTasks().Run(toolSettings);
 
     /// <summary>
     ///     Validates NuGet package health for a remote package using <c>dotnet-validate</c> CLI tool.
@@ -196,7 +155,6 @@ public class DotNetValidateTasks
             bool completeOnFailure = false)
         => configurator.Invoke(
             DotNetValidateRemotePackage,
-            DotNetValidateLogger,
             degreeOfParallelism,
             completeOnFailure);
 }
