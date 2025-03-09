@@ -198,6 +198,41 @@ public sealed class RequestTenancyMiddlewareTest
             static IResult GetTenantId([FromServices] ITenantContextAccessor accessor)
                 => TypedResults.Content(accessor.TenantContext?.Id ?? "no tenant");
         }
+
+        [Fact]
+        public async Task Does_not_set_tenant_if_unable_to_detect()
+        {
+            using var host = await CreateHost(
+                services =>
+                {
+                    services
+                        .AddMultiTenancy()
+                        .ConfigureRequestTenancy(requestTenancy =>
+                        {
+                            requestTenancy.DetectUsing(new StaticValueStrategy(null));
+                        });
+                },
+                app =>
+                {
+                    app.UseMultiTenancy();
+
+                    app.UseEndpoints(endpoints =>
+                    {
+                        endpoints.MapGet("/tenant", GetTenantId);
+                    });
+                });
+
+            using var client = host.GetTestClient();
+            using var response = await client.GetAsync("/tenant");
+            var content = await response.Content.ReadAsStringAsync();
+
+            content.Should().Be("no tenant", "because the tenant id should not be set");
+
+            return;
+
+            static IResult GetTenantId([FromServices] ITenantContextAccessor accessor)
+                => TypedResults.Content(accessor.TenantContext?.Id ?? "no tenant");
+        }
     }
 
     public sealed class WhenUsingControllers
@@ -338,8 +373,40 @@ public sealed class RequestTenancyMiddlewareTest
             var content = await response.Content.ReadAsStringAsync();
 
             content.Should().Be("test", "because the tenant id should be set");
+        }
 
-            return;
+        [Fact]
+        public async Task Does_not_set_tenant_if_unable_to_detect()
+        {
+            using var host = await CreateHost(
+                services =>
+                {
+                    services
+                        .AddControllers()
+                        .AddTestControllers(typeof(TestController));
+
+                    services
+                        .AddMultiTenancy()
+                        .ConfigureRequestTenancy(requestTenancy =>
+                        {
+                            requestTenancy.DetectUsing(new StaticValueStrategy(null));
+                        });
+                },
+                app =>
+                {
+                    app.UseMultiTenancy();
+
+                    app.UseEndpoints(endpoints =>
+                    {
+                        endpoints.MapControllers();
+                    });
+                });
+
+            using var client = host.GetTestClient();
+            using var response = await client.GetAsync("/tenancy-enabled");
+            var content = await response.Content.ReadAsStringAsync();
+
+            content.Should().Be("no tenant", "because the tenant id should not be set");
         }
 
         private sealed class TestController : ControllerBase
