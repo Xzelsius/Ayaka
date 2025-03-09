@@ -1,3 +1,7 @@
+::: warning
+Multi-Tenancy features from Ayaka are work-in-progress and subject to breaking changes.
+:::
+
 # Tenant Context
 
 At the heart of the multi-tenancy functionality is the concept of a tenant context. The tenant context is

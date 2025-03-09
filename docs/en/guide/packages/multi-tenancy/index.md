@@ -1,3 +1,7 @@
+::: warning
+Multi-Tenancy features from Ayaka are work-in-progress and subject to breaking changes.
+:::
+
 # Ayaka.MultiTenancy
 
 Provides functionality for creating multi-tenanted applications.
