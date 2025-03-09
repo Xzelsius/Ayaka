@@ -42,11 +42,16 @@ public sealed class RequestTenancyMiddlewareTest
                 });
 
                 app.UseMultiTenancy();
+
+                app.UseEndpoints(endpoints =>
+                {
+                    endpoints.MapGet("/", context => Task.CompletedTask);
+                });
             });
 
         using var client = host.GetTestClient();
 
-        var action = () => client.GetAsync("/tenant");
+        var action = () => client.GetAsync("/");
 
         await action
             .Should()
@@ -67,11 +72,16 @@ public sealed class RequestTenancyMiddlewareTest
             app =>
             {
                 app.UseMultiTenancy();
+
+                app.UseEndpoints(endpoints =>
+                {
+                    endpoints.MapGet("/", context => Task.CompletedTask);
+                });
             });
 
         using var client = host.GetTestClient();
 
-        var action = () => client.GetAsync("/tenant");
+        var action = () => client.GetAsync("/");
 
         await action
             .Should()
