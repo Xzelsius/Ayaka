@@ -15,6 +15,45 @@ using Microsoft.Extensions.Hosting;
 
 public sealed class RequestTenancyMiddlewareTest
 {
+    [Fact]
+    public async Task Throws_if_tenant_context_was_set_previously()
+    {
+        using var host = await CreateHost(
+            services =>
+            {
+                services
+                    .AddMultiTenancy()
+                    .ConfigureRequestTenancy(requestTenancy =>
+                    {
+                        requestTenancy.DetectUsing(new StaticValueStrategy("test"));
+                    });
+            },
+            app =>
+            {
+                app.Use((httpContext, next) =>
+                {
+                    var tenantContextAccessor = httpContext
+                        .RequestServices
+                        .GetRequiredService<ITenantContextAccessor>();
+
+                    tenantContextAccessor.TenantContext = new TenantContext("test", "test");
+
+                    return next(httpContext);
+                });
+
+                app.UseMultiTenancy();
+            });
+
+        using var client = host.GetTestClient();
+
+        var action = () => client.GetAsync("/tenant");
+
+        await action
+            .Should()
+            .ThrowAsync<InvalidOperationException>()
+            .WithMessage("Tenant was already set previously in the request pipeline");
+    }
+
     public sealed class WhenUsingEndpoints
     {
         [Fact]
