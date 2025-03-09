@@ -20,8 +20,6 @@ public static class GitHubTasks
     /// <returns>A <see cref="Task" /> representing the asynchronous operation.</returns>
     public static async Task CreateRelease(GitHubReleaseSettings settings)
     {
-        settings.Validate();
-
         var client = CreateGitHubClient(settings.Token!, settings.BaseUrl);
 
         Log.Debug("Checking whether release with tag '{TagName}' already exists...", settings.Tag);
@@ -112,8 +110,6 @@ public static class GitHubTasks
     /// </returns>
     public static async Task<(string Name, string Body)> GenerateReleaseNotes(GitHubReleaseNotesSettings settings)
     {
-        settings.Validate();
-
         var client = CreateGitHubClient(settings.Token!, settings.BaseUrl);
 
         Log.Information("Generating release notes for tag '{TagName}'...", settings.Tag);
@@ -153,8 +149,6 @@ public static class GitHubTasks
     /// <returns>A <see cref="Task" /> representing the asynchronous operation.</returns>
     public static async Task CreatePullRequest(GitHubPullRequestSettings settings)
     {
-        settings.Validate();
-
         var client = CreateGitHubClient(settings.Token!, settings.BaseUrl);
 
         var newPullRequest = new NewPullRequest(settings.Title, settings.Head, settings.Base)

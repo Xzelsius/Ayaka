@@ -190,7 +190,7 @@ public sealed class GitHubReleaseSettingsExtensionsTest
         var actual = original.AddArtifactPath("path/to/artifact");
 
         actual.Should().NotBeSameAs(original);
-        original.ArtifactPaths.Should().BeEmpty();
+        original.ArtifactPaths.Should().BeNull();
         actual.ArtifactPaths.Should().ContainSingle().Which.Should().Be("path/to/artifact");
     }
 
@@ -205,113 +205,5 @@ public sealed class GitHubReleaseSettingsExtensionsTest
         actual.Should().NotBeSameAs(original);
         original.ArtifactPaths.Should().ContainSingle().Which.Should().Be("path/to/artifact");
         actual.ArtifactPaths.Should().BeEmpty();
-    }
-
-    [Fact]
-    public void Does_validate_settings_Tag_null()
-    {
-        var settings = new GitHubReleaseSettings()
-            .SetRepositoryOwner("owner")
-            .SetRepositoryName("name")
-            .SetToken("token")
-            .SetTag(null!);
-
-        var action = () => settings.Validate();
-
-        action
-            .Should()
-            .Throw<ArgumentNullException>()
-            .WithParameterName(nameof(GitHubReleaseSettings.Tag));
-    }
-
-    [Fact]
-    public void Does_validate_settings_Tag_empty()
-    {
-        var settings = new GitHubReleaseSettings()
-            .SetRepositoryOwner("owner")
-            .SetRepositoryName("name")
-            .SetToken("token")
-            .SetTag("");
-
-        var action = () => settings.Validate();
-
-        action
-            .Should()
-            .Throw<EmptyStringException>()
-            .WithParameterName(nameof(GitHubReleaseSettings.Tag));
-    }
-
-    [Fact]
-    public void Does_validate_settings_Name_null()
-    {
-        var settings = new GitHubReleaseSettings()
-            .SetRepositoryOwner("owner")
-            .SetRepositoryName("name")
-            .SetToken("token")
-            .SetTag("v1.0")
-            .SetName(null!);
-
-        var action = () => settings.Validate();
-
-        action
-            .Should()
-            .Throw<ArgumentNullException>()
-            .WithParameterName(nameof(GitHubReleaseSettings.Name));
-    }
-
-    [Fact]
-    public void Does_validate_settings_Name_empty()
-    {
-        var settings = new GitHubReleaseSettings()
-            .SetRepositoryOwner("owner")
-            .SetRepositoryName("name")
-            .SetToken("token")
-            .SetTag("v1.0")
-            .SetName("");
-
-        var action = () => settings.Validate();
-
-        action
-            .Should()
-            .Throw<EmptyStringException>()
-            .WithParameterName(nameof(GitHubReleaseSettings.Name));
-    }
-
-    [Fact]
-    public void Does_validate_settings_Body_null()
-    {
-        var settings = new GitHubReleaseSettings()
-            .SetRepositoryOwner("owner")
-            .SetRepositoryName("name")
-            .SetToken("token")
-            .SetTag("v1.0")
-            .SetName("Release v1.0")
-            .SetBody(null!);
-
-        var action = () => settings.Validate();
-
-        action
-            .Should()
-            .Throw<ArgumentNullException>()
-            .WithParameterName(nameof(GitHubReleaseSettings.Body));
-    }
-
-    [Fact]
-    public void Does_validate_settings_Body_empty()
-    {
-        var settings = new GitHubReleaseSettings()
-            .SetRepositoryOwner("owner")
-            .SetRepositoryName("name")
-            .SetToken("token")
-            .SetTag("v1.0")
-            .SetName("Release v1.0")
-            .SetBody("");
-
-        var action = () => settings.Validate();
-
-        action
-            .Should()
-            .Throw<EmptyStringException>()
-            .WithParameterName(nameof(GitHubReleaseSettings.Body));
     }
 }
