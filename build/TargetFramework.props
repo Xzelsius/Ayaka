@@ -1,7 +1,7 @@
 <Project>
 
   <PropertyGroup>
-    <DotNetTargetFramework>net8.0</DotNetTargetFramework>
+    <DotNetTargetFramework>net9.0</DotNetTargetFramework>
   </PropertyGroup>
 
 </Project>
