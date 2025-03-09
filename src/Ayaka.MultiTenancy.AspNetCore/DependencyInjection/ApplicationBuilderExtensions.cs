@@ -26,7 +26,7 @@ public static class ApplicationBuilderExtensions
     private static void VerifyServiceAreRegistered(IApplicationBuilder app)
     {
         var serviceProviderIsService = app.ApplicationServices.GetService<IServiceProviderIsService>();
-        if (serviceProviderIsService != null && !serviceProviderIsService.IsService(typeof(IOptions<ITenantContextAccessor>)))
+        if (serviceProviderIsService != null && !serviceProviderIsService.IsService(typeof(ITenantContextAccessor)))
         {
             throw new InvalidOperationException(
                 $"Unable to find the required services. " +
