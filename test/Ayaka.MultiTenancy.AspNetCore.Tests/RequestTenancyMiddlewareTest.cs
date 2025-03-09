@@ -54,6 +54,31 @@ public sealed class RequestTenancyMiddlewareTest
             .WithMessage("Tenant was already set previously in the request pipeline");
     }
 
+    [Fact]
+    public async Task Throws_if_no_tenant_detection_strategies_are_configured()
+    {
+        using var host = await CreateHost(
+            services =>
+            {
+                services
+                    .AddMultiTenancy()
+                    .ConfigureRequestTenancy(_ => { });
+            },
+            app =>
+            {
+                app.UseMultiTenancy();
+            });
+
+        using var client = host.GetTestClient();
+
+        var action = () => client.GetAsync("/tenant");
+
+        await action
+            .Should()
+            .ThrowAsync<InvalidOperationException>()
+            .WithMessage("No tenant detection strategies are configured");
+    }
+
     public sealed class WhenUsingEndpoints
     {
         [Fact]
