@@ -21,7 +21,7 @@ public interface ICanVitePressInstall
     sealed Configure<NpmCiSettings> VitePressInstallSettingsBase
         => install => install
             .SetProcessWorkingDirectory(DocsDirectory)
-            .SetProcessLogOutput(Verbosity == Verbosity.Verbose);
+            .SetProcessOutputLogging(Verbosity == Verbosity.Verbose);
 
     /// <summary>
     ///     Gets the additional settings for installing the VitePress site dependencies.

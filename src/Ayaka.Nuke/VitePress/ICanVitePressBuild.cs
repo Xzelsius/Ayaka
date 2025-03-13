@@ -27,7 +27,7 @@ public interface ICanVitePressBuild
             .SetArguments(
                 "--outDir",
                 DocsArtifactsDirectory)
-            .SetProcessLogOutput(Verbosity == Verbosity.Verbose);
+            .SetProcessOutputLogging(Verbosity == Verbosity.Verbose);
 
     /// <summary>
     ///     Gets the additional settings for building the VitePress site.

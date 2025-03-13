@@ -532,7 +532,7 @@ class Build
 
     Configure<DotNetValidateSettings, AbsolutePath> ICanDotNetValidate.DotNetValidatePackageSettings
         => (dotnet, packagePath) => dotnet
-            .SetProcessExitHandler(_ =>
+            .SetProcessLogger((type, s) =>
             {
                 // ...
             });

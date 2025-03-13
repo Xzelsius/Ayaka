@@ -3,6 +3,55 @@
 `Ayaka.Nuke` provides a set of utility methods that can improve the readability of your build scripts
 or provide other useful functionality.
 
+## When
+
+```csharp [Definition]
+public static T When<T>(this T settings, bool condition, Func<T, T> configurator)
+```
+
+Invokes a `configurator` method, but only if the passed in `condition` is `true`.
+
+The `configurator` method receives the object the method is called on and should return the same object
+it is called on (at least of the same type, if you care for immutability), so multiple calls can be chained.
+
+::: tip
+This method is similar to the built-in `.When()` but using a simple `bool` instead of a `Func<T, bool>`.
+:::
+
+::: code-group
+
+```csharp {3-8} [Usage for Settings]
+Configure<DotNetBuildSettings> ICanDotNetBuild.DotNetBuild
+        => dotnet => dotnet
+            .When(IsServerBuild, x => x.EnableContinuousIntegrationBuild())
+```
+
+```csharp {6} [Usage in Targets]
+Target Default => target => target
+    .Executes(() =>
+    {
+        ReportSummary(
+            summary => summary
+                .When(IsServerBuild, s => s.AddPair("CI", "Yes"))
+        );
+    });
+```
+
+```csharp {3-10} [Chaining multiple calls]
+Configure<DotNetTestSettings, Project> ICanDotNetTest.DotNetTestProjectSettings
+    => (dotnet, project) => dotnet
+        .When(
+            GitHubActions.Instance is not null && project.HasPackageReference("GitHubActionsTestLogger"),
+            d => d.AddLoggers("GitHubActions;report-warnings=false"))
+        .When(
+            this is IHaveCodeCoverage && project.HasPackageReference("coverlet.collector"),
+            d => d
+                .SetDataCollector("XPlat Code Coverage")
+                .EnableUseSourceLink())
+```
+
+:::
+
 ## WhenNotNull
 
 ```csharp [Definition]

@@ -23,7 +23,7 @@ public interface ICanVitePressLint
         => run => run
             .SetProcessWorkingDirectory(DocsDirectory)
             .SetCommand("lint")
-            .SetProcessLogOutput(Verbosity == Verbosity.Verbose);
+            .SetProcessOutputLogging(Verbosity == Verbosity.Verbose);
 
     /// <summary>
     ///     Gets the additional settings for linting the VitePress site.

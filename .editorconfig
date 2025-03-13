@@ -281,7 +281,7 @@ csharp_space_after_dot = false
 csharp_space_after_keywords_in_control_flow_statements = true
 csharp_space_after_semicolon_in_for_statement = true
 csharp_space_around_binary_operators = before_and_after
-csharp_space_around_declaration_statements = do_not_ignore
+csharp_space_around_declaration_statements = false
 csharp_space_before_open_square_brackets = false
 csharp_space_before_semicolon_in_for_statement = false
 csharp_space_between_empty_square_brackets = false
@@ -377,5 +377,4 @@ resharper_arguments_literal = named
 [/test/**/*.cs]
 # Computed value is never used
 # Reason: We don't want this rule in tests as would not play nice with FluentAssertions
-csharp_style_unused_value_expression_statement_preference = none
 dotnet_diagnostic.IDE0058.severity = none

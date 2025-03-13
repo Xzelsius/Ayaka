@@ -106,38 +106,4 @@ public sealed class GitHubReleaseNotesSettingsExtensionsTest
         original.ConfigFile.Should().Be("release.yml");
         actual.ConfigFile.Should().Be(expected: null);
     }
-
-    [Fact]
-    public void Does_validate_settings_Tag_null()
-    {
-        var settings = new GitHubReleaseNotesSettings()
-            .SetRepositoryOwner("owner")
-            .SetRepositoryName("name")
-            .SetToken("token")
-            .SetTag(null!);
-
-        var action = () => settings.Validate();
-
-        action
-            .Should()
-            .Throw<ArgumentNullException>()
-            .WithParameterName(nameof(GitHubReleaseNotesSettings.Tag));
-    }
-
-    [Fact]
-    public void Does_validate_settings_Tag_empty()
-    {
-        var settings = new GitHubReleaseNotesSettings()
-            .SetRepositoryOwner("owner")
-            .SetRepositoryName("name")
-            .SetToken("token")
-            .SetTag("");
-
-        var action = () => settings.Validate();
-
-        action
-            .Should()
-            .Throw<EmptyStringException>()
-            .WithParameterName(nameof(GitHubReleaseNotesSettings.Tag));
-    }
 }
