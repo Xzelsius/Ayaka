@@ -61,7 +61,6 @@ Ayaka.Nuke.GitHub.GitHubReleaseSettings.GitHubReleaseSettings() -> void
 Ayaka.Nuke.GitHub.GitHubReleaseSettingsExtensions
 Ayaka.Nuke.GitHub.GitHubSettings
 Ayaka.Nuke.GitHub.GitHubSettings.GitHubSettings() -> void
-Ayaka.Nuke.GitHub.GitHubSettings.Validate() -> void
 Ayaka.Nuke.GitHub.GitHubSettingsExtensions
 Ayaka.Nuke.GitHub.GitHubTasks
 Ayaka.Nuke.GitHub.ICanGitHubRelease
@@ -125,17 +124,6 @@ Ayaka.Nuke.VitePress.IHaveVitePressLintTarget
 Ayaka.Nuke.VitePress.IHaveVitePressLintTarget.VitePressLint.get -> Nuke.Common.Target!
 const Ayaka.Nuke.DotNetValidate.DotNetValidateTasks.DotNetValidatePackageId = "dotnet-validate" -> string!
 const Ayaka.Nuke.NuGet.IHaveNuGetConfiguration.DefaultNuGetSource = "https://api.nuget.org/v3/index.json" -> string!
-override Ayaka.Nuke.DotNetValidate.DotNetValidateLocalPackageSettings.ConfigureProcessArguments(Nuke.Common.Tooling.Arguments! arguments) -> Nuke.Common.Tooling.Arguments!
-override Ayaka.Nuke.DotNetValidate.DotNetValidateLocalPackageSettings.ProcessExitHandler.get -> System.Action<Nuke.Common.Tooling.ToolSettings!, Nuke.Common.Tooling.IProcess!>!
-override Ayaka.Nuke.DotNetValidate.DotNetValidateLocalPackageSettings.ProcessLogger.get -> System.Action<Nuke.Common.Tooling.OutputType, string!>!
-override Ayaka.Nuke.DotNetValidate.DotNetValidateLocalPackageSettings.ProcessToolPath.get -> string!
-override Ayaka.Nuke.DotNetValidate.DotNetValidateRemotePackageSettings.ConfigureProcessArguments(Nuke.Common.Tooling.Arguments! arguments) -> Nuke.Common.Tooling.Arguments!
-override Ayaka.Nuke.DotNetValidate.DotNetValidateRemotePackageSettings.ProcessExitHandler.get -> System.Action<Nuke.Common.Tooling.ToolSettings!, Nuke.Common.Tooling.IProcess!>!
-override Ayaka.Nuke.DotNetValidate.DotNetValidateRemotePackageSettings.ProcessLogger.get -> System.Action<Nuke.Common.Tooling.OutputType, string!>!
-override Ayaka.Nuke.DotNetValidate.DotNetValidateRemotePackageSettings.ProcessToolPath.get -> string!
-override Ayaka.Nuke.GitHub.GitHubPullRequestSettings.AssertValid() -> void
-override Ayaka.Nuke.GitHub.GitHubReleaseNotesSettings.AssertValid() -> void
-override Ayaka.Nuke.GitHub.GitHubReleaseSettings.AssertValid() -> void
 static Ayaka.Nuke.DotNet.Configuration.Debug -> Ayaka.Nuke.DotNet.Configuration!
 static Ayaka.Nuke.DotNet.Configuration.implicit operator string!(Ayaka.Nuke.DotNet.Configuration! configuration) -> string!
 static Ayaka.Nuke.DotNet.Configuration.Release -> Ayaka.Nuke.DotNet.Configuration!
@@ -147,15 +135,9 @@ static Ayaka.Nuke.DotNetValidate.DotNetValidateRemotePackageSettingsExtensions.R
 static Ayaka.Nuke.DotNetValidate.DotNetValidateRemotePackageSettingsExtensions.SetConfigDirectory<T>(this T! toolSettings, string! configFile) -> T!
 static Ayaka.Nuke.DotNetValidate.DotNetValidateRemotePackageSettingsExtensions.SetPackageId<T>(this T! toolSettings, string! packageId) -> T!
 static Ayaka.Nuke.DotNetValidate.DotNetValidateRemotePackageSettingsExtensions.SetPackageVersion<T>(this T! toolSettings, string! packageVersion) -> T!
-static Ayaka.Nuke.DotNetValidate.DotNetValidateTasks.DotNetValidate(Nuke.Common.Tooling.ArgumentStringHandler arguments, string? workingDirectory = null, System.Collections.Generic.IReadOnlyDictionary<string!, string!>? environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, System.Action<Nuke.Common.Tooling.OutputType, string!>? logger = null, System.Action<Nuke.Common.Tooling.IProcess!>? exitHandler = null) -> System.Collections.Generic.IReadOnlyCollection<Nuke.Common.Tooling.Output>!
-static Ayaka.Nuke.DotNetValidate.DotNetValidateTasks.DotNetValidateExitHandler.get -> System.Action<Nuke.Common.Tooling.ToolSettings?, Nuke.Common.Tooling.IProcess!>!
-static Ayaka.Nuke.DotNetValidate.DotNetValidateTasks.DotNetValidateExitHandler.set -> void
 static Ayaka.Nuke.DotNetValidate.DotNetValidateTasks.DotNetValidateLocalPackage(Ayaka.Nuke.DotNetValidate.DotNetValidateLocalPackageSettings! toolSettings) -> System.Collections.Generic.IReadOnlyCollection<Nuke.Common.Tooling.Output>!
 static Ayaka.Nuke.DotNetValidate.DotNetValidateTasks.DotNetValidateLocalPackage(Nuke.Common.Tooling.CombinatorialConfigure<Ayaka.Nuke.DotNetValidate.DotNetValidateLocalPackageSettings!>! configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) -> System.Collections.Generic.IEnumerable<(Ayaka.Nuke.DotNetValidate.DotNetValidateLocalPackageSettings! Settings, System.Collections.Generic.IReadOnlyCollection<Nuke.Common.Tooling.Output>! Output)>!
 static Ayaka.Nuke.DotNetValidate.DotNetValidateTasks.DotNetValidateLocalPackage(Nuke.Common.Tooling.Configure<Ayaka.Nuke.DotNetValidate.DotNetValidateLocalPackageSettings!>! configurator) -> System.Collections.Generic.IReadOnlyCollection<Nuke.Common.Tooling.Output>!
-static Ayaka.Nuke.DotNetValidate.DotNetValidateTasks.DotNetValidateLogger.get -> System.Action<Nuke.Common.Tooling.OutputType, string!>!
-static Ayaka.Nuke.DotNetValidate.DotNetValidateTasks.DotNetValidateLogger.set -> void
-static Ayaka.Nuke.DotNetValidate.DotNetValidateTasks.DotNetValidatePath.get -> string!
 static Ayaka.Nuke.DotNetValidate.DotNetValidateTasks.DotNetValidateRemotePackage(Ayaka.Nuke.DotNetValidate.DotNetValidateRemotePackageSettings! toolSettings) -> System.Collections.Generic.IReadOnlyCollection<Nuke.Common.Tooling.Output>!
 static Ayaka.Nuke.DotNetValidate.DotNetValidateTasks.DotNetValidateRemotePackage(Nuke.Common.Tooling.CombinatorialConfigure<Ayaka.Nuke.DotNetValidate.DotNetValidateRemotePackageSettings!>! configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) -> System.Collections.Generic.IEnumerable<(Ayaka.Nuke.DotNetValidate.DotNetValidateRemotePackageSettings! Settings, System.Collections.Generic.IReadOnlyCollection<Nuke.Common.Tooling.Output>! Output)>!
 static Ayaka.Nuke.DotNetValidate.DotNetValidateTasks.DotNetValidateRemotePackage(Nuke.Common.Tooling.Configure<Ayaka.Nuke.DotNetValidate.DotNetValidateRemotePackageSettings!>! configurator) -> System.Collections.Generic.IReadOnlyCollection<Nuke.Common.Tooling.Output>!
@@ -208,29 +190,3 @@ static Ayaka.Nuke.GitHub.GitHubTasks.CreateRelease(Ayaka.Nuke.GitHub.GitHubRelea
 static Ayaka.Nuke.GitHub.GitHubTasks.CreateRelease(Nuke.Common.Tooling.Configure<Ayaka.Nuke.GitHub.GitHubReleaseSettings!>! configure) -> System.Threading.Tasks.Task!
 static Ayaka.Nuke.GitHub.GitHubTasks.GenerateReleaseNotes(Ayaka.Nuke.GitHub.GitHubReleaseNotesSettings! settings) -> System.Threading.Tasks.Task<(string! Name, string! Body)>!
 static Ayaka.Nuke.GitHub.GitHubTasks.GenerateReleaseNotes(Nuke.Common.Tooling.Configure<Ayaka.Nuke.GitHub.GitHubReleaseNotesSettings!>! configure) -> System.Threading.Tasks.Task<(string! Name, string! Body)>!
-virtual Ayaka.Nuke.DotNetValidate.DotNetValidateLocalPackageSettings.PackagePath.get -> string?
-virtual Ayaka.Nuke.DotNetValidate.DotNetValidateRemotePackageSettings.ConfigDirectory.get -> string?
-virtual Ayaka.Nuke.DotNetValidate.DotNetValidateRemotePackageSettings.PackageId.get -> string?
-virtual Ayaka.Nuke.DotNetValidate.DotNetValidateRemotePackageSettings.PackageVersion.get -> string?
-virtual Ayaka.Nuke.GitHub.GitHubPullRequestSettings.Base.get -> string?
-virtual Ayaka.Nuke.GitHub.GitHubPullRequestSettings.Body.get -> string?
-virtual Ayaka.Nuke.GitHub.GitHubPullRequestSettings.Draft.get -> bool?
-virtual Ayaka.Nuke.GitHub.GitHubPullRequestSettings.Head.get -> string?
-virtual Ayaka.Nuke.GitHub.GitHubPullRequestSettings.Title.get -> string?
-virtual Ayaka.Nuke.GitHub.GitHubReleaseNotesSettings.ConfigFile.get -> string?
-virtual Ayaka.Nuke.GitHub.GitHubReleaseNotesSettings.PreviousTag.get -> string?
-virtual Ayaka.Nuke.GitHub.GitHubReleaseNotesSettings.Tag.get -> string?
-virtual Ayaka.Nuke.GitHub.GitHubReleaseNotesSettings.TargetCommitish.get -> string?
-virtual Ayaka.Nuke.GitHub.GitHubReleaseSettings.ArtifactPaths.get -> System.Collections.Generic.IReadOnlyList<string!>!
-virtual Ayaka.Nuke.GitHub.GitHubReleaseSettings.Body.get -> string?
-virtual Ayaka.Nuke.GitHub.GitHubReleaseSettings.Draft.get -> bool?
-virtual Ayaka.Nuke.GitHub.GitHubReleaseSettings.GenerateReleaseNotes.get -> bool?
-virtual Ayaka.Nuke.GitHub.GitHubReleaseSettings.Name.get -> string?
-virtual Ayaka.Nuke.GitHub.GitHubReleaseSettings.PreRelease.get -> bool?
-virtual Ayaka.Nuke.GitHub.GitHubReleaseSettings.Tag.get -> string?
-virtual Ayaka.Nuke.GitHub.GitHubReleaseSettings.TargetCommitish.get -> string?
-virtual Ayaka.Nuke.GitHub.GitHubSettings.AssertValid() -> void
-virtual Ayaka.Nuke.GitHub.GitHubSettings.BaseUrl.get -> string?
-virtual Ayaka.Nuke.GitHub.GitHubSettings.RepositoryName.get -> string?
-virtual Ayaka.Nuke.GitHub.GitHubSettings.RepositoryOwner.get -> string?
-virtual Ayaka.Nuke.GitHub.GitHubSettings.Token.get -> string?
