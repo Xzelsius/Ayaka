@@ -66,7 +66,7 @@ public static class GitHubTasks
         Log.Verbose("  Draft: {Draft}", release.Draft);
         Log.Verbose("  Pre-release: {PreRelease}", release.Prerelease);
 
-        if (settings.ArtifactPaths.Count > 0)
+        if (settings.ArtifactPaths is { Count: > 0 })
         {
             Log.Debug("Uploading {ArtifactCount} artifact(s) to release...", settings.ArtifactPaths.Count);
 

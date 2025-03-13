@@ -70,7 +70,6 @@ Ayaka.Nuke.GitHub.GitHubReleaseNotesSettings.Tag.get -> string!
 Ayaka.Nuke.GitHub.GitHubReleaseNotesSettings.TargetCommitish.get -> string?
 Ayaka.Nuke.GitHub.GitHubReleaseNotesSettingsExtensions
 Ayaka.Nuke.GitHub.GitHubReleaseSettings
-Ayaka.Nuke.GitHub.GitHubReleaseSettings.ArtifactPaths.get -> System.Collections.Generic.IReadOnlyList<string!>!
 Ayaka.Nuke.GitHub.GitHubReleaseSettings.Body.get -> string?
 Ayaka.Nuke.GitHub.GitHubReleaseSettings.Draft.get -> bool?
 Ayaka.Nuke.GitHub.GitHubReleaseSettings.GenerateReleaseNotes.get -> bool?
