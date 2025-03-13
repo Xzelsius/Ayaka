@@ -2,7 +2,7 @@
 
   <!-- Packages for normal projects -->
   <ItemGroup Condition="'$(IsTestProject)' != 'True'">
-    <PackageReference Include="Light.GuardClauses" Version="12.0.0" />
+    <PackageReference Include="Light.GuardClauses" Version="13.0.0" />
   </ItemGroup>
 
   <!-- Packages for test projects -->
