@@ -62,5 +62,5 @@ public class GitHubReleaseSettings : GitHubSettings
     /// <summary>
     ///     Gets the optional artifact paths to upload to the release.
     /// </summary>
-    public IReadOnlyList<string> ArtifactPaths => Get<List<string>>(() => ArtifactPaths);
+    public IReadOnlyList<string>? ArtifactPaths => Get<List<string>?>(() => ArtifactPaths);
 }
