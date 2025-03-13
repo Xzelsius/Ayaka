@@ -26,7 +26,7 @@ public interface ICanDotNetPush
         => dotnet => dotnet
             .SetSource(NuGetSource)
             .SetApiKey(NuGetApiKey)
-            .SetSkipDuplicate(skipDuplicate: true);
+            .SetSkipDuplicate(true);
 
     /// <summary>
     ///     Gets the additional settings for pushing NuGet packages.
