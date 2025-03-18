@@ -14,6 +14,8 @@ Ayaka.MultiTenancy.AspNetCore.RequestTenancyMiddleware
 Ayaka.MultiTenancy.AspNetCore.RequestTenancyMiddleware.InvokeAsync(Microsoft.AspNetCore.Http.HttpContext! context) -> System.Threading.Tasks.Task!
 Ayaka.MultiTenancy.AspNetCore.RequestTenancyMiddleware.RequestTenancyMiddleware(Microsoft.AspNetCore.Http.RequestDelegate! next, Microsoft.Extensions.Options.IOptions<Ayaka.MultiTenancy.AspNetCore.RequestTenancyOptions!>! options, Ayaka.MultiTenancy.ITenantContextAccessor! accessor, Microsoft.Extensions.Logging.ILoggerFactory! loggerFactory) -> void
 Ayaka.MultiTenancy.AspNetCore.RequestTenancyOptions
+Ayaka.MultiTenancy.AspNetCore.RequestTenancyOptions.ActivityTagName.get -> string!
+Ayaka.MultiTenancy.AspNetCore.RequestTenancyOptions.ActivityTagName.set -> void
 Ayaka.MultiTenancy.AspNetCore.RequestTenancyOptions.DetectionStrategies.get -> System.Collections.Generic.IList<Ayaka.MultiTenancy.AspNetCore.Detection.ITenantDetectionStrategy!>!
 Ayaka.MultiTenancy.AspNetCore.RequestTenancyOptions.DetectionStrategies.init -> void
 Ayaka.MultiTenancy.AspNetCore.RequestTenancyOptions.RequestTenancyOptions() -> void
@@ -25,5 +27,6 @@ Ayaka.MultiTenancy.DependencyInjection.RequestTenancyBuilder.DetectFromRequestHo
 Ayaka.MultiTenancy.DependencyInjection.RequestTenancyBuilder.DetectUsing(Ayaka.MultiTenancy.AspNetCore.Detection.ITenantDetectionStrategy! strategy) -> Ayaka.MultiTenancy.DependencyInjection.RequestTenancyBuilder!
 Ayaka.MultiTenancy.DependencyInjection.RequestTenancyBuilder.DetectUsing<TDetectionStrategy>() -> Ayaka.MultiTenancy.DependencyInjection.RequestTenancyBuilder!
 Ayaka.MultiTenancy.DependencyInjection.RequestTenancyBuilder.MultiTenancy.get -> Ayaka.MultiTenancy.DependencyInjection.IMultiTenancyBuilder!
+Ayaka.MultiTenancy.DependencyInjection.RequestTenancyBuilder.UseCustomActivityTagName(string! tagName) -> Ayaka.MultiTenancy.DependencyInjection.RequestTenancyBuilder!
 static Ayaka.MultiTenancy.DependencyInjection.ApplicationBuilderExtensions.UseMultiTenancy(this Microsoft.AspNetCore.Builder.IApplicationBuilder! app) -> Microsoft.AspNetCore.Builder.IApplicationBuilder!
 static Ayaka.MultiTenancy.DependencyInjection.MultiTenancyBuilderExtensions.ConfigureRequestTenancy(this Ayaka.MultiTenancy.DependencyInjection.IMultiTenancyBuilder! builder, System.Action<Ayaka.MultiTenancy.DependencyInjection.RequestTenancyBuilder!>! configure) -> Ayaka.MultiTenancy.DependencyInjection.IMultiTenancyBuilder!
