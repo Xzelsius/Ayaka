@@ -2,6 +2,7 @@
 
 namespace Ayaka.MultiTenancy.DependencyInjection;
 
+using System.Diagnostics;
 using Ayaka.MultiTenancy.AspNetCore;
 using Ayaka.MultiTenancy.AspNetCore.Detection;
 using Microsoft.Extensions.DependencyInjection;
@@ -84,6 +85,21 @@ public sealed class RequestTenancyBuilder
     /// <returns>The same <see cref="RequestTenancyBuilder"/>.</returns>
     public RequestTenancyBuilder DetectUsing(ITenantDetectionStrategy strategy)
         => AddStrategy(_ => strategy);
+
+
+    /// <summary>
+    ///     Configures the request tenancy to use the specified <paramref name="tagName"/> as the name of the tag
+    ///     written to the request's <see cref="Activity"/> after the middleware successfully detected a tenant.
+    /// </summary>
+    /// <param name="tagName">The name of the tag to write to the request's <see cref="Activity"/>.</param>
+    /// <returns>The same <see cref="RequestTenancyBuilder"/>.</returns>
+    public RequestTenancyBuilder UseCustomActivityTagName(string tagName)
+    {
+        _configureActions.Add(
+            (options, _) => options.ActivityTagName = tagName);
+
+        return this;
+    }
 
     internal void ConfigureServices()
     {

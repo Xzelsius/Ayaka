@@ -3,6 +3,7 @@
 namespace Ayaka.MultiTenancy.AspNetCore;
 
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
@@ -69,6 +70,12 @@ public sealed partial class RequestTenancyMiddleware
         var tenant = await TryDetectTenant(context);
         if (tenant is not null)
         {
+            var activityFeature = context.Features.Get<IHttpActivityFeature>();
+            if (activityFeature is not null)
+            {
+                _ = activityFeature.Activity.SetTag(_options.ActivityTagName, tenant);
+            }
+
             _accessor.TenantContext = new TenantContext(tenant, tenant);
         }
 

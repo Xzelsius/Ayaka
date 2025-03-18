@@ -136,6 +136,35 @@ public sealed class RequestTenancyBuilderTest
         }
     }
 
+    public sealed class ActivityTagName
+    {
+        [Fact]
+        public void Does_have_default_activity_tag_name()
+        {
+            var builder = new TestMultiTenancyBuilder();
+
+            builder.ConfigureRequestTenancy(opts => { });
+
+            var sp = builder.Services.BuildServiceProvider();
+            var options = sp.GetRequiredService<IOptions<RequestTenancyOptions>>().Value;
+
+            options.ActivityTagName.Should().Be("tenant");
+        }
+
+        [Fact]
+        public void Does_set_activity_tag_name()
+        {
+            var builder = new TestMultiTenancyBuilder();
+
+            builder.ConfigureRequestTenancy(opts => opts.UseCustomActivityTagName("custom"));
+
+            var sp = builder.Services.BuildServiceProvider();
+            var options = sp.GetRequiredService<IOptions<RequestTenancyOptions>>().Value;
+
+            options.ActivityTagName.Should().Be("custom");
+        }
+    }
+
     private sealed class TestMultiTenancyBuilder : IMultiTenancyBuilder
     {
         public IServiceCollection Services { get; } = new ServiceCollection();
