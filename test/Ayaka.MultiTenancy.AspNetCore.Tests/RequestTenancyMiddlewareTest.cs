@@ -5,6 +5,7 @@ namespace Ayaka.MultiTenancy.AspNetCore.Tests;
 using Ayaka.MultiTenancy.AspNetCore.Detection;
 using Ayaka.MultiTenancy.AspNetCore.Tests.Internal;
 using Ayaka.MultiTenancy.DependencyInjection;
+using FastEndpoints;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -12,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using HttpGet = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
 
 public abstract class RequestTenancyMiddlewareTest
 {
@@ -299,6 +301,65 @@ public abstract class RequestTenancyMiddlewareTest
             [HttpGet("/inherited-tenancy-disabled")]
             public IActionResult GetTenantId([FromServices] ITenantContextAccessor accessor)
                 => Ok(accessor.TenantContext?.Id ?? "no tenant");
+        }
+    }
+
+    public sealed class WhenUsingFastEndpoints : RequestTenancyMiddlewareTest
+    {
+        protected override void ConfigureServices(IServiceCollection services)
+        {
+            services.AddFastEndpoints(opts =>
+            {
+                opts.DisableAutoDiscovery = true;
+                opts.Assemblies = [typeof(WhenUsingFastEndpoints).Assembly];
+            });
+        }
+
+        protected override void ConfigureApp(IApplicationBuilder app)
+        {
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapFastEndpoints();
+            });
+        }
+
+        private sealed class GetTenantIdEndpoint : EndpointWithoutRequest
+        {
+            private readonly ITenantContextAccessor _accessor;
+
+            public GetTenantIdEndpoint(ITenantContextAccessor accessor)
+            {
+                _accessor = accessor;
+            }
+
+            public override void Configure()
+            {
+                Get("/tenancy-enabled");
+                AllowAnonymous();
+            }
+
+            public override Task HandleAsync(CancellationToken ct)
+                => SendStringAsync(_accessor.TenantContext?.Id ?? "no tenant", cancellation: ct);
+        }
+
+        private sealed class GetTenantIdDisabledEndpoint : EndpointWithoutRequest
+        {
+            private readonly ITenantContextAccessor _accessor;
+
+            public GetTenantIdDisabledEndpoint(ITenantContextAccessor accessor)
+            {
+                _accessor = accessor;
+            }
+
+            public override void Configure()
+            {
+                Get("/tenancy-disabled");
+                AllowAnonymous();
+                Options(o => o.WithMetadata(new DisableMultiTenancyAttribute()));
+            }
+
+            public override Task HandleAsync(CancellationToken ct)
+                => SendStringAsync(_accessor.TenantContext?.Id ?? "no tenant", cancellation: ct);
         }
     }
 
