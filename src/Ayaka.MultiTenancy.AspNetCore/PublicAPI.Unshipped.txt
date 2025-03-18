@@ -1,1 +1,4 @@
 ﻿#nullable enable
+Ayaka.MultiTenancy.AspNetCore.RequestTenancyOptions.ActivityTagName.get -> string!
+Ayaka.MultiTenancy.AspNetCore.RequestTenancyOptions.ActivityTagName.set -> void
+Ayaka.MultiTenancy.DependencyInjection.RequestTenancyBuilder.UseCustomActivityTagName(string! tagName) -> Ayaka.MultiTenancy.DependencyInjection.RequestTenancyBuilder!

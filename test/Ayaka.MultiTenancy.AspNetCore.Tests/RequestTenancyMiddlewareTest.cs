@@ -2,6 +2,7 @@
 
 namespace Ayaka.MultiTenancy.AspNetCore.Tests;
 
+using System.Diagnostics;
 using Ayaka.MultiTenancy.AspNetCore.Detection;
 using Ayaka.MultiTenancy.AspNetCore.Tests.Internal;
 using Ayaka.MultiTenancy.DependencyInjection;
@@ -206,6 +207,41 @@ public abstract class RequestTenancyMiddlewareTest
         var content = await response.Content.ReadAsStringAsync();
 
         content.Should().Be("no tenant", "because the tenant id should not be set");
+    }
+
+    [Fact]
+    public async Task Does_tag_current_request_Activity_if_tenant_is_detected()
+    {
+        using var tracker = new ActivityTracker();
+
+        using var host = await CreateHost(
+            services =>
+            {
+                services.AddSingleton(tracker.Source); // override ASP.NET Core's ActivitySource
+
+                services
+                    .AddMultiTenancy()
+                    .ConfigureRequestTenancy(requestTenancy =>
+                    {
+                        requestTenancy.DetectUsing(new StaticValueStrategy("test"));
+                        requestTenancy.UseCustomActivityTagName("custom");
+                    });
+
+                ConfigureServices(services);
+            },
+            app =>
+            {
+                app.UseMultiTenancy();
+
+                ConfigureApp(app);
+            });
+
+        using var client = host.GetTestClient();
+        using var response = await client.GetAsync("/tenancy-enabled");
+        response.Should().BeSuccessful();
+
+        tracker.StoppedActivities.Should().ContainSingle();
+        tracker.StoppedActivities[0].Tags.Should().ContainSingle(x => x.Key == "custom" && x.Value == "test");
     }
 
     protected virtual void ConfigureServices(IServiceCollection services)
