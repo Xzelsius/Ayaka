@@ -1,6 +1,8 @@
 ﻿#nullable enable
+Ayaka.MultiTenancy.DependencyInjection.MultiTenancyBuilderExtensions
 Ayaka.MultiTenancy.Management.InMemoryTenantStorage
 Ayaka.MultiTenancy.Management.InMemoryTenantStorage.AddAsync(Ayaka.MultiTenancy.Management.Tenant! tenant, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
 Ayaka.MultiTenancy.Management.InMemoryTenantStorage.GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Ayaka.MultiTenancy.Management.Tenant!>!>!
 Ayaka.MultiTenancy.Management.InMemoryTenantStorage.InMemoryTenantStorage() -> void
 Ayaka.MultiTenancy.Management.InMemoryTenantStorage.RemoveAsync(string! id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+static Ayaka.MultiTenancy.DependencyInjection.MultiTenancyBuilderExtensions.AddTenantManagement(this Ayaka.MultiTenancy.DependencyInjection.IMultiTenancyBuilder! builder) -> Ayaka.MultiTenancy.DependencyInjection.ITenantManagementBuilder!
