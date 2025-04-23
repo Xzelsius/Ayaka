@@ -13,8 +13,7 @@ public sealed class MultiTenancyBuilderExtensionsTest
         [Fact]
         public void Does_return_instance_of_TenantManagementBuilder()
         {
-            var services = new ServiceCollection();
-            var builder = services.AddMultiTenancy();
+            var builder = new TestMultiTenancyBuilder();
 
             var tenantManagementBuilder = builder.AddTenantManagement();
 
@@ -25,36 +24,38 @@ public sealed class MultiTenancyBuilderExtensionsTest
         [Fact]
         public void Does_use_service_collection_from_MultiTenancyBuilder()
         {
-            var services = new ServiceCollection();
-            var builder = services.AddMultiTenancy();
+            var builder = new TestMultiTenancyBuilder();
 
             var tenantManagementBuilder = builder.AddTenantManagement();
 
-            tenantManagementBuilder.Services.Should().BeSameAs(services);
+            tenantManagementBuilder.Services.Should().BeSameAs(builder.Services);
         }
 
         [Fact]
         public void Does_add_default_services()
         {
-            var services = new ServiceCollection();
-            var builder = services.AddMultiTenancy();
+            var builder = new TestMultiTenancyBuilder();
 
             builder.AddTenantManagement();
 
-            var manager = services.FirstOrDefault(x => x.ServiceType == typeof(ITenantManager));
+            var manager = builder.Services.FirstOrDefault(x => x.ServiceType == typeof(ITenantManager));
             manager.Should().NotBeNull("ITenantManager should be registered");
         }
 
         [Fact]
         public void Does_not_add_default_services_twice()
         {
-            var services = new ServiceCollection();
-            var builder = services.AddMultiTenancy();
+            var builder = new TestMultiTenancyBuilder();
 
             builder.AddTenantManagement();
             builder.AddTenantManagement();
 
-            services.Count(x => x.ServiceType == typeof(ITenantManager)).Should().Be(1);
+            builder.Services.Count(x => x.ServiceType == typeof(ITenantManager)).Should().Be(1);
         }
+    }
+
+    private sealed class TestMultiTenancyBuilder : IMultiTenancyBuilder
+    {
+        public IServiceCollection Services { get; } = new ServiceCollection();
     }
 }
