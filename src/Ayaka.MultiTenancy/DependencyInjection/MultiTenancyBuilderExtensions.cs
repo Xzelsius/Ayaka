@@ -2,6 +2,7 @@
 
 namespace Ayaka.MultiTenancy.DependencyInjection;
 
+using Ayaka.MultiTenancy.Management;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -24,5 +25,6 @@ public static class MultiTenancyBuilderExtensions
 
     private static void ConfigureDefaultServices(this IServiceCollection services)
     {
+        services.TryAddSingleton<ITenantManager, DefaultTenantManager>();
     }
 }

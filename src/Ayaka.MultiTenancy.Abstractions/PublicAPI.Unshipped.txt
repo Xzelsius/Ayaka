@@ -1,6 +1,11 @@
 ﻿#nullable enable
 Ayaka.MultiTenancy.DependencyInjection.ITenantManagementBuilder
 Ayaka.MultiTenancy.DependencyInjection.ITenantManagementBuilder.Services.get -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+Ayaka.MultiTenancy.Management.ITenantManager
+Ayaka.MultiTenancy.Management.ITenantManager.AddAsync(Ayaka.MultiTenancy.Management.Tenant! tenant, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+Ayaka.MultiTenancy.Management.ITenantManager.GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Ayaka.MultiTenancy.Management.Tenant!>!>!
+Ayaka.MultiTenancy.Management.ITenantManager.GetAsync(string! id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Ayaka.MultiTenancy.Management.Tenant?>!
+Ayaka.MultiTenancy.Management.ITenantManager.RemoveAsync(string! id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
 Ayaka.MultiTenancy.Management.ITenantStorage
 Ayaka.MultiTenancy.Management.ITenantStorage.AddAsync(Ayaka.MultiTenancy.Management.Tenant! tenant, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
 Ayaka.MultiTenancy.Management.ITenantStorage.GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Ayaka.MultiTenancy.Management.Tenant!>!>!
