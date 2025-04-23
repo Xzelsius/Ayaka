@@ -5,8 +5,6 @@ Ayaka.MultiTenancy.ITenantContextAccessor
 Ayaka.MultiTenancy.ITenantContextAccessor.TenantContext.get -> Ayaka.MultiTenancy.TenantContext?
 Ayaka.MultiTenancy.ITenantContextAccessor.TenantContext.set -> void
 Ayaka.MultiTenancy.TenantContext
-Ayaka.MultiTenancy.TenantContext.DisplayName.get -> string!
 Ayaka.MultiTenancy.TenantContext.DisplayName.init -> void
 Ayaka.MultiTenancy.TenantContext.Id.get -> string!
 Ayaka.MultiTenancy.TenantContext.Id.init -> void
-Ayaka.MultiTenancy.TenantContext.TenantContext(string! Id, string! DisplayName) -> void
