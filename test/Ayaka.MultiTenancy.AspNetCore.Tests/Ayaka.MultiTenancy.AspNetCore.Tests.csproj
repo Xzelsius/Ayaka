@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="FastEndpoints" Version="5.35.0" />
-    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="9.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="9.0.5" />
   </ItemGroup>
 
 </Project>
