@@ -4,20 +4,20 @@ namespace Ayaka.MultiTenancy.Tests.Management;
 
 using Ayaka.MultiTenancy.Management;
 
-public abstract class TenantStorageCompliance<TStorageFixture> : IDisposable, IAsyncDisposable, IAsyncLifetime
-    where TStorageFixture : TenantStorageFixture, new()
+public abstract class TenantStoreCompliance<TStoreFixture> : IDisposable, IAsyncDisposable, IAsyncLifetime
+    where TStoreFixture : TenantStoreFixture, new()
 {
-    protected TenantStorageFixture StorageFixture { get; } = new TStorageFixture();
+    protected TenantStoreFixture StoreFixture { get; } = new TStoreFixture();
 
     [Fact]
     public async Task Allows_adding_a_new_tenant()
     {
-        var storage = StorageFixture.Storage;
+        var store = StoreFixture.Store;
         var tenant = new Tenant("tenant1");
 
-        await storage.AddAsync(tenant);
+        await store.AddAsync(tenant);
 
-        var tenants = await storage.GetAllAsync();
+        var tenants = await store.GetAllAsync();
         tenants.Should().ContainSingle();
         tenants.Should().Contain(tenant);
     }
@@ -25,24 +25,24 @@ public abstract class TenantStorageCompliance<TStorageFixture> : IDisposable, IA
     [Fact]
     public async Task Allows_adding_many_tenants_parallel()
     {
-        var storage = StorageFixture.Storage;
+        var store = StoreFixture.Store;
 
         await Parallel.ForEachAsync(
             Enumerable.Range(1, 100),
             new ParallelOptions { MaxDegreeOfParallelism = 10 },
-            async (i, ct) => await storage.AddAsync(new Tenant("tenant" + i), ct));
+            async (i, ct) => await store.AddAsync(new Tenant("tenant" + i), ct));
 
-        var tenants = await storage.GetAllAsync();
+        var tenants = await store.GetAllAsync();
         tenants.Should().HaveCount(100);
     }
 
     [Fact]
     public async Task Throws_if_tenant_already_exists()
     {
-        var storage = StorageFixture.Storage;
-        await storage.AddAsync(new Tenant("tenant1"));
+        var store = StoreFixture.Store;
+        await store.AddAsync(new Tenant("tenant1"));
 
-        var act = async () => await storage.AddAsync(new Tenant("tenant1"));
+        var act = async () => await store.AddAsync(new Tenant("tenant1"));
 
         await act.Should().ThrowAsync<TenantManagementException>().WithMessage("Tenant with id 'tenant1' already exists");
     }
@@ -50,32 +50,32 @@ public abstract class TenantStorageCompliance<TStorageFixture> : IDisposable, IA
     [Fact]
     public async Task Allows_removing_existing_tenant()
     {
-        var storage = StorageFixture.Storage;
-        await storage.AddAsync(new Tenant("tenant1"));
+        var store = StoreFixture.Store;
+        await store.AddAsync(new Tenant("tenant1"));
 
         // Make sure the tenant was added
-        var tenants = await storage.GetAllAsync();
+        var tenants = await store.GetAllAsync();
         tenants.Should().ContainSingle();
 
-        await storage.RemoveAsync("tenant1");
+        await store.RemoveAsync("tenant1");
 
-        tenants = await storage.GetAllAsync();
+        tenants = await store.GetAllAsync();
         tenants.Should().BeEmpty();
     }
 
     [Fact]
     public Task Does_not_throw_when_removing_non_existing_tenant()
     {
-        var storage = StorageFixture.Storage;
+        var store = StoreFixture.Store;
 
-        var act = async () => await storage.RemoveAsync("tenant1");
+        var act = async () => await store.RemoveAsync("tenant1");
 
         return act.Should().NotThrowAsync();
     }
 
     public Task InitializeAsync()
     {
-        if (StorageFixture is IAsyncLifetime asyncLifetime)
+        if (StoreFixture is IAsyncLifetime asyncLifetime)
         {
             return asyncLifetime.InitializeAsync();
         }
@@ -103,10 +103,10 @@ public abstract class TenantStorageCompliance<TStorageFixture> : IDisposable, IA
     {
         if (disposing)
         {
-            StorageFixture.Dispose();
+            StoreFixture.Dispose();
         }
     }
 
     protected virtual ValueTask DisposeAsyncCore()
-        => StorageFixture.DisposeAsync();
+        => StoreFixture.DisposeAsync();
 }

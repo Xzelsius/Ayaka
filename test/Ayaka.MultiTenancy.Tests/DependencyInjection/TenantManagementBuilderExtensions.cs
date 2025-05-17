@@ -21,30 +21,30 @@ public sealed class TenantManagementBuilderExtensions
         }
 
         [Fact]
-        public void Does_add_in_memory_tenant_storage()
+        public void Does_add_in_memory_tenant_store()
         {
             var builder = new TestTenantManagementBuilder();
 
             builder.UseInMemoryStore();
 
-            var storage = builder.Services.FirstOrDefault(x => x.ServiceType == typeof(ITenantStorage));
+            var store = builder.Services.FirstOrDefault(x => x.ServiceType == typeof(ITenantStore));
 
-            storage.Should().NotBeNull("ITenantStorage should be registered");
-            storage.ImplementationType.Should().Be(typeof(InMemoryTenantStorage));
+            store.Should().NotBeNull("ITenantStore should be registered");
+            store.ImplementationType.Should().Be(typeof(InMemoryTenantStore));
         }
 
         [Fact]
-        public void Does_not_replace_user_registered_tenant_storage()
+        public void Does_not_replace_user_registered_tenant_store()
         {
             var builder = new TestTenantManagementBuilder();
-            builder.Services.AddSingleton<ITenantStorage, TestTenantStorage>();
+            builder.Services.AddSingleton<ITenantStore, TestTenantStore>();
 
             builder.UseInMemoryStore();
 
-            var storage = builder.Services.FirstOrDefault(x => x.ServiceType == typeof(ITenantStorage));
+            var store = builder.Services.FirstOrDefault(x => x.ServiceType == typeof(ITenantStore));
 
-            storage.Should().NotBeNull("ITenantStorage should be registered");
-            storage.ImplementationType.Should().Be(typeof(TestTenantStorage));
+            store.Should().NotBeNull("ITenantStore should be registered");
+            store.ImplementationType.Should().Be(typeof(TestTenantStore));
         }
     }
 
@@ -53,7 +53,7 @@ public sealed class TenantManagementBuilderExtensions
         public IServiceCollection Services { get; } = new ServiceCollection();
     }
 
-    private sealed class TestTenantStorage : ITenantStorage
+    private sealed class TestTenantStore : ITenantStore
     {
         public Task AddAsync(Tenant tenant, CancellationToken cancellationToken = default)
             => throw new NotImplementedException();

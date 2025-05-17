@@ -5,9 +5,9 @@ namespace Ayaka.MultiTenancy.Management;
 using System.Collections.Concurrent;
 
 /// <summary>
-///     Represents an in-memory storage for <see cref="Tenant"/> instances.
+///     Represents in-memory persistence for <see cref="Tenant"/> instances.
 /// </summary>
-public sealed class InMemoryTenantStorage : ITenantStorage
+public sealed class InMemoryTenantStore : ITenantStore
 {
     private readonly ConcurrentDictionary<string, Tenant> _tenants = new();
 

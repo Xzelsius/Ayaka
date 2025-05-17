@@ -4,9 +4,9 @@ namespace Ayaka.MultiTenancy.Tests.Management;
 
 using Ayaka.MultiTenancy.Management;
 
-public abstract class TenantStorageFixture : IDisposable, IAsyncDisposable
+public abstract class TenantStoreFixture : IDisposable, IAsyncDisposable
 {
-    public abstract ITenantStorage Storage { get; }
+    public abstract ITenantStore Store { get; }
 
     public void Dispose()
     {
