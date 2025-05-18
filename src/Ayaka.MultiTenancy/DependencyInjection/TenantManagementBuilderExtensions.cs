@@ -18,7 +18,7 @@ public static class TenantManagementBuilderExtensions
     /// <returns>The same <see cref="ITenantManagementBuilder"/>.</returns>
     public static ITenantManagementBuilder UseInMemoryStore(this ITenantManagementBuilder builder)
     {
-        builder.Services.TryAddSingleton<ITenantStore, InMemoryTenantStore>();
+        builder.MultiTenancy.Services.TryAddSingleton<ITenantStore, InMemoryTenantStore>();
 
         return builder;
     }

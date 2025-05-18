@@ -27,7 +27,7 @@ public sealed class TenantManagementBuilderExtensions
 
             builder.UseInMemoryStore();
 
-            var store = builder.Services.FirstOrDefault(x => x.ServiceType == typeof(ITenantStore));
+            var store = builder.MultiTenancy.Services.FirstOrDefault(x => x.ServiceType == typeof(ITenantStore));
 
             store.Should().NotBeNull("ITenantStore should be registered");
             store.ImplementationType.Should().Be(typeof(InMemoryTenantStore));
@@ -37,20 +37,25 @@ public sealed class TenantManagementBuilderExtensions
         public void Does_not_replace_user_registered_tenant_store()
         {
             var builder = new TestTenantManagementBuilder();
-            builder.Services.AddSingleton<ITenantStore, TestTenantStore>();
+            builder.MultiTenancy.Services.AddSingleton<ITenantStore, TestTenantStore>();
 
             builder.UseInMemoryStore();
 
-            var store = builder.Services.FirstOrDefault(x => x.ServiceType == typeof(ITenantStore));
+            var store = builder.MultiTenancy.Services.FirstOrDefault(x => x.ServiceType == typeof(ITenantStore));
 
             store.Should().NotBeNull("ITenantStore should be registered");
             store.ImplementationType.Should().Be(typeof(TestTenantStore));
         }
     }
 
-    private sealed class TestTenantManagementBuilder : ITenantManagementBuilder
+    private sealed class TestMultiTenancyBuilder : IMultiTenancyBuilder
     {
         public IServiceCollection Services { get; } = new ServiceCollection();
+    }
+
+    private sealed class TestTenantManagementBuilder : ITenantManagementBuilder
+    {
+        public IMultiTenancyBuilder MultiTenancy { get; } = new TestMultiTenancyBuilder();
     }
 
     private sealed class TestTenantStore : ITenantStore

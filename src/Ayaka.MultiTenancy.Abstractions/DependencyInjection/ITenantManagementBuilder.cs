@@ -2,15 +2,13 @@
 
 namespace Ayaka.MultiTenancy.DependencyInjection;
 
-using Microsoft.Extensions.DependencyInjection;
-
 /// <summary>
 ///     Provides functionality to configure tenant management services.
 /// </summary>
 public interface ITenantManagementBuilder
 {
     /// <summary>
-    ///     Gets the <see cref="IServiceCollection"/> where tenant management services are configured.
+    ///     Gets the <see cref="IMultiTenancyBuilder"/> where tenant management services are configured.
     /// </summary>
-    IServiceCollection Services { get; }
+    IMultiTenancyBuilder MultiTenancy { get; }
 }

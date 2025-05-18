@@ -20,7 +20,7 @@ public static class MultiTenancyBuilderExtensions
     {
         ConfigureDefaultServices(builder.Services);
 
-        return new TenantManagementBuilder(builder.Services);
+        return new TenantManagementBuilder(builder);
     }
 
     private static void ConfigureDefaultServices(this IServiceCollection services)

@@ -22,13 +22,13 @@ public sealed class MultiTenancyBuilderExtensionsTest
         }
 
         [Fact]
-        public void Does_use_service_collection_from_MultiTenancyBuilder()
+        public void Does_use_specified_IMultiTenancyBuilder_to_configure_tenant_management()
         {
             var builder = new TestMultiTenancyBuilder();
 
             var tenantManagementBuilder = builder.AddTenantManagement();
 
-            tenantManagementBuilder.Services.Should().BeSameAs(builder.Services);
+            tenantManagementBuilder.MultiTenancy.Should().BeSameAs(builder);
         }
 
         [Fact]
