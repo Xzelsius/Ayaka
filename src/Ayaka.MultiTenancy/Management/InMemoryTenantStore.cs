@@ -3,7 +3,6 @@
 namespace Ayaka.MultiTenancy.Management;
 
 using System.Collections.Concurrent;
-using System.Text.Json;
 
 /// <summary>
 ///     Represents in-memory persistence for <see cref="Tenant"/> instances.
@@ -45,9 +44,5 @@ public sealed class InMemoryTenantStore : ITenantStore
 
     /// <inheritdoc />
     public Task<IReadOnlyList<Tenant>> GetAllAsync(CancellationToken cancellationToken = default)
-        => Task.FromResult<IReadOnlyList<Tenant>>([.._tenants.Values.Select(x =>
-        {
-            var j = JsonSerializer.Serialize(x);
-            return JsonSerializer.Deserialize<Tenant>(j);
-        })]);
+        => Task.FromResult<IReadOnlyList<Tenant>>([.._tenants.Values]);
 }
