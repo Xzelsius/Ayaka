@@ -3,6 +3,7 @@
 namespace Ayaka.MultiTenancy.Management;
 
 using System.Collections.Concurrent;
+using System.Text.Json;
 
 /// <summary>
 ///     Represents in-memory persistence for <see cref="Tenant"/> instances.
@@ -24,6 +25,18 @@ public sealed class InMemoryTenantStore : ITenantStore
     }
 
     /// <inheritdoc />
+    public Task UpdateAsync(Tenant tenant, CancellationToken cancellationToken = default)
+    {
+        _ = _tenants.AddOrUpdate(
+            tenant.Id,
+            _ => throw new TenantManagementException($"Tenant with id '{tenant.Id}' does not exist"),
+            (_, _) => tenant
+        );
+
+        return Task.CompletedTask;
+    }
+
+    /// <inheritdoc />
     public Task RemoveAsync(string id, CancellationToken cancellationToken = default)
     {
         _ = _tenants.TryRemove(id, out _);
@@ -32,5 +45,9 @@ public sealed class InMemoryTenantStore : ITenantStore
 
     /// <inheritdoc />
     public Task<IReadOnlyList<Tenant>> GetAllAsync(CancellationToken cancellationToken = default)
-        => Task.FromResult<IReadOnlyList<Tenant>>([.._tenants.Values]);
+        => Task.FromResult<IReadOnlyList<Tenant>>([.._tenants.Values.Select(x =>
+        {
+            var j = JsonSerializer.Serialize(x);
+            return JsonSerializer.Deserialize<Tenant>(j);
+        })]);
 }

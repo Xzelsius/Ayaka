@@ -16,6 +16,14 @@ public interface ITenantStore
     Task AddAsync(Tenant tenant, CancellationToken cancellationToken = default);
 
     /// <summary>
+    ///    Updates the specified <paramref name="tenant"/> in the store.
+    /// </summary>
+    /// <param name="tenant">The tenant that should be updated in the store.</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for the task to complete.</param>
+    /// <returns>A task that represents the asynchronous operation.</returns>
+    Task UpdateAsync(Tenant tenant, CancellationToken cancellationToken = default);
+
+    /// <summary>
     ///     Removes the tenant with the specified <paramref name="id"/> from the store.
     /// </summary>
     /// <param name="id">The identifier of the tenant that should be removed from the store.</param>

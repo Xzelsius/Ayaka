@@ -2,6 +2,7 @@
 
 namespace Ayaka.MultiTenancy.Tests.Management;
 
+using System.Collections.Immutable;
 using Ayaka.MultiTenancy.Management;
 
 public abstract class TenantStoreCompliance<TStoreFixture> : IDisposable, IAsyncDisposable, IAsyncLifetime
@@ -19,7 +20,39 @@ public abstract class TenantStoreCompliance<TStoreFixture> : IDisposable, IAsync
 
         var tenants = await store.GetAllAsync();
         tenants.Should().ContainSingle();
-        tenants.Should().Contain(tenant);
+        tenants.Should().ContainEquivalentOf(tenant);
+    }
+
+    [Fact]
+    public async Task Allows_adding_a_new_tenant_with_a_display_name()
+    {
+        var store = StoreFixture.Store;
+        var tenant = new Tenant("tenant1", "Tenant 1");
+
+        await store.AddAsync(tenant);
+
+        var tenants = await store.GetAllAsync();
+        tenants.Should().ContainSingle();
+        tenants.Should().ContainEquivalentOf(tenant);
+    }
+
+    [Fact]
+    public async Task Allows_adding_a_new_tenant_with_attributes()
+    {
+        var store = StoreFixture.Store;
+        var tenant = new Tenant(
+            "tenant1",
+            "Tenant 1",
+            new Dictionary<string, string>
+            {
+                { "key", "value" }
+            }.ToImmutableDictionary());
+
+        await store.AddAsync(tenant);
+
+        var tenants = await store.GetAllAsync();
+        tenants.Should().ContainSingle();
+        tenants.Should().ContainEquivalentOf(tenant);
     }
 
     [Fact]
@@ -45,6 +78,72 @@ public abstract class TenantStoreCompliance<TStoreFixture> : IDisposable, IAsync
         var act = async () => await store.AddAsync(new Tenant("tenant1"));
 
         await act.Should().ThrowAsync<TenantManagementException>().WithMessage("Tenant with id 'tenant1' already exists");
+    }
+
+    [Fact]
+    public async Task Allows_updating_the_display_name_of_an_existing_tenant()
+    {
+        var store = StoreFixture.Store;
+        var tenant = new Tenant("tenant1", "Tenant 1");
+
+        await store.AddAsync(tenant);
+
+        var updatedTenant = tenant with
+        {
+            DisplayName = "Tenant 1 (Updated)",
+        };
+        await store.UpdateAsync(updatedTenant);
+
+        var tenants = await store.GetAllAsync();
+        tenants.Should().ContainSingle();
+        tenants.Should().ContainEquivalentOf(updatedTenant);
+    }
+
+    [Fact]
+    public async Task Allows_updating_the_attributes_of_an_existing_tenant()
+    {
+        var store = StoreFixture.Store;
+        var tenant = new Tenant(
+            "tenant1",
+            "Tenant 1",
+            new Dictionary<string, string>
+            {
+                { "key1", "value" }
+            }.ToImmutableDictionary());
+
+        await store.AddAsync(tenant);
+
+        var updatedTenant = tenant with
+        {
+            Attributes = tenant.Attributes?.Add("key2", "value2"),
+        };
+        await store.UpdateAsync(updatedTenant);
+
+        var tenants = await store.GetAllAsync();
+        tenants.Should().ContainSingle();
+        tenants.Should().ContainEquivalentOf(updatedTenant);
+    }
+
+    [Fact]
+    public Task Throws_when_updating_non_existing_tenant()
+    {
+        var store = StoreFixture.Store;
+        var tenant = new Tenant(
+            "tenant1",
+            "Tenant 1",
+            new Dictionary<string, string>
+            {
+                { "key1", "value" }
+            }.ToImmutableDictionary());
+
+        var updatedTenant = tenant with
+        {
+            Attributes = tenant.Attributes?.Add("key2", "value2"),
+        };
+
+        var act = async () => await store.UpdateAsync(updatedTenant);
+
+        return act.Should().ThrowAsync<TenantManagementException>().WithMessage("Tenant with id 'tenant1' does not exist");
     }
 
     [Fact]

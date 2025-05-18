@@ -10,6 +10,7 @@ Ayaka.MultiTenancy.Management.ITenantStore
 Ayaka.MultiTenancy.Management.ITenantStore.AddAsync(Ayaka.MultiTenancy.Management.Tenant! tenant, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
 Ayaka.MultiTenancy.Management.ITenantStore.GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Ayaka.MultiTenancy.Management.Tenant!>!>!
 Ayaka.MultiTenancy.Management.ITenantStore.RemoveAsync(string! id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+Ayaka.MultiTenancy.Management.ITenantStore.UpdateAsync(Ayaka.MultiTenancy.Management.Tenant! tenant, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
 Ayaka.MultiTenancy.Management.Tenant
 Ayaka.MultiTenancy.Management.Tenant.Attributes.get -> System.Collections.Immutable.IImmutableDictionary<string!, string!>?
 Ayaka.MultiTenancy.Management.Tenant.Attributes.init -> void
