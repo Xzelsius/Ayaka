@@ -5,6 +5,7 @@ namespace Ayaka.MultiTenancy.Management;
 /// <summary>
 ///     Represents an exception that is thrown when an error occurs during tenant management operations.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public sealed class TenantManagementException : Exception
 {
     /// <summary>
