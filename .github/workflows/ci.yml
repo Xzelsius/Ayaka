@@ -24,7 +24,7 @@ jobs:
           fetch-depth: 0
 
       - name: NuGet Cache
-        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5
         with:
           path: |
             ${{ env.NUGET_PACKAGES }}
@@ -73,7 +73,7 @@ jobs:
           fetch-depth: 0
 
       - name: NPM Cache
-        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -86,7 +86,7 @@ jobs:
           node-version: 'lts/iron'
 
       - name: NuGet Cache
-        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5
         with:
           path: |
             ${{ env.NUGET_PACKAGES }}
