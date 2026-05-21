@@ -19,6 +19,7 @@ public static class CakeHostExtensions
     /// <typeparam name="TContext">The consumer's <see cref="IAyakaContext" /> implementation.</typeparam>
     /// <param name="host">The Cake host to configure.</param>
     /// <returns>The same <paramref name="host" /> instance, for chaining.</returns>
+    [ExcludeFromCodeCoverage]
     public static CakeHost UseAyaka<TContext>(this CakeHost host)
         where TContext : class, IAyakaContext
     {

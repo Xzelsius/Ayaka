@@ -7,4 +7,4 @@ Ayaka.Cake.Extensions
 Ayaka.Cake.IAyakaContext
 static Ayaka.Cake.CakeHostExtensions.UseAyaka<TContext>(this Cake.Frosting.CakeHost! host) -> Cake.Frosting.CakeHost!
 static Ayaka.Cake.Extensions.When<T>(this T settings, bool condition, System.Func<T, T>! configurator) -> T
-static Ayaka.Cake.Extensions.WhenNotNull<T, TObject>(this T settings, TObject? obj, System.Func<T, TObject, T>! configurator) -> T
+static Ayaka.Cake.Extensions.WhenNotNull<T, TObject>(this T settings, TObject? obj, System.Func<T, TObject!, T>! configurator) -> T

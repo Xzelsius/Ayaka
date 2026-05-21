@@ -28,5 +28,6 @@ public static class Extensions
     /// <param name="configurator">The method to execute if <paramref name="obj" /> is not <c>null</c>.</param>
     /// <returns>The same <paramref name="settings" /> instance for chaining.</returns>
     public static T WhenNotNull<T, TObject>(this T settings, TObject? obj, Func<T, TObject, T> configurator)
+        where TObject : class
         => obj != null ? configurator.Invoke(settings, obj) : settings;
 }

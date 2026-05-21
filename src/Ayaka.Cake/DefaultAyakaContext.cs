@@ -15,6 +15,7 @@ public abstract class DefaultAyakaContext : FrostingContext, IAyakaContext
     ///     Initializes a new instance of the <see cref="DefaultAyakaContext" /> class.
     /// </summary>
     /// <param name="context">The underlying Cake context.</param>
+    [ExcludeFromCodeCoverage]
     protected DefaultAyakaContext(ICakeContext context)
         : base(context)
     {
