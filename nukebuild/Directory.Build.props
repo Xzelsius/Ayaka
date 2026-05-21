@@ -6,7 +6,7 @@
     <IsTestProject>False</IsTestProject>
   </PropertyGroup>
 
-  <Import Project="..\build\TargetFramework.props" />
-  <Import Project="..\build\Compiler.props" />
+  <Import Project="..\eng\TargetFramework.props" />
+  <Import Project="..\eng\Compiler.props" />
 
 </Project>

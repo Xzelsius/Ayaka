@@ -3,20 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34607.119
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{B7CF0DCF-432F-434F-83F3-97089C111D06}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "eng", "eng", "{B7CF0DCF-432F-434F-83F3-97089C111D06}"
 	ProjectSection(SolutionItems) = preProject
-		build\Analyzers.props = build\Analyzers.props
-		build\Compiler.props = build\Compiler.props
-		build\Packages.props = build\Packages.props
-		build\Product.props = build\Product.props
-		build\SourceLink.props = build\SourceLink.props
-		build\TargetFramework.props = build\TargetFramework.props
-		build\Usings.props = build\Usings.props
+		eng\Analyzers.props = eng\Analyzers.props
+		eng\Compiler.props = eng\Compiler.props
+		eng\Packages.props = eng\Packages.props
+		eng\Product.props = eng\Product.props
+		eng\SourceLink.props = eng\SourceLink.props
+		eng\TargetFramework.props = eng\TargetFramework.props
+		eng\Usings.props = eng\Usings.props
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assets", "assets", "{D1CD98E8-91B4-4980-9E32-F505175A1DCE}"
 	ProjectSection(SolutionItems) = preProject
-		build\assets\logo.png = build\assets\logo.png
+		eng\assets\logo.png = eng\assets\logo.png
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E3E1A4B0-3D9E-4F1B-9BA2-16E21CEF43D6}"
