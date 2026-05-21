@@ -17,7 +17,7 @@ jobs:
 
     steps:
       - name: Use GitHub App
-        uses: actions/create-github-app-token@df432ceedc7162793a195dd1713ff69aefc7379e # v2
+        uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349 # v2
         id: app
         with:
           app-id: ${{ vars.AYAKA_RELEASES_APP_ID }}
