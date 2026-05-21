@@ -1,0 +1,7 @@
+#nullable enable
+Ayaka.Cake.AyakaTaskNames
+Ayaka.Cake.CakeHostExtensions
+Ayaka.Cake.DefaultAyakaContext
+Ayaka.Cake.DefaultAyakaContext.DefaultAyakaContext(Cake.Core.ICakeContext! context) -> void
+Ayaka.Cake.IAyakaContext
+static Ayaka.Cake.CakeHostExtensions.UseAyaka<TContext>(this Cake.Frosting.CakeHost! host) -> Cake.Frosting.CakeHost!
