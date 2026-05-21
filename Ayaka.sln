@@ -49,6 +49,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ayaka.MultiTenancy.AspNetCo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ayaka.Cake", "src\Ayaka.Cake\Ayaka.Cake.csproj", "{38D7E984-9008-4242-8C6A-80914207D0BC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ayaka.Cake.Tests", "test\Ayaka.Cake.Tests\Ayaka.Cake.Tests.csproj", "{F6E7A7C7-835E-4199-A25C-5D50006BBEA9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -89,6 +91,10 @@ Global
 		{38D7E984-9008-4242-8C6A-80914207D0BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38D7E984-9008-4242-8C6A-80914207D0BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38D7E984-9008-4242-8C6A-80914207D0BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6E7A7C7-835E-4199-A25C-5D50006BBEA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6E7A7C7-835E-4199-A25C-5D50006BBEA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6E7A7C7-835E-4199-A25C-5D50006BBEA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6E7A7C7-835E-4199-A25C-5D50006BBEA9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -104,6 +110,7 @@ Global
 		{CA0F2000-FC57-44DE-8103-F0372D003EF8} = {E3E1A4B0-3D9E-4F1B-9BA2-16E21CEF43D6}
 		{26A65F54-5CDD-4970-96DA-0B2ADE3BD64E} = {4767B628-8774-4CBA-A1DF-ED27A2CFA272}
 		{38D7E984-9008-4242-8C6A-80914207D0BC} = {E3E1A4B0-3D9E-4F1B-9BA2-16E21CEF43D6}
+		{F6E7A7C7-835E-4199-A25C-5D50006BBEA9} = {4767B628-8774-4CBA-A1DF-ED27A2CFA272}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E47191B9-F1B0-4A60-955E-ACAE410BD5DF}
