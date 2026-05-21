@@ -872,6 +872,24 @@ Stand up the new package's infrastructure so subsequent phases have somewhere to
 
 **Exit criteria.** `dotnet pack src/Ayaka.Cake` produces a valid (empty) NuGet package. `Ayaka.Cake.Tests` runs green locally and on the draft PR's CI. `dotnet nuke` still completes successfully (existing pipeline not regressed).
 
+#### Phase 1 outcome — 2026-05-21 (commits `4dfda07`…`e0482b1`)
+
+Held to plan on the major decisions (branch shape, six logical commits matching the six bullets, all chosen options from §16). Six deviations / additions worth recording:
+
+1. **Plan amendment to §14.5 rule 5.** Folded a Conventional Commits convention ("type: subject" with no scope) into the planning-artefacts commit before commit #1 landed. The rule now reads explicitly; all six Phase 1 commits follow it.
+
+2. **`Cake.DotNetLocalTools.Module 3.0.12` — verified despite README framing.** The module's README claims it tracks Cake 3.0 / net6.0–net7.0 only; the repo is dormant since 2022-11-24. Empirical verification: GitTools/GitVersion ships the same combination `Cake.Frosting 6.1.0 + Cake.DotNetLocalTools.Module 3.0.12` in production (`build/Directory.Packages.props`). Restore + build pass cleanly under net9.0. Plan §8A stands as written; the version is anchored for Renovate in `src/Ayaka.Cake/Ayaka.Cake.csproj`.
+
+3. **`dotnet sln add` rewrites platform configurations.** The .NET 9 SDK's `dotnet sln add` expands `SolutionConfigurationPlatforms` to include `Debug/Release × Any CPU/x64/x86` (~80 unrelated lines per add) instead of inheriting the existing AnyCPU-only style. Both Phase 1 sln additions (`Ayaka.Cake`, `Ayaka.Cake.Tests`) used hand-merged entries with fresh GUIDs to preserve AnyCPU-only. This will recur on every future `dotnet sln add` — convention forward: hand-merge sln entries unless we adopt a different sln tool. **Carry-forward for Phase 3+:** continue hand-merging when adding `build/Build.csproj` and any other projects.
+
+4. **PublicAPI tracking files required, not optional.** `eng/Compiler.props` enables `UsePublicApiAnalyzers` when `IsNuGetPackage=True` and adds `RS0016` etc. to `WarningsAsErrors`. Phase 1 added `PublicAPI.Shipped.txt` (empty header) and `PublicAPI.Unshipped.txt` (9 symbols across the composition shell + primitives) to `src/Ayaka.Cake/`. The plan didn't enumerate this explicitly but it follows from the existing repo convention. Phase 5+ ports will each need to extend `PublicAPI.Unshipped.txt` per public symbol added.
+
+5. **Tests ported verbatim, not "one trivial assertion".** The plan's bullet said "One trivial assertion so CI exercises it"; the tests were instead ported verbatim from `test/Ayaka.Nuke.Tests/ExtensionsTest.cs` and `test/Ayaka.Nuke.Tests/PublicApi/IgnoreCaseWhenPossibleComparer.cs` (only namespaces, usings, and the comparer's sample data adjusted). 6 Facts (vs the plan's 1), full coverage of both primitives. **Convention forward:** Phase 5+ ports must port matching `test/Ayaka.Nuke.Tests/**` files alongside their source, not write fresh replacements.
+
+6. **GUID strategy.** Project GUIDs in `Ayaka.sln`: `{38D7E984-9008-4242-8C6A-80914207D0BC}` for `Ayaka.Cake` (inherited from the one `dotnet sln add` chose before the revert), `{F6E7A7C7-835E-4199-A25C-5D50006BBEA9}` for `Ayaka.Cake.Tests` (freshly `uuidgen`-generated). Both use the standard csproj project-type GUID `{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}` (matching every other src/test project in the solution).
+
+§16 decisions all hold unchanged. Phase 1 closes with the six commits pushed and the draft PR's CI green on the last one.
+
 ### Phase 2 — Foundation: basic `IHave…` + `Clean` + `DotNet.Restore` + `DotNet.Build`
 
 Validate the architecture end-to-end with the smallest meaningful slice of real work.
