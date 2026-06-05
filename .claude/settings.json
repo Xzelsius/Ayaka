@@ -1,0 +1,58 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dotnet build)",
+      "Bash(dotnet build *)",
+      "Bash(dotnet test)",
+      "Bash(dotnet test *)",
+      "Bash(dotnet format *)",
+      "Bash(dotnet nuke)",
+      "Bash(dotnet nuke *)",
+      "Bash(dotnet tool restore)",
+      "Bash(dotnet sln *)",
+      "Bash(./build.sh)",
+      "Bash(./build.sh *)",
+      "Bash(bash build.sh)",
+      "Bash(bash build.sh *)",
+      "Bash(git status)",
+      "Bash(git status *)",
+      "Bash(git diff)",
+      "Bash(git diff *)",
+      "Bash(git log)",
+      "Bash(git log *)",
+      "Bash(git show *)",
+      "Bash(gh pr view *)",
+      "Bash(gh pr checks *)",
+      "Bash(gh pr list *)",
+      "Bash(gh run view *)",
+      "Bash(gh run list *)",
+      "Bash(gh issue view *)",
+      "Bash(gh issue list *)",
+      "Bash(npm ci)",
+      "Bash(npm run build)",
+      "Bash(npm run lint:js)",
+      "Bash(npm run preview)",
+      "Bash(npm run setup:browser)",
+      "mcp__playwright"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/format-csharp.sh",
+            "timeout": 120
+          },
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/format-docs.sh",
+            "timeout": 120
+          }
+        ]
+      }
+    ]
+  }
+}

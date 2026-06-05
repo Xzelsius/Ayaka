@@ -149,3 +149,6 @@ docs/.vitepress/cache
 #================================
 # Others
 #================================
+
+# Claude Code local overrides
+.claude/settings.local.json
