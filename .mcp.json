@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "playwright": {
+      "command": "node",
+      "args": [
+        "docs/node_modules/@playwright/mcp/cli.js",
+        "--headless",
+        "--browser", "chromium",
+        "--allowed-origins", "localhost:5173;localhost:4173;img.shields.io;placehold.co;dotnet.microsoft.com",
+        "--output-dir", "artifacts/playwright"
+      ]
+    }
+  }
+}
