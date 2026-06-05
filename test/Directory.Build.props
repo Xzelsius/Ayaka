@@ -5,11 +5,11 @@
     <IsTestProject>True</IsTestProject>
   </PropertyGroup>
 
-  <Import Project="..\build\TargetFramework.props" />
-  <Import Project="..\build\Compiler.props" />
-  <Import Project="..\build\Product.props" />
-  <Import Project="..\build\Packages.props" />
-  <Import Project="..\build\Analyzers.props" />
-  <Import Project="..\build\Usings.props" />
+  <Import Project="..\eng\TargetFramework.props" />
+  <Import Project="..\eng\Compiler.props" />
+  <Import Project="..\eng\Product.props" />
+  <Import Project="..\eng\Packages.props" />
+  <Import Project="..\eng\Analyzers.props" />
+  <Import Project="..\eng\Usings.props" />
 
 </Project>
