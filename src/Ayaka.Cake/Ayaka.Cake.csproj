@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>$(DotNetTargetFramework)</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Ayaka.Cake.Tests" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <PackageDescription>Provides various opinionated Cake Frosting build components for simpler build automation. $(PackageDescriptionAppendix)</PackageDescription>
+    <PackageTags>$(PackageCommonTags);cake;frosting;build;automation;continuous-integration;tools;orchestration</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Cake.Frosting" Version="6.1.0" />
+    <PackageReference Include="Cake.DotNetLocalTools.Module" Version="3.0.12" />
+  </ItemGroup>
+
+</Project>
