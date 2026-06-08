@@ -48,13 +48,10 @@ jobs:
           dotnet nuke
 
       - name: Upload Coverage
-        uses: codecov/codecov-action@18283e04ce6e62d37312384ff67231eb8fd56d24 # v5
+        uses: codacy/codacy-coverage-reporter-action@89d6c85cfafaec52c72b6c5e8b2878d33104c699 # v1.3.0
         with:
-          version: v10.0.1 # Later versions break file search
-          token: ${{ secrets.CODECOV_TOKEN }}
-          fail_ci_if_error: true
-          directory: ${{ github.workspace }}/artifacts/coverage
-          files: "*.cobertura.xml"
+          project-token: ${{ secrets.CODACY_TOKEN }}
+          coverage-reports: ${{ github.workspace }}/artifacts/coverage/*.cobertura.xml
 
       - name: Upload Packages
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
