@@ -48,8 +48,12 @@ See `AGENTS.md` at the repo root for the full agent guide.
 
 ## Commits & PRs
 
-- Conventional commits and PR titles; types: `chore`, `docs`, `feat`, `fix`, `refactor`, `revert`,
-  `style`, `test`
+- Conventional commits and PR titles, validated against `.github/semantic.yml` — a non-matching type
+  fails the PR check
+- Allowed types are a closed set, exactly these, nothing else: `chore`, `docs`, `feat`, `fix`,
+  `refactor`, `revert`, `style`, `test`
+- `ci`, `build`, and `perf` are **not** enabled — use `chore` for CI/workflow, build, tooling, and
+  dependency changes
 - Version bump: `feat:` → minor, everything else → patch, `!` or `BREAKING CHANGE:` footer → major
 - PR labels drive the changelog: `breaking-change`, `enhancement`, `bug`, `dependencies`,
   `documentation`

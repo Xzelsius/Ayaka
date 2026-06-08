@@ -109,9 +109,12 @@ xunit + FluentAssertions + FakeItEasy (see `eng/Packages.props` for versions).
 
 ## Commits, PRs, releases
 
-- **Conventional commits** — enforced on PR titles (`.github/semantic.yml`) and used by GitVersion
-  for versioning
-- Allowed types: `chore`, `docs`, `feat`, `fix`, `refactor`, `revert`, `style`, `test` — optional `(scope)`
+- **Conventional commits** — PR titles are validated against `.github/semantic.yml`, so a
+  non-matching type fails the PR check; GitVersion also derives the version from them
+- Allowed types are a **closed set — exactly these, nothing else**: `chore`, `docs`, `feat`, `fix`,
+  `refactor`, `revert`, `style`, `test` (optional `(scope)`)
+- The standard Conventional Commits types `ci`, `build`, and `perf` are **not** enabled here — use
+  `chore` for CI/workflow, build, tooling, and dependency changes
 - Version bump: `feat:` → minor, everything else → patch, `!` or `BREAKING CHANGE:` footer → major
 - Changelog sections come from **PR labels**: `breaking-change`, `enhancement`, `bug`, `dependencies`,
   `documentation`
