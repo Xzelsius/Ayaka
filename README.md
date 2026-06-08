@@ -2,7 +2,9 @@
 
 Ayaka is a collection of packages, aiming to help developing applications using .NET.
 
-[![ci](https://github.com/Xzelsius/Ayaka/actions/workflows/ci.yml/badge.svg)](https://github.com/Xzelsius/Ayaka/actions/workflows/ci.yml)[![codecov](https://codecov.io/gh/Xzelsius/Ayaka/graph/badge.svg?token=BF7EOUA2OP)](https://codecov.io/gh/Xzelsius/Ayaka)
+[![ci](https://github.com/Xzelsius/Ayaka/actions/workflows/ci.yml/badge.svg)](https://github.com/Xzelsius/Ayaka/actions/workflows/ci.yml)
+[![Codacy Grade](https://app.codacy.com/project/badge/Grade/72767b9d3827433395bca1e4a574c5bb)](https://app.codacy.com/gh/Xzelsius/Ayaka/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+[![Codacy Coverage](https://app.codacy.com/project/badge/Coverage/72767b9d3827433395bca1e4a574c5bb)](https://app.codacy.com/gh/Xzelsius/Ayaka/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_coverage)
 
 ## Compatibility
 
