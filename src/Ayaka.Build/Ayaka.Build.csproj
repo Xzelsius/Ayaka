@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>$(DotNetTargetFramework)</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Ayaka.Build.Tests" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <VersionSuffix>preview</VersionSuffix>
+    <PackageDescription>Provides a lightweight, opinionated build automation engine for .NET. $(PackageDescriptionAppendix)</PackageDescription>
+    <PackageTags>$(PackageCommonTags);build;automation;continuous-integration;tools;orchestration</PackageTags>
+  </PropertyGroup>
+
+</Project>

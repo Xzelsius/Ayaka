@@ -100,6 +100,11 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
       ],
     },
     {
+      text: 'Ayaka.Build',
+      collapsed: true,
+      items: [{ text: 'Overview', link: 'packages/build' }],
+    },
+    {
       text: 'Ayaka.MultiTenancy',
       collapsed: true,
       items: [
