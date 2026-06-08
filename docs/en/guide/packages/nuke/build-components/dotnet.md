@@ -571,9 +571,7 @@ class Build
 
 [`IHaveGitRepository`]: ./general#ihavegitrepository
 [`IHaveGitVersion`]: ./general#ihavegitversion
-[`IHaveSources`]: ./general#ihavesource
 [`IHaveTests`]: ./general#ihavetests
-[`IHaveArtifacts`]: ./general#ihaveartifacts
 [`IHavePackageArtifacts`]: ./general#ihavepackageartifacts
 [`IHaveCodeCoverage`]: ./general#ihavecodecoverage
 [`IHaveDotNetConfiguration`]: ./dotnet#ihavedotnetconfiguration
