@@ -14,6 +14,6 @@
     "@antfu/eslint-config": "4.19.0",
     "@playwright/mcp": "0.0.75",
     "eslint": "9.27.0",
-    "vitepress": "1.6.3"
+    "vitepress": "1.6.4"
   }
 }
