@@ -1,4 +1,4 @@
-﻿// Copyright (c) Raphael Strotz. All rights reserved.
+// Copyright (c) Raphael Strotz. All rights reserved.
 
 namespace Ayaka.MultiTenancy.Tests.Management;
 
@@ -16,9 +16,9 @@ public abstract class TenantStoreCompliance<TStoreFixture> : IDisposable, IAsync
         var store = StoreFixture.Store;
         var tenant = new Tenant("tenant1");
 
-        await store.AddAsync(tenant);
+        await store.AddAsync(tenant, TestContext.Current.CancellationToken);
 
-        var tenants = await store.GetAllAsync();
+        var tenants = await store.GetAllAsync(TestContext.Current.CancellationToken);
         tenants.Should().ContainSingle();
         tenants.Should().ContainEquivalentOf(tenant);
     }
@@ -29,9 +29,9 @@ public abstract class TenantStoreCompliance<TStoreFixture> : IDisposable, IAsync
         var store = StoreFixture.Store;
         var tenant = new Tenant("tenant1", "Tenant 1");
 
-        await store.AddAsync(tenant);
+        await store.AddAsync(tenant, TestContext.Current.CancellationToken);
 
-        var tenants = await store.GetAllAsync();
+        var tenants = await store.GetAllAsync(TestContext.Current.CancellationToken);
         tenants.Should().ContainSingle();
         tenants.Should().ContainEquivalentOf(tenant);
     }
@@ -48,9 +48,9 @@ public abstract class TenantStoreCompliance<TStoreFixture> : IDisposable, IAsync
                 { "key", "value" }
             }.ToImmutableDictionary());
 
-        await store.AddAsync(tenant);
+        await store.AddAsync(tenant, TestContext.Current.CancellationToken);
 
-        var tenants = await store.GetAllAsync();
+        var tenants = await store.GetAllAsync(TestContext.Current.CancellationToken);
         tenants.Should().ContainSingle();
         tenants.Should().ContainEquivalentOf(tenant);
     }
@@ -65,7 +65,7 @@ public abstract class TenantStoreCompliance<TStoreFixture> : IDisposable, IAsync
             new ParallelOptions { MaxDegreeOfParallelism = 10 },
             async (i, ct) => await store.AddAsync(new Tenant("tenant" + i), ct));
 
-        var tenants = await store.GetAllAsync();
+        var tenants = await store.GetAllAsync(TestContext.Current.CancellationToken);
         tenants.Should().HaveCount(100);
     }
 
@@ -73,7 +73,7 @@ public abstract class TenantStoreCompliance<TStoreFixture> : IDisposable, IAsync
     public async Task Throws_if_tenant_already_exists()
     {
         var store = StoreFixture.Store;
-        await store.AddAsync(new Tenant("tenant1"));
+        await store.AddAsync(new Tenant("tenant1"), TestContext.Current.CancellationToken);
 
         var act = async () => await store.AddAsync(new Tenant("tenant1"));
 
@@ -86,15 +86,15 @@ public abstract class TenantStoreCompliance<TStoreFixture> : IDisposable, IAsync
         var store = StoreFixture.Store;
         var tenant = new Tenant("tenant1", "Tenant 1");
 
-        await store.AddAsync(tenant);
+        await store.AddAsync(tenant, TestContext.Current.CancellationToken);
 
         var updatedTenant = tenant with
         {
             DisplayName = "Tenant 1 (Updated)",
         };
-        await store.UpdateAsync(updatedTenant);
+        await store.UpdateAsync(updatedTenant, TestContext.Current.CancellationToken);
 
-        var tenants = await store.GetAllAsync();
+        var tenants = await store.GetAllAsync(TestContext.Current.CancellationToken);
         tenants.Should().ContainSingle();
         tenants.Should().ContainEquivalentOf(updatedTenant);
     }
@@ -111,15 +111,15 @@ public abstract class TenantStoreCompliance<TStoreFixture> : IDisposable, IAsync
                 { "key1", "value" }
             }.ToImmutableDictionary());
 
-        await store.AddAsync(tenant);
+        await store.AddAsync(tenant, TestContext.Current.CancellationToken);
 
         var updatedTenant = tenant with
         {
             Attributes = tenant.Attributes?.Add("key2", "value2"),
         };
-        await store.UpdateAsync(updatedTenant);
+        await store.UpdateAsync(updatedTenant, TestContext.Current.CancellationToken);
 
-        var tenants = await store.GetAllAsync();
+        var tenants = await store.GetAllAsync(TestContext.Current.CancellationToken);
         tenants.Should().ContainSingle();
         tenants.Should().ContainEquivalentOf(updatedTenant);
     }
@@ -150,15 +150,15 @@ public abstract class TenantStoreCompliance<TStoreFixture> : IDisposable, IAsync
     public async Task Allows_removing_existing_tenant()
     {
         var store = StoreFixture.Store;
-        await store.AddAsync(new Tenant("tenant1"));
+        await store.AddAsync(new Tenant("tenant1"), TestContext.Current.CancellationToken);
 
         // Make sure the tenant was added
-        var tenants = await store.GetAllAsync();
+        var tenants = await store.GetAllAsync(TestContext.Current.CancellationToken);
         tenants.Should().ContainSingle();
 
-        await store.RemoveAsync("tenant1");
+        await store.RemoveAsync("tenant1", TestContext.Current.CancellationToken);
 
-        tenants = await store.GetAllAsync();
+        tenants = await store.GetAllAsync(TestContext.Current.CancellationToken);
         tenants.Should().BeEmpty();
     }
 
@@ -172,14 +172,14 @@ public abstract class TenantStoreCompliance<TStoreFixture> : IDisposable, IAsync
         return act.Should().NotThrowAsync();
     }
 
-    public Task InitializeAsync()
+    public ValueTask InitializeAsync()
     {
         if (StoreFixture is IAsyncLifetime asyncLifetime)
         {
             return asyncLifetime.InitializeAsync();
         }
 
-        return Task.CompletedTask;
+        return ValueTask.CompletedTask;
     }
 
     public void Dispose()
@@ -187,9 +187,6 @@ public abstract class TenantStoreCompliance<TStoreFixture> : IDisposable, IAsync
         Dispose(true);
         GC.SuppressFinalize(this);
     }
-
-    async Task IAsyncLifetime.DisposeAsync()
-        => await DisposeAsync();
 
     public async ValueTask DisposeAsync()
     {

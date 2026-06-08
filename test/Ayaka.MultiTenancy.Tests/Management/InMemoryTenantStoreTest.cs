@@ -17,12 +17,12 @@ public sealed class InMemoryTenantStoreTest : TenantStoreCompliance<InMemoryStor
         var store1 = new InMemoryTenantStore();
         var store2 = new InMemoryTenantStore();
 
-        await store1.AddAsync(new Tenant("tenant1"));
+        await store1.AddAsync(new Tenant("tenant1"), TestContext.Current.CancellationToken);
 
-        var tenantsFromStore1 = await store1.GetAllAsync();
+        var tenantsFromStore1 = await store1.GetAllAsync(TestContext.Current.CancellationToken);
         tenantsFromStore1.Should().ContainSingle();
 
-        var tenantsFromStore2 = await store2.GetAllAsync();
+        var tenantsFromStore2 = await store2.GetAllAsync(TestContext.Current.CancellationToken);
         tenantsFromStore2.Should().BeEmpty();
     }
 }

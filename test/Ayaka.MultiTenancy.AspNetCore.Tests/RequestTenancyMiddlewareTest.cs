@@ -1,4 +1,4 @@
-﻿// Copyright (c) Raphael Strotz. All rights reserved.
+// Copyright (c) Raphael Strotz. All rights reserved.
 
 namespace Ayaka.MultiTenancy.AspNetCore.Tests;
 
@@ -113,8 +113,8 @@ public abstract class RequestTenancyMiddlewareTest
             });
 
         using var client = host.GetTestClient();
-        using var response = await client.GetAsync("/tenancy-disabled");
-        var content = await response.Content.ReadAsStringAsync();
+        using var response = await client.GetAsync("/tenancy-disabled", TestContext.Current.CancellationToken);
+        var content = await response.Content.ReadAsStringAsync(TestContext.Current.CancellationToken);
 
         content.Should().Be("no tenant", "because the tenant id should not be set");
     }
@@ -142,9 +142,9 @@ public abstract class RequestTenancyMiddlewareTest
             });
 
         using var client = host.GetTestClient();
-        using var response = await client.GetAsync("/tenancy-enabled");
+        using var response = await client.GetAsync("/tenancy-enabled", TestContext.Current.CancellationToken);
 
-        var content = await response.Content.ReadAsStringAsync();
+        var content = await response.Content.ReadAsStringAsync(TestContext.Current.CancellationToken);
 
         content.Should().Be("test", "because the tenant id should be set");
     }
@@ -174,8 +174,8 @@ public abstract class RequestTenancyMiddlewareTest
             });
 
         using var client = host.GetTestClient();
-        using var response = await client.GetAsync("/tenancy-enabled");
-        var content = await response.Content.ReadAsStringAsync();
+        using var response = await client.GetAsync("/tenancy-enabled", TestContext.Current.CancellationToken);
+        var content = await response.Content.ReadAsStringAsync(TestContext.Current.CancellationToken);
 
         content.Should().Be("test", "because the tenant id should be set");
     }
@@ -203,8 +203,8 @@ public abstract class RequestTenancyMiddlewareTest
             });
 
         using var client = host.GetTestClient();
-        using var response = await client.GetAsync("/tenancy-enabled");
-        var content = await response.Content.ReadAsStringAsync();
+        using var response = await client.GetAsync("/tenancy-enabled", TestContext.Current.CancellationToken);
+        var content = await response.Content.ReadAsStringAsync(TestContext.Current.CancellationToken);
 
         content.Should().Be("no tenant", "because the tenant id should not be set");
     }
@@ -237,7 +237,7 @@ public abstract class RequestTenancyMiddlewareTest
             });
 
         using var client = host.GetTestClient();
-        using var response = await client.GetAsync("/tenancy-enabled");
+        using var response = await client.GetAsync("/tenancy-enabled", TestContext.Current.CancellationToken);
         response.Should().BeSuccessful();
 
         tracker.StoppedActivities.Should().ContainSingle();
@@ -313,8 +313,8 @@ public abstract class RequestTenancyMiddlewareTest
                 });
 
             using var client = host.GetTestClient();
-            using var response = await client.GetAsync("/inherited-tenancy-disabled");
-            var content = await response.Content.ReadAsStringAsync();
+            using var response = await client.GetAsync("/inherited-tenancy-disabled", TestContext.Current.CancellationToken);
+            var content = await response.Content.ReadAsStringAsync(TestContext.Current.CancellationToken);
 
             content.Should().Be("no tenant", "because the tenant id should not be set");
         }
