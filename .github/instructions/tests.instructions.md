@@ -25,6 +25,7 @@ Naming:
 Writing tests:
 
 - Use `[Fact]`, or `[Theory]` + `[InlineData]` for parameterized cases
+- Pass `TestContext.Current.CancellationToken` to methods that accept a `CancellationToken` (the xUnit1051 analyzer flags calls that omit it)
 - Assert with FluentAssertions (`result.Should().BeSameAs(expected)`)
 - Fake with FakeItEasy: `A.Fake<T>()` to create, `A.CallTo(() => ...)` to configure and assert
 - Internals can be made testable via `InternalsVisibleTo` in the src `.csproj` (already declared

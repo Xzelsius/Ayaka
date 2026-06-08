@@ -13,7 +13,7 @@ public sealed class AsyncLocalTenantContextAccessorTest
             TenantContext = context
         };
 
-        await Task.Delay(100);
+        await Task.Delay(100, TestContext.Current.CancellationToken);
 
         accessor.TenantContext.Should().BeSameAs(context);
     }

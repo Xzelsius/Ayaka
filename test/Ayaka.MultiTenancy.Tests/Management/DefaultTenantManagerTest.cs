@@ -1,4 +1,4 @@
-﻿// Copyright (c) Raphael Strotz. All rights reserved.
+// Copyright (c) Raphael Strotz. All rights reserved.
 
 namespace Ayaka.MultiTenancy.Tests.Management;
 
@@ -13,7 +13,7 @@ public sealed class DefaultTenantManagerTest
         var tenantManager = new DefaultTenantManager(store);
         var tenant = new Tenant("tenant1");
 
-        await tenantManager.AddAsync(tenant);
+        await tenantManager.AddAsync(tenant, TestContext.Current.CancellationToken);
 
         A.CallTo(() => store.AddAsync(tenant, A<CancellationToken>.Ignored))
             .MustHaveHappened();
@@ -26,7 +26,7 @@ public sealed class DefaultTenantManagerTest
         var tenantManager = new DefaultTenantManager(store);
         var tenantId = "tenant1";
 
-        await tenantManager.RemoveAsync(tenantId);
+        await tenantManager.RemoveAsync(tenantId, TestContext.Current.CancellationToken);
 
         A.CallTo(() => store.RemoveAsync(tenantId, A<CancellationToken>.Ignored))
             .MustHaveHappened();
@@ -43,7 +43,7 @@ public sealed class DefaultTenantManagerTest
         A.CallTo(() => store.GetAllAsync(A<CancellationToken>.Ignored))
             .Returns([tenant]);
 
-        var result = await tenantManager.GetAsync(tenantId);
+        var result = await tenantManager.GetAsync(tenantId, TestContext.Current.CancellationToken);
 
         result.Should().Be(tenant);
     }
@@ -58,7 +58,7 @@ public sealed class DefaultTenantManagerTest
         A.CallTo(() => store.GetAllAsync(A<CancellationToken>.Ignored))
             .Returns([]);
 
-        var result = await tenantManager.GetAsync(tenantId);
+        var result = await tenantManager.GetAsync(tenantId, TestContext.Current.CancellationToken);
 
         result.Should().BeNull();
     }
@@ -77,7 +77,7 @@ public sealed class DefaultTenantManagerTest
         A.CallTo(() => store.GetAllAsync(A<CancellationToken>.Ignored))
             .Returns(tenants);
 
-        var result = await tenantManager.GetAllAsync();
+        var result = await tenantManager.GetAllAsync(TestContext.Current.CancellationToken);
 
         result.Should().BeEquivalentTo(tenants);
     }
