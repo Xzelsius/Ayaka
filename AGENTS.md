@@ -32,7 +32,7 @@ One-time setup: `dotnet tool restore` (installs the NUKE global tool).
 Fast inner loop (preferred while iterating):
 
 ```sh
-dotnet build Ayaka.sln
+dotnet build Ayaka.slnx
 dotnet test test/Ayaka.MultiTenancy.Tests
 dotnet test test/Ayaka.MultiTenancy.Tests --filter "FullyQualifiedName~AsyncLocalTenantContextAccessorTest"
 ```

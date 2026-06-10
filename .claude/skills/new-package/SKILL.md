@@ -28,14 +28,14 @@ Use the kebab-case of the feature part for docs paths (e.g. `Ayaka.MultiTenancy`
    `test/Ayaka.MultiTenancy.Tests/Ayaka.MultiTenancy.Tests.csproj`, with a `ProjectReference` to
    the new src project; add `InternalsVisibleTo` in the src csproj if tests need internals
 5. **Solution** — add both projects to their solution folders:
-   - `dotnet sln Ayaka.sln add src/<Name>/<Name>.csproj --solution-folder src`
-   - `dotnet sln Ayaka.sln add test/<Name>.Tests/<Name>.Tests.csproj --solution-folder test`
+   - `dotnet sln Ayaka.slnx add src/<Name>/<Name>.csproj --solution-folder src`
+   - `dotnet sln Ayaka.slnx add test/<Name>.Tests/<Name>.Tests.csproj --solution-folder test`
 6. **Docs** —
    - `docs/en/guide/packages/<kebab>/index.md`, starting with the `::: warning` preview note like
      `docs/en/guide/packages/multi-tenancy/index.md`
    - a sidebar section in `guideSidebar()` in `docs/.vitepress/en.ts`
    - a table row + link reference in `docs/en/guide/packages.md`
-7. **Verify** — `dotnet build Ayaka.sln`, then `./build.sh` (Pack runs dotnet-validate over the
+7. **Verify** — `dotnet build Ayaka.slnx`, then `./build.sh` (Pack runs dotnet-validate over the
    new package), then `/docs-verify guide/packages/<kebab>` for the new page and sidebar entry
 
 Do not invent initial APIs — leave the package empty or minimal unless the user specified contents.
