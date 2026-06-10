@@ -1,0 +1,32 @@
+<Solution>
+  <Folder Name="/eng/">
+    <File Path="eng/Analyzers.props" />
+    <File Path="eng/Compiler.props" />
+    <File Path="eng/Packages.props" />
+    <File Path="eng/Product.props" />
+    <File Path="eng/SourceLink.props" />
+    <File Path="eng/TargetFramework.props" />
+    <File Path="eng/Usings.props" />
+  </Folder>
+  <Folder Name="/eng/assets/">
+    <File Path="eng/assets/logo.png" />
+  </Folder>
+  <Folder Name="/nukebuild/">
+    <Project Path="nukebuild/Build.csproj">
+      <Build Project="false" />
+    </Project>
+  </Folder>
+  <Folder Name="/src/">
+    <File Path="src/Directory.Build.props" />
+    <Project Path="src/Ayaka.MultiTenancy.Abstractions/Ayaka.MultiTenancy.Abstractions.csproj" />
+    <Project Path="src/Ayaka.MultiTenancy.AspNetCore/Ayaka.MultiTenancy.AspNetCore.csproj" />
+    <Project Path="src/Ayaka.MultiTenancy/Ayaka.MultiTenancy.csproj" />
+    <Project Path="src/Ayaka.Nuke/Ayaka.Nuke.csproj" />
+  </Folder>
+  <Folder Name="/test/">
+    <File Path="test/Directory.Build.props" />
+    <Project Path="test/Ayaka.MultiTenancy.AspNetCore.Tests/Ayaka.MultiTenancy.AspNetCore.Tests.csproj" />
+    <Project Path="test/Ayaka.MultiTenancy.Tests/Ayaka.MultiTenancy.Tests.csproj" />
+    <Project Path="test/Ayaka.Nuke.Tests/Ayaka.Nuke.Tests.csproj" />
+  </Folder>
+</Solution>

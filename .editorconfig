@@ -16,16 +16,12 @@ indent_size = 2
 [*.{yml,yaml}]
 indent_size = 2
 
-# Visual Studio solution files
-[*.sln]
-indent_style = tab
-
 # Visual Studio XML project files
 [*.{csproj,vbproj,vcxproj.filters,proj,projitems,shproj}]
 indent_size = 2
 
 # XML, and XML based configuration files
-[*.{xml,config,props,targets,nuspec,resx,ruleset}]
+[*.{slnx,xml,config,props,targets,nuspec,resx,ruleset}]
 indent_size = 2
 
 # Markdown files

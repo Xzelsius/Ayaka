@@ -19,6 +19,6 @@ cd "$root" 2>/dev/null || exit 0
 # dotnet format expects workspace-relative --include paths.
 rel="${file#"$root"/}"
 
-dotnet format Ayaka.sln --include "$rel" --no-restore --verbosity quiet >/dev/null 2>&1 || true
+dotnet format Ayaka.slnx --include "$rel" --no-restore --verbosity quiet >/dev/null 2>&1 || true
 
 exit 0
