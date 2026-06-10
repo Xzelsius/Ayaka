@@ -5,7 +5,7 @@
 Ayaka is a collection of NuGet packages helping with .NET application development.
 
 `src/` contains the package projects, mirrored by `test/<Project>.Tests` xunit projects (not every
-package has one). Everything targets net9.0 only; the SDK is pinned to 9.0.300 in `global.json`.
+package has one). Everything targets net10.0 only; the SDK is pinned to 10.0.301 in `global.json`.
 
 See `AGENTS.md` at the repo root for the full agent guide.
 

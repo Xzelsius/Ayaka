@@ -12,8 +12,8 @@ MIT licensed, docs at <https://xzelsius.github.io/Ayaka>.
 | `Ayaka.MultiTenancy`              | `src/Ayaka.MultiTenancy`              | preview                                                                                                                                         |
 | `Ayaka.MultiTenancy.AspNetCore`   | `src/Ayaka.MultiTenancy.AspNetCore`   | preview                                                                                                                                         |
 
-Everything targets **net9.0 only** — no multi-targeting, by explicit decision. The .NET SDK is pinned
-to `9.0.300` in `global.json`.
+Everything targets **net10.0 only** — no multi-targeting, by explicit decision. The .NET SDK is pinned
+to `10.0.301` in `global.json`.
 
 ## Repository map
 
