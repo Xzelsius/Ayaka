@@ -494,10 +494,12 @@ See [Executing CLI Tools] for more information.
 :::
 
 ::: warning
-Please note that `dotnet-validate` with version `0.0.1-preview.304` and below still requires .NET 6 SDK installed
-on the build system.
+`dotnet-validate` runs on the .NET runtime it was built against, which depends on its version:
+`0.0.1-preview.304` and below target .NET 6, `0.0.1-preview.537` targets .NET 8, and
+`0.0.1-preview.582` and above target .NET 10.
 
-Since the support for .NET 6 ended in Nov 2024, you likely have to install it manually.
+Make sure the matching .NET SDK (or runtime) is installed on your build system. Picking a version that
+targets the same .NET as your build avoids having to install an extra runtime just for this tool.
 :::
 
 By default, `NuGetPackagesToPush` represents all packages (`*.nupkg`) within the `PackagesDirectory` directory of the

@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageDownload Include="dotnet-validate" Version="[0.0.1-preview.304]" />
+    <PackageDownload Include="dotnet-validate" Version="[0.0.1-preview.582]" />
     <PackageDownload Include="GitVersion.Tool" Version="[6.7.0]" />
   </ItemGroup>
 
