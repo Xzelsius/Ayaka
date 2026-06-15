@@ -2,6 +2,6 @@
 
 namespace Ayaka.Build;
 
-public abstract class BuildDefinition : IBuildDefinition
+public interface IBuildDefinition
 {
 }
