@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/build/">
+    <Project Path="build/Build.csproj" />
+  </Folder>
   <Folder Name="/eng/">
     <File Path="eng/Analyzers.props" />
     <File Path="eng/Compiler.props" />

@@ -1,0 +1,5 @@
+<Project>
+
+  <!-- This file prevents unintended imports of unrelated MSBuild files -->
+
+</Project>

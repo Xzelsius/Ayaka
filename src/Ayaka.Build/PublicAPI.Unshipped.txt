@@ -1,1 +1,5 @@
 ﻿#nullable enable
+Ayaka.Build.BuildDefinition
+Ayaka.Build.BuildDefinition.BuildDefinition() -> void
+Ayaka.Build.BuildRunner
+Ayaka.Build.BuildRunner.RunAsync(string![]! args) -> System.Threading.Tasks.Task<int>!
