@@ -3,3 +3,7 @@ Ayaka.Build.BuildDefinition
 Ayaka.Build.BuildDefinition.BuildDefinition() -> void
 Ayaka.Build.BuildRunner
 Ayaka.Build.BuildRunner.RunAsync(string![]! args) -> System.Threading.Tasks.Task<int>!
+Ayaka.Build.ITargetDefinition
+Ayaka.Build.ITargetDefinition.Executes(System.Action! action) -> Ayaka.Build.ITargetDefinition!
+Ayaka.Build.ITargetDefinition.Executes(System.Func<System.Threading.Tasks.Task!>! action) -> Ayaka.Build.ITargetDefinition!
+Ayaka.Build.Target
