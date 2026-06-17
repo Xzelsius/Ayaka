@@ -8,3 +8,5 @@ Ayaka.Build.ITargetDefinition
 Ayaka.Build.ITargetDefinition.Executes(System.Action! action) -> Ayaka.Build.ITargetDefinition!
 Ayaka.Build.ITargetDefinition.Executes(System.Func<System.Threading.Tasks.Task!>! action) -> Ayaka.Build.ITargetDefinition!
 Ayaka.Build.Target
+static Ayaka.Build.BuildRunner.Create(Ayaka.Build.BuildDefinition! definition) -> Ayaka.Build.BuildRunner!
+static Ayaka.Build.BuildRunner.Create<TBuildDefinition>() -> Ayaka.Build.BuildRunner!
