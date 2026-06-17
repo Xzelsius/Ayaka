@@ -2,9 +2,12 @@
 
 namespace Ayaka.Build.Execution;
 
+using System.Diagnostics;
+
 /// <summary>
 ///     Represents an executable build target.
 /// </summary>
+[DebuggerDisplay("{Name}")]
 internal sealed class BuildTarget
 {
     private readonly TargetDefinition _definition;

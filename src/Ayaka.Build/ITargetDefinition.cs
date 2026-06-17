@@ -3,7 +3,7 @@
 namespace Ayaka.Build;
 
 /// <summary>
-///     A build target definition.
+///     Configures a build target.
 /// </summary>
 public interface ITargetDefinition
 {
