@@ -15,7 +15,7 @@ public sealed class AsyncLocalTenantContextAccessorTest
 
         await Task.Delay(100, TestContext.Current.CancellationToken);
 
-        accessor.TenantContext.Should().BeSameAs(context);
+        accessor.TenantContext.ShouldBeSameAs(context);
     }
 
     [Fact]
@@ -23,7 +23,7 @@ public sealed class AsyncLocalTenantContextAccessorTest
     {
         var accessor = new AsyncLocalTenantContextAccessor();
 
-        accessor.TenantContext.Should().BeNull();
+        accessor.TenantContext.ShouldBeNull();
     }
 
     [Fact]
@@ -43,7 +43,7 @@ public sealed class AsyncLocalTenantContextAccessorTest
         ThreadPool.QueueUserWorkItem(async _ =>
         {
             // Make sure the TenantContext flows with the execution context
-            accessor.TenantContext.Should().BeSameAs(context);
+            accessor.TenantContext.ShouldBeSameAs(context);
 
             // Signal the outer code to continue
             checkAsyncFlowTcs.SetResult();
@@ -54,7 +54,7 @@ public sealed class AsyncLocalTenantContextAccessorTest
             try
             {
                 // Make sure the TenantContext is now null
-                accessor.TenantContext.Should().BeNull();
+                accessor.TenantContext.ShouldBeNull();
 
                 // Signal the outer code to continue
                 afterNullCheckTcs.SetResult();
@@ -76,7 +76,7 @@ public sealed class AsyncLocalTenantContextAccessorTest
         // Signal the thread pool callback to continue
         waitForNullTcs.SetResult();
 
-        accessor.TenantContext.Should().BeNull();
+        accessor.TenantContext.ShouldBeNull();
 
         // Wait for the thread pool callback to complete
         await afterNullCheckTcs.Task;
@@ -99,7 +99,7 @@ public sealed class AsyncLocalTenantContextAccessorTest
         ThreadPool.QueueUserWorkItem(async _ =>
         {
             // Make sure the TenantContext flows with the execution context
-            accessor.TenantContext.Should().BeSameAs(context);
+            accessor.TenantContext.ShouldBeSameAs(context);
 
             // Signal the outer code to continue
             checkAsyncFlowTcs.SetResult();
@@ -110,7 +110,7 @@ public sealed class AsyncLocalTenantContextAccessorTest
             try
             {
                 // Make sure the TenantContext is now null
-                accessor.TenantContext.Should().BeNull();
+                accessor.TenantContext.ShouldBeNull();
 
                 // Signal the outer code to continue
                 afterNullCheckTcs.SetResult();
@@ -133,7 +133,7 @@ public sealed class AsyncLocalTenantContextAccessorTest
         // Signal the thread pool callback to continue
         waitForNullTcs.SetResult();
 
-        accessor.TenantContext.Should().BeSameAs(context2);
+        accessor.TenantContext.ShouldBeSameAs(context2);
 
         // Wait for the thread pool callback to complete
         await afterNullCheckTcs.Task;
@@ -158,7 +158,7 @@ public sealed class AsyncLocalTenantContextAccessorTest
             try
             {
                 // Make sure the TenantContext flows with the execution context
-                accessor.TenantContext.Should().BeNull();
+                accessor.TenantContext.ShouldBeNull();
 
                 // Signal the outer code to continue
                 checkAsyncFlowTcs.SetResult();
@@ -190,7 +190,7 @@ public sealed class AsyncLocalTenantContextAccessorTest
             try
             {
                 // Make sure the TenantContext flows with the execution context
-                accessor.TenantContext.Should().BeNull();
+                accessor.TenantContext.ShouldBeNull();
 
                 // Signal the outer code to continue
                 checkAsyncFlowTcs.SetResult();

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Raphael Strotz. All rights reserved.
+// Copyright (c) Raphael Strotz. All rights reserved.
 
 namespace Ayaka.MultiTenancy.AspNetCore.Tests.Detection;
 
@@ -18,7 +18,7 @@ public sealed class FromRequestHostStrategyTest
 
         var actual = await new FromRequestHostStrategy().TryDetectAsync(httpContext);
 
-        actual.Should().BeNull();
+        actual.ShouldBeNull();
     }
 
     [Fact]
@@ -32,7 +32,7 @@ public sealed class FromRequestHostStrategyTest
 
         var actual = await new FromRequestHostStrategy().TryDetectAsync(httpContext);
 
-        actual.Should().BeNull();
+        actual.ShouldBeNull();
     }
 
     [Theory]
@@ -49,6 +49,6 @@ public sealed class FromRequestHostStrategyTest
 
         var actual = await new FromRequestHostStrategy().TryDetectAsync(httpContext);
 
-        actual.Should().Be(expectedTenantId);
+        actual.ShouldBe(expectedTenantId);
     }
 }

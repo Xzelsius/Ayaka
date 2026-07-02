@@ -1,4 +1,4 @@
-﻿// Copyright (c) Raphael Strotz. All rights reserved.
+// Copyright (c) Raphael Strotz. All rights reserved.
 
 namespace Ayaka.MultiTenancy.AspNetCore.Tests.Detection;
 
@@ -13,7 +13,7 @@ public sealed class FromRequestHeaderStrategyTest
     {
         var actual = new FromRequestHeaderStrategy("X-Tenant-Id");
 
-        actual.HeaderName.Should().Be("X-Tenant-Id");
+        actual.HeaderName.ShouldBe("X-Tenant-Id");
     }
 
     [Fact]
@@ -27,7 +27,7 @@ public sealed class FromRequestHeaderStrategyTest
 
         var actual = await new FromRequestHeaderStrategy("X-Tenant-Id").TryDetectAsync(httpContext);
 
-        actual.Should().BeNull();
+        actual.ShouldBeNull();
     }
 
     [Theory]
@@ -50,7 +50,7 @@ public sealed class FromRequestHeaderStrategyTest
 
         var actual = await new FromRequestHeaderStrategy("X-Tenant-Id").TryDetectAsync(httpContext);
 
-        actual.Should().BeNull();
+        actual.ShouldBeNull();
     }
 
     [Fact]
@@ -70,7 +70,7 @@ public sealed class FromRequestHeaderStrategyTest
 
         var actual = await new FromRequestHeaderStrategy("X-Tenant-Id").TryDetectAsync(httpContext);
 
-        actual.Should().Be("example");
+        actual.ShouldBe("example");
     }
 
     [Fact]
@@ -90,6 +90,6 @@ public sealed class FromRequestHeaderStrategyTest
 
         var actual = await new FromRequestHeaderStrategy("X-Tenant-Id").TryDetectAsync(httpContext);
 
-        actual.Should().Be("example");
+        actual.ShouldBe("example");
     }
 }

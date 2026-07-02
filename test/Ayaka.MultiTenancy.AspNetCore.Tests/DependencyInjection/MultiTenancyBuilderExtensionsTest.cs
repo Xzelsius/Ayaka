@@ -1,4 +1,4 @@
-﻿// Copyright (c) Raphael Strotz. All rights reserved.
+// Copyright (c) Raphael Strotz. All rights reserved.
 
 namespace Ayaka.MultiTenancy.AspNetCore.Tests.DependencyInjection;
 
@@ -14,7 +14,7 @@ public sealed class MultiTenancyBuilderExtensionsTest
 
         var result = builder.ConfigureRequestTenancy(_ => { });
 
-        result.Should().BeSameAs(builder);
+        result.ShouldBeSameAs(builder);
     }
 
     [Fact]
@@ -24,7 +24,7 @@ public sealed class MultiTenancyBuilderExtensionsTest
 
         builder.ConfigureRequestTenancy(requestTenancy =>
         {
-            requestTenancy.MultiTenancy.Should().BeSameAs(builder);
+            requestTenancy.MultiTenancy.ShouldBeSameAs(builder);
         });
     }
 

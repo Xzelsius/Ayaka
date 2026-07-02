@@ -22,8 +22,7 @@ public sealed class IgnoreCaseWhenPossibleComparerTest
         lines.Sort(IgnoreCaseWhenPossibleComparer.Instance);
 
         lines
-            .Should()
-            .BeEquivalentTo(
+            .ShouldBe(
                 [
                     "#nullable enable",
                     "Ayaka.Nuke.DotNet.ICanDotNetBuild",
@@ -31,8 +30,7 @@ public sealed class IgnoreCaseWhenPossibleComparerTest
                     "Ayaka.Nuke.DotNet.ICanDotNetBuild.DotNetBuildSettingsBase.get -> Nuke.Common.Tooling.Configure<Nuke.Common.Tools.DotNet.DotNetBuildSettings!>!",
                     "Ayaka.Nuke.DotNet.IHaveDotNetPackTarget",
                     "Ayaka.Nuke.Extensions"
-                ],
-                o => o.WithStrictOrdering());
+                ]);
     }
 
     [Fact]
@@ -48,13 +46,11 @@ public sealed class IgnoreCaseWhenPossibleComparerTest
         lines.Sort(IgnoreCaseWhenPossibleComparer.Instance);
 
         lines
-            .Should()
-            .BeEquivalentTo(
+            .ShouldBe(
                 [
                     "Ayaka.Nuke.DotNet.ICanDotNetBuild",
                     "Ayaka.Nuke.Extensions",
                     "ayaka.nuke.extensions",
-                ],
-                o => o.WithStrictOrdering());
+                ]);
     }
 }

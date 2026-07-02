@@ -13,7 +13,7 @@ public sealed class ExtensionsTest
 
             var actual = settings.When(true, s => s.EnableFlag());
 
-            actual.Should().BeEquivalentTo(new TestSettings(Flag: true));
+            actual.ShouldBe(new TestSettings(Flag: true));
         }
 
         [Fact]
@@ -23,7 +23,7 @@ public sealed class ExtensionsTest
 
             var actual = settings.When(false, s => s.EnableFlag());
 
-            actual.Should().BeEquivalentTo(new TestSettings(Flag: false));
+            actual.ShouldBe(new TestSettings(Flag: false));
         }
 
         private sealed record TestSettings(bool Flag)
@@ -43,7 +43,7 @@ public sealed class ExtensionsTest
 
             var actual = settings.WhenNotNull(obj, (s, o) => s.EnableFlag());
 
-            actual.Should().BeEquivalentTo(new TestSettings(Flag: true));
+            actual.ShouldBe(new TestSettings(Flag: true));
         }
 
         [Fact]
@@ -54,7 +54,7 @@ public sealed class ExtensionsTest
 
             var actual = settings.WhenNotNull(obj, (s, o) => s.EnableFlag());
 
-            actual.Should().BeEquivalentTo(new TestSettings(Flag: false));
+            actual.ShouldBe(new TestSettings(Flag: false));
         }
 
         private sealed record TestSettings(bool Flag)

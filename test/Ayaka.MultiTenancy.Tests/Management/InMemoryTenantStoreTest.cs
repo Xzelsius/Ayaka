@@ -20,9 +20,9 @@ public sealed class InMemoryTenantStoreTest : TenantStoreCompliance<InMemoryStor
         await store1.AddAsync(new Tenant("tenant1"), TestContext.Current.CancellationToken);
 
         var tenantsFromStore1 = await store1.GetAllAsync(TestContext.Current.CancellationToken);
-        tenantsFromStore1.Should().ContainSingle();
+        tenantsFromStore1.ShouldHaveSingleItem();
 
         var tenantsFromStore2 = await store2.GetAllAsync(TestContext.Current.CancellationToken);
-        tenantsFromStore2.Should().BeEmpty();
+        tenantsFromStore2.ShouldBeEmpty();
     }
 }

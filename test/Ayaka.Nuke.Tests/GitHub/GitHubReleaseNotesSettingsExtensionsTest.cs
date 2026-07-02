@@ -14,9 +14,9 @@ public sealed class GitHubReleaseNotesSettingsExtensionsTest
 
         var actual = original.SetTag("v1.0");
 
-        actual.Should().NotBeSameAs(original);
-        original.Tag.Should().Be(expected: null);
-        actual.Tag.Should().Be("v1.0");
+        actual.ShouldNotBeSameAs(original);
+        original.Tag.ShouldBeNull();
+        actual.Tag.ShouldBe("v1.0");
     }
 
     [Fact]
@@ -27,9 +27,9 @@ public sealed class GitHubReleaseNotesSettingsExtensionsTest
 
         var actual = original.ResetTag();
 
-        actual.Should().NotBeSameAs(original);
-        original.Tag.Should().Be("v1.0");
-        actual.Tag.Should().Be(expected: null);
+        actual.ShouldNotBeSameAs(original);
+        original.Tag.ShouldBe("v1.0");
+        actual.Tag.ShouldBeNull();
     }
 
     [Fact]
@@ -39,9 +39,9 @@ public sealed class GitHubReleaseNotesSettingsExtensionsTest
 
         var actual = original.SetTargetCommitish("main");
 
-        actual.Should().NotBeSameAs(original);
-        original.TargetCommitish.Should().Be(expected: null);
-        actual.TargetCommitish.Should().Be("main");
+        actual.ShouldNotBeSameAs(original);
+        original.TargetCommitish.ShouldBeNull();
+        actual.TargetCommitish.ShouldBe("main");
     }
 
     [Fact]
@@ -52,9 +52,9 @@ public sealed class GitHubReleaseNotesSettingsExtensionsTest
 
         var actual = original.ResetTargetCommitish();
 
-        actual.Should().NotBeSameAs(original);
-        original.TargetCommitish.Should().Be("main");
-        actual.TargetCommitish.Should().Be(expected: null);
+        actual.ShouldNotBeSameAs(original);
+        original.TargetCommitish.ShouldBe("main");
+        actual.TargetCommitish.ShouldBeNull();
     }
 
     [Fact]
@@ -64,9 +64,9 @@ public sealed class GitHubReleaseNotesSettingsExtensionsTest
 
         var actual = original.SetPreviousTag("v0.9");
 
-        actual.Should().NotBeSameAs(original);
-        original.PreviousTag.Should().Be(expected: null);
-        actual.PreviousTag.Should().Be("v0.9");
+        actual.ShouldNotBeSameAs(original);
+        original.PreviousTag.ShouldBeNull();
+        actual.PreviousTag.ShouldBe("v0.9");
     }
 
     [Fact]
@@ -77,9 +77,9 @@ public sealed class GitHubReleaseNotesSettingsExtensionsTest
 
         var actual = original.ResetPreviousTag();
 
-        actual.Should().NotBeSameAs(original);
-        original.PreviousTag.Should().Be("v0.9");
-        actual.PreviousTag.Should().Be(expected: null);
+        actual.ShouldNotBeSameAs(original);
+        original.PreviousTag.ShouldBe("v0.9");
+        actual.PreviousTag.ShouldBeNull();
     }
 
     [Fact]
@@ -89,9 +89,9 @@ public sealed class GitHubReleaseNotesSettingsExtensionsTest
 
         var actual = original.SetConfigFile("release.yml");
 
-        actual.Should().NotBeSameAs(original);
-        original.ConfigFile.Should().Be(expected: null);
-        actual.ConfigFile.Should().Be("release.yml");
+        actual.ShouldNotBeSameAs(original);
+        original.ConfigFile.ShouldBeNull();
+        actual.ConfigFile.ShouldBe("release.yml");
     }
 
     [Fact]
@@ -102,8 +102,8 @@ public sealed class GitHubReleaseNotesSettingsExtensionsTest
 
         var actual = original.ResetConfigFile();
 
-        actual.Should().NotBeSameAs(original);
-        original.ConfigFile.Should().Be("release.yml");
-        actual.ConfigFile.Should().Be(expected: null);
+        actual.ShouldNotBeSameAs(original);
+        original.ConfigFile.ShouldBe("release.yml");
+        actual.ConfigFile.ShouldBeNull();
     }
 }

@@ -372,5 +372,5 @@ resharper_arguments_literal = named
 
 [/test/**/*.cs]
 # Computed value is never used
-# Reason: We don't want this rule in tests as would not play nice with FluentAssertions
+# Reason: We don't want this rule in tests as it would not play nice with the assertion library (Shouldly)
 dotnet_diagnostic.IDE0058.severity = none

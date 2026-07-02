@@ -13,9 +13,9 @@ public sealed class DotNetValidateLocalPackageSettingsExtensionsTest
 
         var actual = original.SetPackagePath("path/to/package");
 
-        actual.Should().NotBeSameAs(original);
-        original.PackagePath.Should().Be(expected: null);
-        actual.PackagePath.Should().Be("path/to/package");
+        actual.ShouldNotBeSameAs(original);
+        original.PackagePath.ShouldBeNull();
+        actual.PackagePath.ShouldBe("path/to/package");
     }
 
     [Fact]
@@ -26,8 +26,8 @@ public sealed class DotNetValidateLocalPackageSettingsExtensionsTest
 
         var actual = original.ResetPackagePath();
 
-        actual.Should().NotBeSameAs(original);
-        original.PackagePath.Should().Be("path/to/package");
-        actual.PackagePath.Should().Be(expected: null);
+        actual.ShouldNotBeSameAs(original);
+        original.PackagePath.ShouldBe("path/to/package");
+        actual.PackagePath.ShouldBeNull();
     }
 }

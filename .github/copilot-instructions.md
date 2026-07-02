@@ -42,7 +42,7 @@ See `AGENTS.md` at the repo root for the full agent guide.
 
 ## Tests
 
-- xunit + FluentAssertions + FakeItEasy via global usings (don't add `using Xunit;`)
+- xunit + Shouldly + FakeItEasy via global usings (don't add `using Xunit;`)
 - Class `<TypeName>Test`, snake_case sentence method names
 - Group related cases in nested classes named for the member/scenario under test
 

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Raphael Strotz. All rights reserved.
+// Copyright (c) Raphael Strotz. All rights reserved.
 
 namespace Ayaka.MultiTenancy.AspNetCore.Tests.DependencyInjection;
 
@@ -20,7 +20,7 @@ public sealed class RequestTenancyBuilderTest
         var sp = builder.Services.BuildServiceProvider();
         var options = sp.GetService<IOptions<RequestTenancyOptions>>();
 
-        options.Should().NotBeNull("IOptions<RequestTenancyOptions> should be registered");
+        options.ShouldNotBeNull("IOptions<RequestTenancyOptions> should be registered");
     }
 
     public sealed class DetectFromRequestHeader
@@ -35,12 +35,12 @@ public sealed class RequestTenancyBuilderTest
             var sp = builder.Services.BuildServiceProvider();
             var options = sp.GetRequiredService<IOptions<RequestTenancyOptions>>().Value;
 
-            options.DetectionStrategies.Should().ContainSingle();
+            options.DetectionStrategies.ShouldHaveSingleItem();
 
             var strategy = options.DetectionStrategies[0];
 
-            strategy.Should().BeOfType<FromRequestHeaderStrategy>();
-            strategy.As<FromRequestHeaderStrategy>().HeaderName.Should().Be("foo");
+            strategy.ShouldBeOfType<FromRequestHeaderStrategy>()
+                .HeaderName.ShouldBe("foo");
         }
 
         [Fact]
@@ -57,11 +57,11 @@ public sealed class RequestTenancyBuilderTest
             var sp = builder.Services.BuildServiceProvider();
             var options = sp.GetRequiredService<IOptions<RequestTenancyOptions>>().Value;
 
-            options.DetectionStrategies.Should().HaveCount(2);
-            options.DetectionStrategies.Should().AllBeOfType<FromRequestHeaderStrategy>();
+            options.DetectionStrategies.Count.ShouldBe(2);
+            options.DetectionStrategies.ShouldAllBe(x => x is FromRequestHeaderStrategy);
 
-            options.DetectionStrategies[0].As<FromRequestHeaderStrategy>().HeaderName.Should().Be("foo");
-            options.DetectionStrategies[1].As<FromRequestHeaderStrategy>().HeaderName.Should().Be("bar");
+            ((FromRequestHeaderStrategy)options.DetectionStrategies[0]).HeaderName.ShouldBe("foo");
+            ((FromRequestHeaderStrategy)options.DetectionStrategies[1]).HeaderName.ShouldBe("bar");
         }
     }
 
@@ -77,8 +77,7 @@ public sealed class RequestTenancyBuilderTest
             var sp = builder.Services.BuildServiceProvider();
             var options = sp.GetRequiredService<IOptions<RequestTenancyOptions>>().Value;
 
-            options.DetectionStrategies.Should().ContainSingle();
-            options.DetectionStrategies.Should().AllBeOfType<FromRequestHostStrategy>();
+            options.DetectionStrategies.ShouldHaveSingleItem().ShouldBeOfType<FromRequestHostStrategy>();
         }
     }
 
@@ -94,8 +93,7 @@ public sealed class RequestTenancyBuilderTest
             var sp = builder.Services.BuildServiceProvider();
             var options = sp.GetRequiredService<IOptions<RequestTenancyOptions>>().Value;
 
-            options.DetectionStrategies.Should().ContainSingle();
-            options.DetectionStrategies.Should().AllBeOfType<TestStrategy>();
+            options.DetectionStrategies.ShouldHaveSingleItem().ShouldBeOfType<TestStrategy>();
         }
 
         [Fact]
@@ -111,10 +109,10 @@ public sealed class RequestTenancyBuilderTest
             var sp = builder.Services.BuildServiceProvider();
             var options = sp.GetRequiredService<IOptions<RequestTenancyOptions>>().Value;
 
-            options.DetectionStrategies.Should().ContainSingle();
-            options.DetectionStrategies.Should().AllBeOfType<TestStrategyWithDependency>();
+            var strategy = options.DetectionStrategies.ShouldHaveSingleItem();
 
-            options.DetectionStrategies[0].As<TestStrategyWithDependency>().Dependency.Should().BeSameAs(service);
+            strategy.ShouldBeOfType<TestStrategyWithDependency>()
+                .Dependency.ShouldBeSameAs(service);
         }
     }
 
@@ -131,8 +129,8 @@ public sealed class RequestTenancyBuilderTest
             var sp = builder.Services.BuildServiceProvider();
             var options = sp.GetRequiredService<IOptions<RequestTenancyOptions>>().Value;
 
-            options.DetectionStrategies.Should().ContainSingle();
-            options.DetectionStrategies[0].Should().BeSameAs(strategy);
+            options.DetectionStrategies.ShouldHaveSingleItem();
+            options.DetectionStrategies[0].ShouldBeSameAs(strategy);
         }
     }
 
@@ -148,7 +146,7 @@ public sealed class RequestTenancyBuilderTest
             var sp = builder.Services.BuildServiceProvider();
             var options = sp.GetRequiredService<IOptions<RequestTenancyOptions>>().Value;
 
-            options.ActivityTagName.Should().Be("tenant");
+            options.ActivityTagName.ShouldBe("tenant");
         }
 
         [Fact]
@@ -161,7 +159,7 @@ public sealed class RequestTenancyBuilderTest
             var sp = builder.Services.BuildServiceProvider();
             var options = sp.GetRequiredService<IOptions<RequestTenancyOptions>>().Value;
 
-            options.ActivityTagName.Should().Be("custom");
+            options.ActivityTagName.ShouldBe("custom");
         }
     }
 

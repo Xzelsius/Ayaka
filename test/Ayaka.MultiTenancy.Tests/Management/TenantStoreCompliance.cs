@@ -19,8 +19,7 @@ public abstract class TenantStoreCompliance<TStoreFixture> : IDisposable, IAsync
         await store.AddAsync(tenant, TestContext.Current.CancellationToken);
 
         var tenants = await store.GetAllAsync(TestContext.Current.CancellationToken);
-        tenants.Should().ContainSingle();
-        tenants.Should().ContainEquivalentOf(tenant);
+        tenants.ShouldHaveSingleItem().ShouldBeEquivalentTo(tenant);
     }
 
     [Fact]
@@ -32,8 +31,7 @@ public abstract class TenantStoreCompliance<TStoreFixture> : IDisposable, IAsync
         await store.AddAsync(tenant, TestContext.Current.CancellationToken);
 
         var tenants = await store.GetAllAsync(TestContext.Current.CancellationToken);
-        tenants.Should().ContainSingle();
-        tenants.Should().ContainEquivalentOf(tenant);
+        tenants.ShouldHaveSingleItem().ShouldBeEquivalentTo(tenant);
     }
 
     [Fact]
@@ -51,8 +49,7 @@ public abstract class TenantStoreCompliance<TStoreFixture> : IDisposable, IAsync
         await store.AddAsync(tenant, TestContext.Current.CancellationToken);
 
         var tenants = await store.GetAllAsync(TestContext.Current.CancellationToken);
-        tenants.Should().ContainSingle();
-        tenants.Should().ContainEquivalentOf(tenant);
+        tenants.ShouldHaveSingleItem().ShouldBeEquivalentTo(tenant);
     }
 
     [Fact]
@@ -66,7 +63,7 @@ public abstract class TenantStoreCompliance<TStoreFixture> : IDisposable, IAsync
             async (i, ct) => await store.AddAsync(new Tenant("tenant" + i), ct));
 
         var tenants = await store.GetAllAsync(TestContext.Current.CancellationToken);
-        tenants.Should().HaveCount(100);
+        tenants.Count.ShouldBe(100);
     }
 
     [Fact]
@@ -77,7 +74,8 @@ public abstract class TenantStoreCompliance<TStoreFixture> : IDisposable, IAsync
 
         var act = async () => await store.AddAsync(new Tenant("tenant1"));
 
-        await act.Should().ThrowAsync<TenantManagementException>().WithMessage("Tenant with id 'tenant1' already exists");
+        (await Should.ThrowAsync<TenantManagementException>(act))
+            .Message.ShouldBe("Tenant with id 'tenant1' already exists");
     }
 
     [Fact]
@@ -95,8 +93,7 @@ public abstract class TenantStoreCompliance<TStoreFixture> : IDisposable, IAsync
         await store.UpdateAsync(updatedTenant, TestContext.Current.CancellationToken);
 
         var tenants = await store.GetAllAsync(TestContext.Current.CancellationToken);
-        tenants.Should().ContainSingle();
-        tenants.Should().ContainEquivalentOf(updatedTenant);
+        tenants.ShouldHaveSingleItem().ShouldBeEquivalentTo(updatedTenant);
     }
 
     [Fact]
@@ -120,12 +117,11 @@ public abstract class TenantStoreCompliance<TStoreFixture> : IDisposable, IAsync
         await store.UpdateAsync(updatedTenant, TestContext.Current.CancellationToken);
 
         var tenants = await store.GetAllAsync(TestContext.Current.CancellationToken);
-        tenants.Should().ContainSingle();
-        tenants.Should().ContainEquivalentOf(updatedTenant);
+        tenants.ShouldHaveSingleItem().ShouldBeEquivalentTo(updatedTenant);
     }
 
     [Fact]
-    public Task Throws_when_updating_non_existing_tenant()
+    public async Task Throws_when_updating_non_existing_tenant()
     {
         var store = StoreFixture.Store;
         var tenant = new Tenant(
@@ -143,7 +139,8 @@ public abstract class TenantStoreCompliance<TStoreFixture> : IDisposable, IAsync
 
         var act = async () => await store.UpdateAsync(updatedTenant);
 
-        return act.Should().ThrowAsync<TenantManagementException>().WithMessage("Tenant with id 'tenant1' does not exist");
+        (await Should.ThrowAsync<TenantManagementException>(act))
+            .Message.ShouldBe("Tenant with id 'tenant1' does not exist");
     }
 
     [Fact]
@@ -154,12 +151,12 @@ public abstract class TenantStoreCompliance<TStoreFixture> : IDisposable, IAsync
 
         // Make sure the tenant was added
         var tenants = await store.GetAllAsync(TestContext.Current.CancellationToken);
-        tenants.Should().ContainSingle();
+        tenants.ShouldHaveSingleItem();
 
         await store.RemoveAsync("tenant1", TestContext.Current.CancellationToken);
 
         tenants = await store.GetAllAsync(TestContext.Current.CancellationToken);
-        tenants.Should().BeEmpty();
+        tenants.ShouldBeEmpty();
     }
 
     [Fact]
@@ -169,7 +166,7 @@ public abstract class TenantStoreCompliance<TStoreFixture> : IDisposable, IAsync
 
         var act = async () => await store.RemoveAsync("tenant1");
 
-        return act.Should().NotThrowAsync();
+        return Should.NotThrowAsync(act);
     }
 
     public ValueTask InitializeAsync()

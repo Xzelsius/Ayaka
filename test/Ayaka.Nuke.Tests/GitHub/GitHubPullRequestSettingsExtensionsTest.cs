@@ -14,9 +14,9 @@ public sealed class GitHubPullRequestSettingsExtensionsTest
 
         var actual = original.SetHead("feature/awesome");
 
-        actual.Should().NotBeSameAs(original);
-        original.Head.Should().Be(expected: null);
-        actual.Head.Should().Be("feature/awesome");
+        actual.ShouldNotBeSameAs(original);
+        original.Head.ShouldBeNull();
+        actual.Head.ShouldBe("feature/awesome");
     }
 
     [Fact]
@@ -27,9 +27,9 @@ public sealed class GitHubPullRequestSettingsExtensionsTest
 
         var actual = original.ResetHead();
 
-        actual.Should().NotBeSameAs(original);
-        original.Head.Should().Be("feature/awesome");
-        actual.Head.Should().Be(expected: null);
+        actual.ShouldNotBeSameAs(original);
+        original.Head.ShouldBe("feature/awesome");
+        actual.Head.ShouldBeNull();
     }
 
     [Fact]
@@ -39,9 +39,9 @@ public sealed class GitHubPullRequestSettingsExtensionsTest
 
         var actual = original.SetBase("main");
 
-        actual.Should().NotBeSameAs(original);
-        original.Base.Should().Be(expected: null);
-        actual.Base.Should().Be("main");
+        actual.ShouldNotBeSameAs(original);
+        original.Base.ShouldBeNull();
+        actual.Base.ShouldBe("main");
     }
 
     [Fact]
@@ -52,9 +52,9 @@ public sealed class GitHubPullRequestSettingsExtensionsTest
 
         var actual = original.ResetBase();
 
-        actual.Should().NotBeSameAs(original);
-        original.Base.Should().Be("main");
-        actual.Base.Should().Be(expected: null);
+        actual.ShouldNotBeSameAs(original);
+        original.Base.ShouldBe("main");
+        actual.Base.ShouldBeNull();
     }
 
     [Fact]
@@ -64,9 +64,9 @@ public sealed class GitHubPullRequestSettingsExtensionsTest
 
         var actual = original.SetTitle("Add new feature");
 
-        actual.Should().NotBeSameAs(original);
-        original.Title.Should().Be(expected: null);
-        actual.Title.Should().Be("Add new feature");
+        actual.ShouldNotBeSameAs(original);
+        original.Title.ShouldBeNull();
+        actual.Title.ShouldBe("Add new feature");
     }
 
     [Fact]
@@ -77,9 +77,9 @@ public sealed class GitHubPullRequestSettingsExtensionsTest
 
         var actual = original.ResetTitle();
 
-        actual.Should().NotBeSameAs(original);
-        original.Title.Should().Be("Add new feature");
-        actual.Title.Should().Be(expected: null);
+        actual.ShouldNotBeSameAs(original);
+        original.Title.ShouldBe("Add new feature");
+        actual.Title.ShouldBeNull();
     }
 
     [Fact]
@@ -89,9 +89,9 @@ public sealed class GitHubPullRequestSettingsExtensionsTest
 
         var actual = original.SetBody("This pull request adds a new feature.");
 
-        actual.Should().NotBeSameAs(original);
-        original.Body.Should().Be(expected: null);
-        actual.Body.Should().Be("This pull request adds a new feature.");
+        actual.ShouldNotBeSameAs(original);
+        original.Body.ShouldBeNull();
+        actual.Body.ShouldBe("This pull request adds a new feature.");
     }
 
     [Fact]
@@ -102,9 +102,9 @@ public sealed class GitHubPullRequestSettingsExtensionsTest
 
         var actual = original.ResetBody();
 
-        actual.Should().NotBeSameAs(original);
-        original.Body.Should().Be("This pull request adds a new feature.");
-        actual.Body.Should().Be(expected: null);
+        actual.ShouldNotBeSameAs(original);
+        original.Body.ShouldBe("This pull request adds a new feature.");
+        actual.Body.ShouldBeNull();
     }
 
     [Fact]
@@ -114,9 +114,9 @@ public sealed class GitHubPullRequestSettingsExtensionsTest
 
         var actual = original.SetDraft(true);
 
-        actual.Should().NotBeSameAs(original);
-        original.Draft.Should().Be(expected: null);
-        actual.Draft.Should().Be(true);
+        actual.ShouldNotBeSameAs(original);
+        original.Draft.ShouldBeNull();
+        actual.Draft.ShouldBe(true);
     }
 
     [Fact]
@@ -127,8 +127,8 @@ public sealed class GitHubPullRequestSettingsExtensionsTest
 
         var actual = original.ResetDraft();
 
-        actual.Should().NotBeSameAs(original);
-        original.Draft.Should().Be(true);
-        actual.Draft.Should().Be(expected: null);
+        actual.ShouldNotBeSameAs(original);
+        original.Draft.ShouldBe(true);
+        actual.Draft.ShouldBeNull();
     }
 }

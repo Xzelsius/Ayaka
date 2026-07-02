@@ -1,4 +1,4 @@
-﻿// Copyright (c) Raphael Strotz. All rights reserved.
+// Copyright (c) Raphael Strotz. All rights reserved.
 
 namespace Ayaka.MultiTenancy.Tests.DependencyInjection;
 
@@ -17,7 +17,7 @@ public sealed class TenantManagementBuilderExtensions
 
             var result = builder.UseInMemoryStore();
 
-            result.Should().BeSameAs(builder);
+            result.ShouldBeSameAs(builder);
         }
 
         [Fact]
@@ -29,8 +29,8 @@ public sealed class TenantManagementBuilderExtensions
 
             var store = builder.MultiTenancy.Services.FirstOrDefault(x => x.ServiceType == typeof(ITenantStore));
 
-            store.Should().NotBeNull("ITenantStore should be registered");
-            store.ImplementationType.Should().Be(typeof(InMemoryTenantStore));
+            store.ShouldNotBeNull("ITenantStore should be registered");
+            store.ImplementationType.ShouldBe(typeof(InMemoryTenantStore));
         }
 
         [Fact]
@@ -43,8 +43,8 @@ public sealed class TenantManagementBuilderExtensions
 
             var store = builder.MultiTenancy.Services.FirstOrDefault(x => x.ServiceType == typeof(ITenantStore));
 
-            store.Should().NotBeNull("ITenantStore should be registered");
-            store.ImplementationType.Should().Be(typeof(TestTenantStore));
+            store.ShouldNotBeNull("ITenantStore should be registered");
+            store.ImplementationType.ShouldBe(typeof(TestTenantStore));
         }
     }
 

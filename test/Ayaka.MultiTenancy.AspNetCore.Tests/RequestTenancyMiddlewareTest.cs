@@ -3,6 +3,7 @@
 namespace Ayaka.MultiTenancy.AspNetCore.Tests;
 
 using System.Diagnostics;
+using System.Net;
 using Ayaka.MultiTenancy.AspNetCore.Detection;
 using Ayaka.MultiTenancy.AspNetCore.Tests.Internal;
 using Ayaka.MultiTenancy.DependencyInjection;
@@ -55,10 +56,9 @@ public abstract class RequestTenancyMiddlewareTest
 
         var action = () => client.GetAsync("/");
 
-        await action
-            .Should()
-            .ThrowAsync<InvalidOperationException>()
-            .WithMessage("Tenant was already set previously in the request pipeline");
+        (await Should.ThrowAsync<InvalidOperationException>(action))
+            .Message.ShouldBe(
+                "Tenant was already set previously in the request pipeline");
     }
 
     [Fact]
@@ -84,10 +84,9 @@ public abstract class RequestTenancyMiddlewareTest
 
         var action = () => client.GetAsync("/tenancy-enabled");
 
-        await action
-            .Should()
-            .ThrowAsync<InvalidOperationException>()
-            .WithMessage("No tenant detection strategies are configured");
+        (await Should.ThrowAsync<InvalidOperationException>(action))
+            .Message.ShouldBe(
+                "No tenant detection strategies are configured");
     }
 
     [Fact]
@@ -116,7 +115,7 @@ public abstract class RequestTenancyMiddlewareTest
         using var response = await client.GetAsync("/tenancy-disabled", TestContext.Current.CancellationToken);
         var content = await response.Content.ReadAsStringAsync(TestContext.Current.CancellationToken);
 
-        content.Should().Be("no tenant", "because the tenant id should not be set");
+        content.ShouldBe("no tenant", "because the tenant id should not be set");
     }
 
     [Fact]
@@ -146,7 +145,7 @@ public abstract class RequestTenancyMiddlewareTest
 
         var content = await response.Content.ReadAsStringAsync(TestContext.Current.CancellationToken);
 
-        content.Should().Be("test", "because the tenant id should be set");
+        content.ShouldBe("test", "because the tenant id should be set");
     }
 
     [Fact]
@@ -177,7 +176,7 @@ public abstract class RequestTenancyMiddlewareTest
         using var response = await client.GetAsync("/tenancy-enabled", TestContext.Current.CancellationToken);
         var content = await response.Content.ReadAsStringAsync(TestContext.Current.CancellationToken);
 
-        content.Should().Be("test", "because the tenant id should be set");
+        content.ShouldBe("test", "because the tenant id should be set");
     }
 
     [Fact]
@@ -206,7 +205,7 @@ public abstract class RequestTenancyMiddlewareTest
         using var response = await client.GetAsync("/tenancy-enabled", TestContext.Current.CancellationToken);
         var content = await response.Content.ReadAsStringAsync(TestContext.Current.CancellationToken);
 
-        content.Should().Be("no tenant", "because the tenant id should not be set");
+        content.ShouldBe("no tenant", "because the tenant id should not be set");
     }
 
     [Fact]
@@ -238,10 +237,10 @@ public abstract class RequestTenancyMiddlewareTest
 
         using var client = host.GetTestClient();
         using var response = await client.GetAsync("/tenancy-enabled", TestContext.Current.CancellationToken);
-        response.Should().BeSuccessful();
+        response.StatusCode.ShouldBe(HttpStatusCode.OK);
 
-        tracker.StoppedActivities.Should().ContainSingle();
-        tracker.StoppedActivities[0].Tags.Should().ContainSingle(x => x.Key == "custom" && x.Value == "test");
+        tracker.StoppedActivities.ShouldHaveSingleItem();
+        tracker.StoppedActivities[0].Tags.ShouldContain(x => x.Key == "custom" && x.Value == "test", 1);
     }
 
     protected virtual void ConfigureServices(IServiceCollection services)
@@ -316,7 +315,7 @@ public abstract class RequestTenancyMiddlewareTest
             using var response = await client.GetAsync("/inherited-tenancy-disabled", TestContext.Current.CancellationToken);
             var content = await response.Content.ReadAsStringAsync(TestContext.Current.CancellationToken);
 
-            content.Should().Be("no tenant", "because the tenant id should not be set");
+            content.ShouldBe("no tenant", "because the tenant id should not be set");
         }
 
         private sealed class TestController : ControllerBase
