@@ -16,8 +16,7 @@ public sealed class ServiceCollectionExtensionsTest
 
             var builder = services.AddMultiTenancy();
 
-            builder.Should().NotBeNull();
-            builder.Should().BeOfType<MultiTenancyBuilder>();
+            builder.ShouldBeOfType<MultiTenancyBuilder>();
         }
 
         [Fact]
@@ -27,7 +26,7 @@ public sealed class ServiceCollectionExtensionsTest
 
             var builder = services.AddMultiTenancy();
 
-            builder.Services.Should().BeSameAs(services);
+            builder.Services.ShouldBeSameAs(services);
         }
 
         [Fact]
@@ -38,7 +37,7 @@ public sealed class ServiceCollectionExtensionsTest
             services.AddMultiTenancy();
 
             var accessor = services.FirstOrDefault(x => x.ServiceType == typeof(ITenantContextAccessor));
-            accessor.Should().NotBeNull("ITenantContextAccessor should be registered");
+            accessor.ShouldNotBeNull("ITenantContextAccessor should be registered");
         }
 
         [Fact]
@@ -49,7 +48,7 @@ public sealed class ServiceCollectionExtensionsTest
             services.AddMultiTenancy();
             services.AddMultiTenancy();
 
-            services.Count(x => x.ServiceType == typeof(ITenantContextAccessor)).Should().Be(1);
+            services.Count(x => x.ServiceType == typeof(ITenantContextAccessor)).ShouldBe(1);
         }
     }
 
@@ -64,8 +63,8 @@ public sealed class ServiceCollectionExtensionsTest
 
             var accessor = services.FirstOrDefault(x => x.ServiceType == typeof(ITenantContextAccessor));
 
-            accessor.Should().NotBeNull();
-            accessor!.Lifetime.Should().Be(ServiceLifetime.Singleton);
+            accessor.ShouldNotBeNull();
+            accessor.Lifetime.ShouldBe(ServiceLifetime.Singleton);
         }
 
         [Fact]
@@ -77,14 +76,13 @@ public sealed class ServiceCollectionExtensionsTest
             services.AddTenantContextAccessor();
 
             var accessor = services.FirstOrDefault(x => x.ServiceType == typeof(ITenantContextAccessor));
-            accessor.Should().NotBeNull();
-            accessor!.Lifetime.Should().Be(ServiceLifetime.Scoped);
+            accessor.ShouldNotBeNull();
+            accessor.Lifetime.ShouldBe(ServiceLifetime.Scoped);
 
             var serviceProvider = services.BuildServiceProvider();
             serviceProvider
                 .GetRequiredService<ITenantContextAccessor>()
-                .Should()
-                .BeOfType<TestTenantContextAccessor>();
+                .ShouldBeOfType<TestTenantContextAccessor>();
         }
 
         [Fact]
@@ -92,7 +90,7 @@ public sealed class ServiceCollectionExtensionsTest
         {
             var services = new ServiceCollection();
 
-            services.AddTenantContextAccessor().Should().BeSameAs(services);
+            services.AddTenantContextAccessor().ShouldBeSameAs(services);
         }
 
         private sealed class TestTenantContextAccessor : ITenantContextAccessor

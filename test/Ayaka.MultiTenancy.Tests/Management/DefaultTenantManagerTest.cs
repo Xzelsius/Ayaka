@@ -45,7 +45,7 @@ public sealed class DefaultTenantManagerTest
 
         var result = await tenantManager.GetAsync(tenantId, TestContext.Current.CancellationToken);
 
-        result.Should().Be(tenant);
+        result.ShouldBe(tenant);
     }
 
     [Fact]
@@ -60,7 +60,7 @@ public sealed class DefaultTenantManagerTest
 
         var result = await tenantManager.GetAsync(tenantId, TestContext.Current.CancellationToken);
 
-        result.Should().BeNull();
+        result.ShouldBeNull();
     }
 
     [Fact]
@@ -79,6 +79,6 @@ public sealed class DefaultTenantManagerTest
 
         var result = await tenantManager.GetAllAsync(TestContext.Current.CancellationToken);
 
-        result.Should().BeEquivalentTo(tenants);
+        result.ShouldBeEquivalentTo(tenants);
     }
 }

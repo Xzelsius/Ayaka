@@ -1,4 +1,4 @@
-﻿// Copyright (c) Raphael Strotz. All rights reserved.
+// Copyright (c) Raphael Strotz. All rights reserved.
 
 namespace Ayaka.MultiTenancy.Tests.DependencyInjection;
 
@@ -17,8 +17,7 @@ public sealed class MultiTenancyBuilderExtensionsTest
 
             var tenantManagementBuilder = builder.AddTenantManagement();
 
-            tenantManagementBuilder.Should().NotBeNull();
-            tenantManagementBuilder.Should().BeOfType<TenantManagementBuilder>();
+            tenantManagementBuilder.ShouldBeOfType<TenantManagementBuilder>();
         }
 
         [Fact]
@@ -28,7 +27,7 @@ public sealed class MultiTenancyBuilderExtensionsTest
 
             var tenantManagementBuilder = builder.AddTenantManagement();
 
-            tenantManagementBuilder.MultiTenancy.Should().BeSameAs(builder);
+            tenantManagementBuilder.MultiTenancy.ShouldBeSameAs(builder);
         }
 
         [Fact]
@@ -39,7 +38,7 @@ public sealed class MultiTenancyBuilderExtensionsTest
             builder.AddTenantManagement();
 
             var manager = builder.Services.FirstOrDefault(x => x.ServiceType == typeof(ITenantManager));
-            manager.Should().NotBeNull("ITenantManager should be registered");
+            manager.ShouldNotBeNull("ITenantManager should be registered");
         }
 
         [Fact]
@@ -50,7 +49,7 @@ public sealed class MultiTenancyBuilderExtensionsTest
             builder.AddTenantManagement();
             builder.AddTenantManagement();
 
-            builder.Services.Count(x => x.ServiceType == typeof(ITenantManager)).Should().Be(1);
+            builder.Services.Count(x => x.ServiceType == typeof(ITenantManager)).ShouldBe(1);
         }
     }
 

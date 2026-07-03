@@ -1,4 +1,4 @@
-﻿// Copyright (c) Raphael Strotz. All rights reserved.
+// Copyright (c) Raphael Strotz. All rights reserved.
 
 namespace Ayaka.MultiTenancy.AspNetCore.Tests.DependencyInjection;
 
@@ -32,10 +32,8 @@ public sealed class ApplicationBuilderExtensionsTest
 
         var action = () => host.Start();
 
-        action
-            .Should()
-            .Throw<InvalidOperationException>()
-            .WithMessage(
+        Should.Throw<InvalidOperationException>(action)
+            .Message.ShouldBe(
                 "Unable to find the required services. " +
                 "Please add all the required services by calling 'IServiceCollection.AddMultiTenancy()' in the application startup code.");
     }

@@ -13,9 +13,9 @@ public sealed class DotNetValidateRemotePackageSettingsExtensionsTest
 
         var actual = original.SetPackageId("mypackage");
 
-        actual.Should().NotBeSameAs(original);
-        original.PackageId.Should().Be(expected: null);
-        actual.PackageId.Should().Be("mypackage");
+        actual.ShouldNotBeSameAs(original);
+        original.PackageId.ShouldBeNull();
+        actual.PackageId.ShouldBe("mypackage");
     }
 
     [Fact]
@@ -26,9 +26,9 @@ public sealed class DotNetValidateRemotePackageSettingsExtensionsTest
 
         var actual = original.ResetPackageId();
 
-        actual.Should().NotBeSameAs(original);
-        original.PackageId.Should().Be("mypackage");
-        actual.PackageId.Should().Be(expected: null);
+        actual.ShouldNotBeSameAs(original);
+        original.PackageId.ShouldBe("mypackage");
+        actual.PackageId.ShouldBeNull();
     }
 
     [Fact]
@@ -38,9 +38,9 @@ public sealed class DotNetValidateRemotePackageSettingsExtensionsTest
 
         var actual = original.SetPackageVersion("1.2.3.4");
 
-        actual.Should().NotBeSameAs(original);
-        original.PackageVersion.Should().Be(expected: null);
-        actual.PackageVersion.Should().Be("1.2.3.4");
+        actual.ShouldNotBeSameAs(original);
+        original.PackageVersion.ShouldBeNull();
+        actual.PackageVersion.ShouldBe("1.2.3.4");
     }
 
     [Fact]
@@ -51,9 +51,9 @@ public sealed class DotNetValidateRemotePackageSettingsExtensionsTest
 
         var actual = original.ResetPackageVersion();
 
-        actual.Should().NotBeSameAs(original);
-        original.PackageVersion.Should().Be("1.2.3.4");
-        actual.PackageVersion.Should().Be(expected: null);
+        actual.ShouldNotBeSameAs(original);
+        original.PackageVersion.ShouldBe("1.2.3.4");
+        actual.PackageVersion.ShouldBeNull();
     }
 
     [Fact]
@@ -63,9 +63,9 @@ public sealed class DotNetValidateRemotePackageSettingsExtensionsTest
 
         var actual = original.SetConfigDirectory("path/to/directory");
 
-        actual.Should().NotBeSameAs(original);
-        original.ConfigDirectory.Should().Be(expected: null);
-        actual.ConfigDirectory.Should().Be("path/to/directory");
+        actual.ShouldNotBeSameAs(original);
+        original.ConfigDirectory.ShouldBeNull();
+        actual.ConfigDirectory.ShouldBe("path/to/directory");
     }
 
     [Fact]
@@ -76,8 +76,8 @@ public sealed class DotNetValidateRemotePackageSettingsExtensionsTest
 
         var actual = original.ResetConfigDirectory();
 
-        actual.Should().NotBeSameAs(original);
-        original.ConfigDirectory.Should().Be("path/to/directory");
-        actual.ConfigDirectory.Should().Be(expected: null);
+        actual.ShouldNotBeSameAs(original);
+        original.ConfigDirectory.ShouldBe("path/to/directory");
+        actual.ConfigDirectory.ShouldBeNull();
     }
 }

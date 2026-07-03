@@ -14,9 +14,9 @@ public sealed class GitHubReleaseSettingsExtensionsTest
 
         var actual = original.SetTag("v1.0");
 
-        actual.Should().NotBeSameAs(original);
-        original.Tag.Should().Be(expected: null);
-        actual.Tag.Should().Be("v1.0");
+        actual.ShouldNotBeSameAs(original);
+        original.Tag.ShouldBeNull();
+        actual.Tag.ShouldBe("v1.0");
     }
 
     [Fact]
@@ -27,9 +27,9 @@ public sealed class GitHubReleaseSettingsExtensionsTest
 
         var actual = original.ResetTag();
 
-        actual.Should().NotBeSameAs(original);
-        original.Tag.Should().Be("v1.0");
-        actual.Tag.Should().Be(expected: null);
+        actual.ShouldNotBeSameAs(original);
+        original.Tag.ShouldBe("v1.0");
+        actual.Tag.ShouldBeNull();
     }
 
     [Fact]
@@ -39,9 +39,9 @@ public sealed class GitHubReleaseSettingsExtensionsTest
 
         var actual = original.SetTargetCommitish("main");
 
-        actual.Should().NotBeSameAs(original);
-        original.TargetCommitish.Should().Be(expected: null);
-        actual.TargetCommitish.Should().Be("main");
+        actual.ShouldNotBeSameAs(original);
+        original.TargetCommitish.ShouldBeNull();
+        actual.TargetCommitish.ShouldBe("main");
     }
 
     [Fact]
@@ -52,9 +52,9 @@ public sealed class GitHubReleaseSettingsExtensionsTest
 
         var actual = original.ResetTargetCommitish();
 
-        actual.Should().NotBeSameAs(original);
-        original.TargetCommitish.Should().Be("main");
-        actual.TargetCommitish.Should().Be(expected: null);
+        actual.ShouldNotBeSameAs(original);
+        original.TargetCommitish.ShouldBe("main");
+        actual.TargetCommitish.ShouldBeNull();
     }
 
     [Fact]
@@ -64,9 +64,9 @@ public sealed class GitHubReleaseSettingsExtensionsTest
 
         var actual = original.SetName("Release v1.0");
 
-        actual.Should().NotBeSameAs(original);
-        original.Name.Should().Be(expected: null);
-        actual.Name.Should().Be("Release v1.0");
+        actual.ShouldNotBeSameAs(original);
+        original.Name.ShouldBeNull();
+        actual.Name.ShouldBe("Release v1.0");
     }
 
     [Fact]
@@ -77,9 +77,9 @@ public sealed class GitHubReleaseSettingsExtensionsTest
 
         var actual = original.ResetName();
 
-        actual.Should().NotBeSameAs(original);
-        original.Name.Should().Be("Release v1.0");
-        actual.Name.Should().Be(expected: null);
+        actual.ShouldNotBeSameAs(original);
+        original.Name.ShouldBe("Release v1.0");
+        actual.Name.ShouldBeNull();
     }
 
     [Fact]
@@ -89,9 +89,9 @@ public sealed class GitHubReleaseSettingsExtensionsTest
 
         var actual = original.SetBody("This is the release notes for v1.0.");
 
-        actual.Should().NotBeSameAs(original);
-        original.Body.Should().Be(expected: null);
-        actual.Body.Should().Be("This is the release notes for v1.0.");
+        actual.ShouldNotBeSameAs(original);
+        original.Body.ShouldBeNull();
+        actual.Body.ShouldBe("This is the release notes for v1.0.");
     }
 
     [Fact]
@@ -102,9 +102,9 @@ public sealed class GitHubReleaseSettingsExtensionsTest
 
         var actual = original.ResetBody();
 
-        actual.Should().NotBeSameAs(original);
-        original.Body.Should().Be("This is the release notes for v1.0.");
-        actual.Body.Should().Be(expected: null);
+        actual.ShouldNotBeSameAs(original);
+        original.Body.ShouldBe("This is the release notes for v1.0.");
+        actual.Body.ShouldBeNull();
     }
 
     [Fact]
@@ -114,9 +114,9 @@ public sealed class GitHubReleaseSettingsExtensionsTest
 
         var actual = original.SetDraft(draft: true);
 
-        actual.Should().NotBeSameAs(original);
-        original.Draft.Should().Be(expected: null);
-        actual.Draft.Should().Be(expected: true);
+        actual.ShouldNotBeSameAs(original);
+        original.Draft.ShouldBeNull();
+        actual.Draft.ShouldBe(true);
     }
 
     [Fact]
@@ -127,9 +127,9 @@ public sealed class GitHubReleaseSettingsExtensionsTest
 
         var actual = original.ResetDraft();
 
-        actual.Should().NotBeSameAs(original);
-        original.Draft.Should().Be(expected: true);
-        actual.Draft.Should().Be(expected: null);
+        actual.ShouldNotBeSameAs(original);
+        original.Draft.ShouldBe(true);
+        actual.Draft.ShouldBeNull();
     }
 
     [Fact]
@@ -139,9 +139,9 @@ public sealed class GitHubReleaseSettingsExtensionsTest
 
         var actual = original.SetPreRelease(preRelease: true);
 
-        actual.Should().NotBeSameAs(original);
-        original.PreRelease.Should().Be(expected: null);
-        actual.PreRelease.Should().Be(expected: true);
+        actual.ShouldNotBeSameAs(original);
+        original.PreRelease.ShouldBeNull();
+        actual.PreRelease.ShouldBe(true);
     }
 
     [Fact]
@@ -152,9 +152,9 @@ public sealed class GitHubReleaseSettingsExtensionsTest
 
         var actual = original.ResetPreRelease();
 
-        actual.Should().NotBeSameAs(original);
-        original.PreRelease.Should().Be(expected: true);
-        actual.PreRelease.Should().Be(expected: null);
+        actual.ShouldNotBeSameAs(original);
+        original.PreRelease.ShouldBe(true);
+        actual.PreRelease.ShouldBeNull();
     }
 
     [Fact]
@@ -164,9 +164,9 @@ public sealed class GitHubReleaseSettingsExtensionsTest
 
         var actual = original.SetGenerateReleaseNotes(generateReleaseNotes: true);
 
-        actual.Should().NotBeSameAs(original);
-        original.GenerateReleaseNotes.Should().Be(expected: null);
-        actual.GenerateReleaseNotes.Should().Be(expected: true);
+        actual.ShouldNotBeSameAs(original);
+        original.GenerateReleaseNotes.ShouldBeNull();
+        actual.GenerateReleaseNotes.ShouldBe(true);
     }
 
     [Fact]
@@ -177,9 +177,9 @@ public sealed class GitHubReleaseSettingsExtensionsTest
 
         var actual = original.ResetGenerateReleaseNotes();
 
-        actual.Should().NotBeSameAs(original);
-        original.GenerateReleaseNotes.Should().Be(expected: true);
-        actual.GenerateReleaseNotes.Should().Be(expected: null);
+        actual.ShouldNotBeSameAs(original);
+        original.GenerateReleaseNotes.ShouldBe(true);
+        actual.GenerateReleaseNotes.ShouldBeNull();
     }
 
     [Fact]
@@ -189,9 +189,9 @@ public sealed class GitHubReleaseSettingsExtensionsTest
 
         var actual = original.AddArtifactPath("path/to/artifact");
 
-        actual.Should().NotBeSameAs(original);
-        original.ArtifactPaths.Should().BeNull();
-        actual.ArtifactPaths.Should().ContainSingle().Which.Should().Be("path/to/artifact");
+        actual.ShouldNotBeSameAs(original);
+        original.ArtifactPaths.ShouldBeNull();
+        actual.ArtifactPaths.ShouldHaveSingleItem().ShouldBe("path/to/artifact");
     }
 
     [Fact]
@@ -202,8 +202,8 @@ public sealed class GitHubReleaseSettingsExtensionsTest
 
         var actual = original.ClearArtifactPaths();
 
-        actual.Should().NotBeSameAs(original);
-        original.ArtifactPaths.Should().ContainSingle().Which.Should().Be("path/to/artifact");
-        actual.ArtifactPaths.Should().BeEmpty();
+        actual.ShouldNotBeSameAs(original);
+        original.ArtifactPaths.ShouldHaveSingleItem().ShouldBe("path/to/artifact");
+        actual.ArtifactPaths.ShouldBeEmpty();
     }
 }

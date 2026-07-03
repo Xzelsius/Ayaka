@@ -93,19 +93,19 @@ Usings:
 
 - `ImplicitUsings` is enabled
 - `System.Diagnostics.CodeAnalysis` is a global using everywhere
-- Test projects additionally get `Xunit`, `FluentAssertions`, and `FakeItEasy` as global usings — no
+- Test projects additionally get `Xunit`, `Shouldly`, and `FakeItEasy` as global usings — no
   explicit `using` needed for these
 
 ## Tests
 
-xunit + FluentAssertions + FakeItEasy (see `eng/Packages.props` for versions).
+xunit + Shouldly + FakeItEasy (see `eng/Packages.props` for versions).
 
 - Test class: `<TypeUnderTest>Test` (singular, e.g. `AsyncLocalTenantContextAccessorTest`) in
   `test/<Project>.Tests` mirroring the source namespace
 - Group related cases in nested classes named after the member/scenario under test (e.g.
   `AddMultiTenancy`, `When`)
 - Method names are readable sentences in snake_case: `Getting_TenantContext_returns_null_when_no_TenantContext_is_set`
-- Assert with FluentAssertions (`.Should().Be...`), fake with FakeItEasy
+- Assert with Shouldly (`.ShouldBe(...)`), fake with FakeItEasy
 
 ## Commits, PRs, releases
 

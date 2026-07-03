@@ -14,9 +14,9 @@ public sealed class GitHubSettingsExtensionsTest
 
         var actual = original.SetRepositoryOwner("owner");
 
-        actual.Should().NotBeSameAs(original);
-        original.RepositoryOwner.Should().Be(expected: null);
-        actual.RepositoryOwner.Should().Be("owner");
+        actual.ShouldNotBeSameAs(original);
+        original.RepositoryOwner.ShouldBeNull();
+        actual.RepositoryOwner.ShouldBe("owner");
     }
 
     [Fact]
@@ -27,9 +27,9 @@ public sealed class GitHubSettingsExtensionsTest
 
         var actual = original.ResetRepositoryOwner();
 
-        actual.Should().NotBeSameAs(original);
-        original.RepositoryOwner.Should().Be("owner");
-        actual.RepositoryOwner.Should().Be(expected: null);
+        actual.ShouldNotBeSameAs(original);
+        original.RepositoryOwner.ShouldBe("owner");
+        actual.RepositoryOwner.ShouldBeNull();
     }
 
     [Fact]
@@ -39,9 +39,9 @@ public sealed class GitHubSettingsExtensionsTest
 
         var actual = original.SetRepositoryName("name");
 
-        actual.Should().NotBeSameAs(original);
-        original.RepositoryName.Should().Be(expected: null);
-        actual.RepositoryName.Should().Be("name");
+        actual.ShouldNotBeSameAs(original);
+        original.RepositoryName.ShouldBeNull();
+        actual.RepositoryName.ShouldBe("name");
     }
 
     [Fact]
@@ -52,9 +52,9 @@ public sealed class GitHubSettingsExtensionsTest
 
         var actual = original.ResetRepositoryName();
 
-        actual.Should().NotBeSameAs(original);
-        original.RepositoryName.Should().Be("name");
-        actual.RepositoryName.Should().Be(expected: null);
+        actual.ShouldNotBeSameAs(original);
+        original.RepositoryName.ShouldBe("name");
+        actual.RepositoryName.ShouldBeNull();
     }
 
     [Fact]
@@ -64,9 +64,9 @@ public sealed class GitHubSettingsExtensionsTest
 
         var actual = original.SetToken("token");
 
-        actual.Should().NotBeSameAs(original);
-        original.Token.Should().Be(expected: null);
-        actual.Token.Should().Be("token");
+        actual.ShouldNotBeSameAs(original);
+        original.Token.ShouldBeNull();
+        actual.Token.ShouldBe("token");
     }
 
     [Fact]
@@ -77,9 +77,9 @@ public sealed class GitHubSettingsExtensionsTest
 
         var actual = original.ResetToken();
 
-        actual.Should().NotBeSameAs(original);
-        original.Token.Should().Be("token");
-        actual.Token.Should().Be(expected: null);
+        actual.ShouldNotBeSameAs(original);
+        original.Token.ShouldBe("token");
+        actual.Token.ShouldBeNull();
     }
 
     [Fact]
@@ -89,9 +89,9 @@ public sealed class GitHubSettingsExtensionsTest
 
         var actual = original.SetBaseUrl("url");
 
-        actual.Should().NotBeSameAs(original);
-        original.BaseUrl.Should().Be(expected: null);
-        actual.BaseUrl.Should().Be("url");
+        actual.ShouldNotBeSameAs(original);
+        original.BaseUrl.ShouldBeNull();
+        actual.BaseUrl.ShouldBe("url");
     }
 
     [Fact]
@@ -102,8 +102,8 @@ public sealed class GitHubSettingsExtensionsTest
 
         var actual = original.ResetBaseUrl();
 
-        actual.Should().NotBeSameAs(original);
-        original.BaseUrl.Should().Be("url");
-        actual.BaseUrl.Should().Be(expected: null);
+        actual.ShouldNotBeSameAs(original);
+        original.BaseUrl.ShouldBe("url");
+        actual.BaseUrl.ShouldBeNull();
     }
 }
