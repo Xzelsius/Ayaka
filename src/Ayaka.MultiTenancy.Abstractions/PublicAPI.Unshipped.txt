@@ -1,1 +1,23 @@
 #nullable enable
+Ayaka.MultiTenancy.Management.Tenant.Deconstruct(out string! Id, out string? DisplayName, out System.Collections.Immutable.IImmutableDictionary<string!, string!>? Attributes) -> void
+Ayaka.MultiTenancy.Management.Tenant.Tenant(Ayaka.MultiTenancy.Management.Tenant! original) -> void
+Ayaka.MultiTenancy.TenantContext.Deconstruct(out string! Id, out string? DisplayName) -> void
+Ayaka.MultiTenancy.TenantContext.TenantContext(Ayaka.MultiTenancy.TenantContext! original) -> void
+override Ayaka.MultiTenancy.Management.Tenant.Equals(object? obj) -> bool
+override Ayaka.MultiTenancy.Management.Tenant.GetHashCode() -> int
+override Ayaka.MultiTenancy.Management.Tenant.ToString() -> string!
+override Ayaka.MultiTenancy.TenantContext.Equals(object? obj) -> bool
+override Ayaka.MultiTenancy.TenantContext.GetHashCode() -> int
+override Ayaka.MultiTenancy.TenantContext.ToString() -> string!
+static Ayaka.MultiTenancy.Management.Tenant.operator !=(Ayaka.MultiTenancy.Management.Tenant? left, Ayaka.MultiTenancy.Management.Tenant? right) -> bool
+static Ayaka.MultiTenancy.Management.Tenant.operator ==(Ayaka.MultiTenancy.Management.Tenant? left, Ayaka.MultiTenancy.Management.Tenant? right) -> bool
+static Ayaka.MultiTenancy.TenantContext.operator !=(Ayaka.MultiTenancy.TenantContext? left, Ayaka.MultiTenancy.TenantContext? right) -> bool
+static Ayaka.MultiTenancy.TenantContext.operator ==(Ayaka.MultiTenancy.TenantContext? left, Ayaka.MultiTenancy.TenantContext? right) -> bool
+virtual Ayaka.MultiTenancy.Management.Tenant.<Clone>$() -> Ayaka.MultiTenancy.Management.Tenant!
+virtual Ayaka.MultiTenancy.Management.Tenant.EqualityContract.get -> System.Type!
+virtual Ayaka.MultiTenancy.Management.Tenant.Equals(Ayaka.MultiTenancy.Management.Tenant? other) -> bool
+virtual Ayaka.MultiTenancy.Management.Tenant.PrintMembers(System.Text.StringBuilder! builder) -> bool
+virtual Ayaka.MultiTenancy.TenantContext.<Clone>$() -> Ayaka.MultiTenancy.TenantContext!
+virtual Ayaka.MultiTenancy.TenantContext.EqualityContract.get -> System.Type!
+virtual Ayaka.MultiTenancy.TenantContext.Equals(Ayaka.MultiTenancy.TenantContext? other) -> bool
+virtual Ayaka.MultiTenancy.TenantContext.PrintMembers(System.Text.StringBuilder! builder) -> bool
