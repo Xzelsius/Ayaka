@@ -20,6 +20,19 @@ public sealed class DefaultTenantManagerTest
     }
 
     [Fact]
+    public async Task Does_update_tenant_in_underlying_store()
+    {
+        var store = A.Fake<ITenantStore>();
+        var tenantManager = new DefaultTenantManager(store);
+        var tenant = new Tenant("tenant1");
+
+        await tenantManager.UpdateAsync(tenant, TestContext.Current.CancellationToken);
+
+        A.CallTo(() => store.UpdateAsync(tenant, A<CancellationToken>.Ignored))
+            .MustHaveHappened();
+    }
+
+    [Fact]
     public async Task Does_remove_tenant_from_underlying_store()
     {
         var store = A.Fake<ITenantStore>();
@@ -33,15 +46,29 @@ public sealed class DefaultTenantManagerTest
     }
 
     [Fact]
-    public async Task Does_return_tenant_if_found()
+    public async Task Does_report_the_removal_outcome_of_the_underlying_store()
+    {
+        var store = A.Fake<ITenantStore>();
+        var tenantManager = new DefaultTenantManager(store);
+
+        A.CallTo(() => store.RemoveAsync("tenant1", A<CancellationToken>.Ignored))
+            .Returns(false);
+
+        var result = await tenantManager.RemoveAsync("tenant1", TestContext.Current.CancellationToken);
+
+        result.ShouldBeFalse();
+    }
+
+    [Fact]
+    public async Task Does_return_a_single_tenant()
     {
         var store = A.Fake<ITenantStore>();
         var tenantManager = new DefaultTenantManager(store);
         var tenantId = "tenant1";
         var tenant = new Tenant(tenantId);
 
-        A.CallTo(() => store.GetAllAsync(A<CancellationToken>.Ignored))
-            .Returns([tenant]);
+        A.CallTo(() => store.GetAsync(tenantId, A<CancellationToken>.Ignored))
+            .Returns(tenant);
 
         var result = await tenantManager.GetAsync(tenantId, TestContext.Current.CancellationToken);
 
@@ -55,8 +82,8 @@ public sealed class DefaultTenantManagerTest
         var tenantManager = new DefaultTenantManager(store);
         var tenantId = "tenant1";
 
-        A.CallTo(() => store.GetAllAsync(A<CancellationToken>.Ignored))
-            .Returns([]);
+        A.CallTo(() => store.GetAsync(tenantId, A<CancellationToken>.Ignored))
+            .Returns((Tenant?)null);
 
         var result = await tenantManager.GetAsync(tenantId, TestContext.Current.CancellationToken);
 

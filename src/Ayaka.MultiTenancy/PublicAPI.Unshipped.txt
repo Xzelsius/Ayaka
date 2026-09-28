@@ -1,1 +1,3 @@
-﻿#nullable enable
+#nullable enable
+Ayaka.MultiTenancy.Management.InMemoryTenantStore.GetAsync(string! id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Ayaka.MultiTenancy.Management.Tenant?>!
+Ayaka.MultiTenancy.Management.InMemoryTenantStore.RemoveAsync(string! id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<bool>!

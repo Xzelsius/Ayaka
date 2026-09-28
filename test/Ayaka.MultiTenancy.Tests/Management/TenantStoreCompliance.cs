@@ -153,20 +153,79 @@ public abstract class TenantStoreCompliance<TStoreFixture> : IDisposable, IAsync
         var tenants = await store.GetAllAsync(TestContext.Current.CancellationToken);
         tenants.ShouldHaveSingleItem();
 
-        await store.RemoveAsync("tenant1", TestContext.Current.CancellationToken);
+        var removed = await store.RemoveAsync("tenant1", TestContext.Current.CancellationToken);
+
+        removed.ShouldBeTrue();
 
         tenants = await store.GetAllAsync(TestContext.Current.CancellationToken);
         tenants.ShouldBeEmpty();
     }
 
     [Fact]
-    public Task Does_not_throw_when_removing_non_existing_tenant()
+    public async Task Reports_false_when_removing_non_existing_tenant()
     {
         var store = StoreFixture.Store;
 
-        var act = async () => await store.RemoveAsync("tenant1");
+        var removed = await store.RemoveAsync("tenant1", TestContext.Current.CancellationToken);
 
-        return Should.NotThrowAsync(act);
+        removed.ShouldBeFalse();
+    }
+
+    [Fact]
+    public async Task Allows_getting_an_existing_tenant()
+    {
+        var store = StoreFixture.Store;
+        var tenant = new Tenant(
+            "tenant1",
+            "Tenant 1",
+            new Dictionary<string, string>
+            {
+                { "key", "value" }
+            }.ToImmutableDictionary());
+
+        await store.AddAsync(tenant, TestContext.Current.CancellationToken);
+
+        var found = await store.GetAsync("tenant1", TestContext.Current.CancellationToken);
+
+        found.ShouldNotBeNull().ShouldBeEquivalentTo(tenant);
+    }
+
+    [Fact]
+    public async Task Returns_null_when_getting_a_non_existing_tenant()
+    {
+        var store = StoreFixture.Store;
+        await store.AddAsync(new Tenant("tenant1"), TestContext.Current.CancellationToken);
+
+        var found = await store.GetAsync("tenant2", TestContext.Current.CancellationToken);
+
+        found.ShouldBeNull();
+    }
+
+    [Fact]
+    public async Task Allows_getting_all_existing_tenants()
+    {
+        var store = StoreFixture.Store;
+        var tenant1 = new Tenant(
+            "tenant1",
+            "Tenant 1",
+            new Dictionary<string, string>
+            {
+                { "key", "value" }
+            }.ToImmutableDictionary());
+        var tenant2 = new Tenant(
+            "tenant2",
+            "Tenant 2",
+            new Dictionary<string, string>
+            {
+                    { "key", "value" }
+            }.ToImmutableDictionary());
+
+        await store.AddAsync(tenant1, TestContext.Current.CancellationToken);
+        await store.AddAsync(tenant2, TestContext.Current.CancellationToken);
+
+        var found = await store.GetAllAsync(TestContext.Current.CancellationToken);
+
+        found.ShouldBe([tenant1, tenant2], ignoreOrder: true);
     }
 
     public ValueTask InitializeAsync()

@@ -1,8 +1,9 @@
-﻿// Copyright (c) Raphael Strotz. All rights reserved.
+// Copyright (c) Raphael Strotz. All rights reserved.
 
 namespace Ayaka.MultiTenancy.Management;
 
 using System.Collections.Immutable;
+using System.ComponentModel;
 
 /// <summary>
 ///     Represents a tenant.
@@ -13,7 +14,8 @@ using System.Collections.Immutable;
 ///     The optional attributes of the tenant.
 ///     Normally used to store additional information about a tenant.
 /// </param>
-public record Tenant(
+[ImmutableObject(true)]
+public sealed record Tenant(
     string Id,
     string? DisplayName = null,
     IImmutableDictionary<string, string>? Attributes = null);
