@@ -14,6 +14,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- Overrides NUKE's NuGet 6.12.1: MSBuild from SDK 10.0.4xx references NuGet.Frameworks 7.9 and fails to load an older one -->
+    <PackageReference Include="NuGet.Packaging" Version="7.9.0" />
     <PackageReference Include="Nuke.Common" Version="10.1.0" />
     <PackageReference Include="Octokit" Version="14.0.0" />
   </ItemGroup>
