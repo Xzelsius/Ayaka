@@ -267,7 +267,7 @@ csharp_preserve_single_line_statements = true
 csharp_style_prefer_top_level_statements = false:warning
 
 # Constructors
-csharp_style_prefer_primary_constructors = true:suggestion
+csharp_style_prefer_primary_constructors = false:warning
 
 # 'var' usage
 csharp_style_var_for_built_in_types = true:suggestion

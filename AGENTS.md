@@ -85,7 +85,7 @@ Idioms:
 
 - `var` when the type is apparent
 - Pattern matching preferred: `is null` over `== null`, `is not` over `!(...)`
-- Primary constructors preferred
+- No primary constructors on classes or structs — use regular constructors (records are fine)
 - Expression bodies for single-line members
 - Avoid unnecessary code/clutter — match the surrounding style
 

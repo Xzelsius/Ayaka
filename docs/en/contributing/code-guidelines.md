@@ -176,7 +176,7 @@ The following rules should be followed regarding null-checking:
 
 ### Others
 
-* Prefer primary constructor (that one is controversial, maybe I'll change my mind someday)
+* Do not use primary constructors on classes and structs, write a regular constructor instead (records are fine)
 * Prefer index and range operators over `Substring`, `Take`, `Skip`, etc.
 * Discard variables using `_` if not used (e.g. `var (id, firstName, _) = GetPerson();` whereas `GetPerson` returns a tuple `(int, string, string)`),
 
