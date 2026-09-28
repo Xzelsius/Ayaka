@@ -29,16 +29,14 @@ The following file header should be present in every C# code file:
 The following naming conventions should be followed:
 
 * Interfaces: `I` prefix and `PascalCase` (e.g. `IInterface`)
-* Non-Interface types (classes, structs, enums, delegates and namespaces): `PascalCase` (e.g. `ClassName`)
-* Constant fields: `PascalCase` (e.g. `ConstantName`)
-* Public, internal and protected static readonly fields: `PascalCase` (e.g. `StaticReadonlyFieldName`)
-* Private static readonly fields: `_` prefix and `camelCase` (e.g. `_privateStaticReadonlyField`)
-* Public symbols (properties, methods and events): `PascalCase` (e.g. `PublicSymbol`)
-* Public, internal and protected readonly fields: `PascalCase` (e.g. `ReadonlyFieldName`)
-* Protected fields: `camelCase` (e.g. `protectedField`)
-* Private and private readonly fields: `_` prefix and `camelCase` (e.g. `_privateField`)
-* Parameters: camelCase (e.g. `parameterName`)
-* Local variables: camelCase (e.g. `localVariableName`)
+* All other types (classes, structs, enums, delegates and namespaces): `PascalCase` (e.g. `ClassName`)
+* Type parameters: `T` prefix and `PascalCase` (e.g. `TValue`)
+* Constants, at any accessibility: `PascalCase` (e.g. `ConstantName`)
+* Fields reachable from outside the declaring type (public, internal, protected and protected internal): `PascalCase` (e.g. `FieldName`)
+* Fields private to the declaring type (private and private protected, including static and readonly ones): `_` prefix and `camelCase` (e.g. `_privateField`)
+* Members (properties, methods, events and local functions), at any accessibility: `PascalCase` (e.g. `MemberName`)
+* Parameters: `camelCase` (e.g. `parameterName`)
+* Local variables: `camelCase` (e.g. `localVariableName`)
 
 ### Spaces
 

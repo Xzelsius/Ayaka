@@ -118,61 +118,46 @@ dotnet_style_allow_multiple_blank_lines_experimental = true:silent
 dotnet_style_allow_statement_immediately_after_block_experimental = true:silent
 
 ### Naming Conventions
+# Naming rules only run in the build when IDE1006 has an explicit severity
+# The per-rule 'dotnet_naming_rule.<x>.severity' keys below drive the IDE; MSBuild ignores them.
+dotnet_diagnostic.IDE1006.severity = warning
+
 ## Styles
 dotnet_naming_style.pascal_case_style.capitalization = pascal_case
 dotnet_naming_style.camel_case_style.capitalization = camel_case
+dotnet_naming_style.underscore_camel_case_style.capitalization = camel_case
+dotnet_naming_style.underscore_camel_case_style.required_prefix = _
 dotnet_naming_style.interface_style.capitalization = pascal_case
 dotnet_naming_style.interface_style.required_prefix = I
 dotnet_naming_style.type_parameter_style.capitalization = pascal_case
 dotnet_naming_style.type_parameter_style.required_prefix = T
-dotnet_naming_style.underscore_camel_case_style.capitalization = camel_case
-dotnet_naming_style.underscore_camel_case_style.required_prefix = _
 
 ## Symbols
 # Interfaces
 dotnet_naming_symbols.interface_symbol.applicable_kinds = interface
 dotnet_naming_symbols.interface_symbol.applicable_accessibilities = *
-# Non-Interface types
-dotnet_naming_symbols.non_interface_symbol.applicable_kinds = class, struct, enum, delegate, namespace
-dotnet_naming_symbols.non_interface_symbol.applicable_accessibilities = *
-# Constants
-dotnet_naming_symbols.constant_symbol.applicable_kinds = field
-dotnet_naming_symbols.constant_symbol.required_modifiers = const
-# Public, internal and protected static readonly fields
-dotnet_naming_symbols.public_static_readonly_field_symbol.applicable_kinds = field
-dotnet_naming_symbols.public_static_readonly_field_symbol.required_modifiers = static, readonly
-dotnet_naming_symbols.public_static_readonly_field_symbol.applicable_accessibilities = public, internal, protected, protected_internal
-# Private static readonly fields
-dotnet_naming_symbols.private_static_readonly_field_symbol.applicable_kinds = field
-dotnet_naming_symbols.private_static_readonly_field_symbol.required_modifiers = static, readonly
-dotnet_naming_symbols.private_static_readonly_field_symbol.applicable_accessibilities = private
-# Public symbols (properties, methods, events)
-dotnet_naming_symbols.public_symbol.applicable_kinds = property, method, event
-dotnet_naming_symbols.public_symbol.applicable_accessibilities = public, internal, protected, protected_internal
-# Public, internal and protected readonly fields
-dotnet_naming_symbols.public_readonly_field_symbol.applicable_kinds = field
-dotnet_naming_symbols.public_readonly_field_symbol.applicable_accessibilities = public, internal, protected, protected_internal
-dotnet_naming_symbols.public_readonly_field_symbol.required_modifiers = readonly
-# Public and internal fields
-dotnet_naming_symbols.public_internal_field_symbol.applicable_kinds = field
-dotnet_naming_symbols.public_internal_field_symbol.applicable_accessibilities = public, internal
-# Private and protected fields
-dotnet_naming_symbols.private_protected_field_symbol.applicable_kinds = field
-dotnet_naming_symbols.private_protected_field_symbol.applicable_accessibilities = private, protected, protected_internal
-# Private readonly fields
-dotnet_naming_symbols.private_readonly_field_symbol.applicable_kinds = field
-dotnet_naming_symbols.private_readonly_field_symbol.applicable_accessibilities = private
-dotnet_naming_symbols.private_readonly_field_symbol.required_modifiers = readonly
-# Private fields
-dotnet_naming_symbols.private_field_symbol.applicable_kinds = field
-dotnet_naming_symbols.private_field_symbol.applicable_accessibilities = private
+# All other types
+dotnet_naming_symbols.type_symbol.applicable_kinds = class, struct, enum, delegate, namespace
+dotnet_naming_symbols.type_symbol.applicable_accessibilities = *
 # Type parameters
 dotnet_naming_symbols.type_parameter_symbol.applicable_kinds = type_parameter
 dotnet_naming_symbols.type_parameter_symbol.applicable_accessibilities = *
+# Constants, at any accessibility
+dotnet_naming_symbols.constant_symbol.applicable_kinds = field
+dotnet_naming_symbols.constant_symbol.required_modifiers = const
+# Fields reachable from outside the declaring type
+dotnet_naming_symbols.exposed_field_symbol.applicable_kinds = field
+dotnet_naming_symbols.exposed_field_symbol.applicable_accessibilities = public, internal, protected, protected_internal
+# Fields private to the declaring type
+dotnet_naming_symbols.internal_field_symbol.applicable_kinds = field
+dotnet_naming_symbols.internal_field_symbol.applicable_accessibilities = private, private_protected
+# Members, at any accessibility
+dotnet_naming_symbols.member_symbol.applicable_kinds = property, method, event, local_function
+dotnet_naming_symbols.member_symbol.applicable_accessibilities = *
 # Parameters
 dotnet_naming_symbols.parameter_symbol.applicable_kinds = parameter
 dotnet_naming_symbols.parameter_symbol.applicable_accessibilities = *
-# Everything local
+# Locals
 dotnet_naming_symbols.local_symbol.applicable_kinds = local
 dotnet_naming_symbols.local_symbol.applicable_accessibilities = *
 
@@ -181,58 +166,38 @@ dotnet_naming_symbols.local_symbol.applicable_accessibilities = *
 dotnet_naming_rule.interface_naming.symbols = interface_symbol
 dotnet_naming_rule.interface_naming.style = interface_style
 dotnet_naming_rule.interface_naming.severity = warning
-# Non-Interface types must be PascalCase
-dotnet_naming_rule.non_interface_naming.symbols = non_interface_symbol
-dotnet_naming_rule.non_interface_naming.style = pascal_case_style
-dotnet_naming_rule.non_interface_naming.severity = warning
-# Constants must be PascalCase
-dotnet_naming_rule.constant_naming.symbols = constant_symbol
-dotnet_naming_rule.constant_naming.style = pascal_case_style
-dotnet_naming_rule.constant_naming.severity = warning
-# Public, internal and protected static readonly fields must be PascalCase
-dotnet_naming_rule.public_static_readonly_field_naming.symbols = public_static_readonly_field_symbol
-dotnet_naming_rule.public_static_readonly_field_naming.style = pascal_case_style
-dotnet_naming_rule.public_static_readonly_field_naming.severity = warning
-# Private static readonly fields must be _camelCase
-dotnet_naming_rule.private_static_readonly_field_naming.symbols = private_static_readonly_field_symbol
-dotnet_naming_rule.private_static_readonly_field_naming.style = underscore_camel_case_style
-dotnet_naming_rule.private_static_readonly_field_naming.severity = warning
-# Public symbols must be PascalCase
-dotnet_naming_rule.public_symbol_naming.symbols = public_symbol
-dotnet_naming_rule.public_symbol_naming.style = pascal_case_style
-dotnet_naming_rule.public_symbol_naming.severity = warning
-# Public, internal and protected readonly fields must be PascalCase
-dotnet_naming_rule.public_readonly_field_naming.symbols = public_readonly_field_symbol
-dotnet_naming_rule.public_readonly_field_naming.style = pascal_case_style
-dotnet_naming_rule.public_readonly_field_naming.severity = warning
-# Public and internal fields must be PascalCase
-dotnet_naming_rule.public_internal_field_naming.symbols = public_internal_field_symbol
-dotnet_naming_rule.public_internal_field_naming.style = pascal_case_style
-dotnet_naming_rule.public_internal_field_naming.severity = warning
-# Private and protected fields must be camelCase
-dotnet_naming_rule.private_protected_field_naming.symbols = private_protected_field_symbol
-dotnet_naming_rule.private_protected_field_naming.style = camel_case_style
-dotnet_naming_rule.private_protected_field_naming.severity = warning
-# Private readonly fields must be _camelCase
-dotnet_naming_rule.private_readonly_field_naming.symbols = private_readonly_field_symbol
-dotnet_naming_rule.private_readonly_field_naming.style = underscore_camel_case_style
-dotnet_naming_rule.private_readonly_field_naming.severity = warning
-# Private fields must be _camelCase
-dotnet_naming_rule.private_field_naming.symbols = private_field_symbol
-dotnet_naming_rule.private_field_naming.style = underscore_camel_case_style
-dotnet_naming_rule.private_field_naming.severity = warning
-# Parameters must be camelCase
-dotnet_naming_rule.parameter_naming.symbols = parameter_symbol
-dotnet_naming_rule.parameter_naming.style = camel_case_style
-dotnet_naming_rule.parameter_naming.severity = warning
+# All other types must be PascalCase
+dotnet_naming_rule.type_naming.symbols = type_symbol
+dotnet_naming_rule.type_naming.style = pascal_case_style
+dotnet_naming_rule.type_naming.severity = warning
 # Type parameters must be prefixed with 'T'
 dotnet_naming_rule.type_parameter_naming.symbols = type_parameter_symbol
 dotnet_naming_rule.type_parameter_naming.style = type_parameter_style
 dotnet_naming_rule.type_parameter_naming.severity = warning
-# Local stuff must be camelCase
-dotnet_naming_rule.local_variable_naming.symbols = local_symbol
-dotnet_naming_rule.local_variable_naming.style = camel_case_style
-dotnet_naming_rule.local_variable_naming.severity = warning
+# Constants must be PascalCase
+dotnet_naming_rule.constant_naming.symbols = constant_symbol
+dotnet_naming_rule.constant_naming.style = pascal_case_style
+dotnet_naming_rule.constant_naming.severity = warning
+# Externally reachable fields must be PascalCase
+dotnet_naming_rule.exposed_field_naming.symbols = exposed_field_symbol
+dotnet_naming_rule.exposed_field_naming.style = pascal_case_style
+dotnet_naming_rule.exposed_field_naming.severity = warning
+# Private fields must be _camelCase
+dotnet_naming_rule.internal_field_naming.symbols = internal_field_symbol
+dotnet_naming_rule.internal_field_naming.style = underscore_camel_case_style
+dotnet_naming_rule.internal_field_naming.severity = warning
+# Members must be PascalCase
+dotnet_naming_rule.member_naming.symbols = member_symbol
+dotnet_naming_rule.member_naming.style = pascal_case_style
+dotnet_naming_rule.member_naming.severity = warning
+# Parameters must be camelCase
+dotnet_naming_rule.parameter_naming.symbols = parameter_symbol
+dotnet_naming_rule.parameter_naming.style = camel_case_style
+dotnet_naming_rule.parameter_naming.severity = warning
+# Locals must be camelCase
+dotnet_naming_rule.local_naming.symbols = local_symbol
+dotnet_naming_rule.local_naming.style = camel_case_style
+dotnet_naming_rule.local_naming.severity = warning
 
 #================================
 # C# Coding Conventions
