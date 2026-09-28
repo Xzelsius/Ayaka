@@ -66,7 +66,10 @@ public sealed class TenantManagementBuilderExtensions
         public Task UpdateAsync(Tenant tenant, CancellationToken cancellationToken = default)
             => throw new NotImplementedException();
 
-        public Task RemoveAsync(string id, CancellationToken cancellationToken = default)
+        public Task<bool> RemoveAsync(string id, CancellationToken cancellationToken = default)
+            => throw new NotImplementedException();
+
+        public Task<Tenant?> GetAsync(string id, CancellationToken cancellationToken = default)
             => throw new NotImplementedException();
 
         public Task<IReadOnlyList<Tenant>> GetAllAsync(CancellationToken cancellationToken = default)

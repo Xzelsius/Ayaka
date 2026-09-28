@@ -36,11 +36,12 @@ public sealed class InMemoryTenantStore : ITenantStore
     }
 
     /// <inheritdoc />
-    public Task RemoveAsync(string id, CancellationToken cancellationToken = default)
-    {
-        _tenants.TryRemove(id, out _);
-        return Task.CompletedTask;
-    }
+    public Task<bool> RemoveAsync(string id, CancellationToken cancellationToken = default)
+        => Task.FromResult(_tenants.TryRemove(id, out _));
+
+    /// <inheritdoc />
+    public Task<Tenant?> GetAsync(string id, CancellationToken cancellationToken = default)
+        => Task.FromResult(_tenants.TryGetValue(id, out var tenant) ? tenant : null);
 
     /// <inheritdoc />
     public Task<IReadOnlyList<Tenant>> GetAllAsync(CancellationToken cancellationToken = default)
