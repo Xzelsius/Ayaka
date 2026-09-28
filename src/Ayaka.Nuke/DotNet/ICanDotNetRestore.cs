@@ -40,7 +40,7 @@ public interface ICanDotNetRestore
         .TryDependsOn<IHaveCleanTarget>()
         .Executes(() =>
         {
-            _ = DotNetTasks.DotNetRestore(
+            DotNetTasks.DotNetRestore(
                 dotnet => dotnet
                     .Apply(DotNetRestoreSettingsBase)
                     .Apply(DotNetRestoreSettings)

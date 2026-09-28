@@ -1,4 +1,4 @@
-﻿// Copyright (c) Raphael Strotz. All rights reserved.
+// Copyright (c) Raphael Strotz. All rights reserved.
 
 namespace Ayaka.MultiTenancy.Management;
 

@@ -62,7 +62,7 @@ public interface ICanDotNetBuild
                         (s, o) => s.AddPair("Version", o.Versioning.SemVer))
             );
 
-            _ = DotNetTasks.DotNetBuild(
+            DotNetTasks.DotNetBuild(
                 dotnet => dotnet
                     .Apply(DotNetBuildSettingsBase)
                     .Apply(DotNetBuildSettings)

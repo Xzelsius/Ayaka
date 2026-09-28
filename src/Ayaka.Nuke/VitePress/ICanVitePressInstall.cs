@@ -40,7 +40,7 @@ public interface ICanVitePressInstall
         .Unlisted()
         .Executes(() =>
         {
-            _ = NpmTasks.NpmCi(
+            NpmTasks.NpmCi(
                 npm => npm
                     .Apply(VitePressInstallSettingsBase)
                     .Apply(VitePressInstallSettings));

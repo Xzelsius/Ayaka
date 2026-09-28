@@ -1,4 +1,4 @@
-﻿// Copyright (c) Raphael Strotz. All rights reserved.
+// Copyright (c) Raphael Strotz. All rights reserved.
 
 #pragma warning disable IDE0130 // Namespaces does not match folder structure
 namespace Ayaka.MultiTenancy.DependencyInjection;
@@ -110,7 +110,7 @@ public sealed class RequestTenancyBuilder
         if (_configureActions.Count > 0)
         {
             // Apply them custom configuration actions
-            _ = optionBuilder.Configure<IServiceProvider>((opts, sp) =>
+            optionBuilder.Configure<IServiceProvider>((opts, sp) =>
             {
                 foreach (var action in _configureActions)
                 {

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Raphael Strotz. All rights reserved.
+// Copyright (c) Raphael Strotz. All rights reserved.
 
 #pragma warning disable IDE0130 // Namespaces does not match folder structure
 namespace Ayaka.MultiTenancy.DependencyInjection;

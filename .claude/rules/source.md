@@ -13,8 +13,6 @@ Public API tracking:
 - Lines in `PublicAPI.Unshipped.txt` use the analyzer format, e.g.
   `Ayaka.MultiTenancy.AsyncLocalTenantContextAccessor.TenantContext.get -> Ayaka.MultiTenancy.TenantContext?`
 - The analyzer error (RS0016 etc.) names the exact symbol text it expects — mirror it
-- When creating the files for a new project, copy them from an existing project so the encoding
-  (UTF-8 with BOM) is preserved
 
 Breaking changes:
 

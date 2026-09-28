@@ -40,7 +40,7 @@ public interface ICanClean
             {
                 Log.Information("Cleaning up artifacts in {Directory}", hasArtifacts.ArtifactsDirectory);
 
-                _ = hasArtifacts.ArtifactsDirectory.CreateOrCleanDirectory();
+                hasArtifacts.ArtifactsDirectory.CreateOrCleanDirectory();
             }
         });
 }

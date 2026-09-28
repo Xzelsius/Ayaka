@@ -2,7 +2,6 @@
 
 namespace Ayaka.Nuke.PublicApi;
 
-using System.Text;
 using global::Nuke.Common;
 using global::Nuke.Common.IO;
 using global::Nuke.Common.ProjectModel;
@@ -84,10 +83,10 @@ public interface ICanShipPublicApis
                     additions.Sort(IgnoreCaseWhenPossibleComparer.Instance);
 
                     Log.Verbose("Persisting new baseline file");
-                    await File.WriteAllLinesAsync(baselineFile, baseline, Encoding.UTF8);
+                    await File.WriteAllLinesAsync(baselineFile, baseline);
 
                     Log.Verbose("Persisting new additions file");
-                    await File.WriteAllLinesAsync(additionsFile, additions, Encoding.UTF8);
+                    await File.WriteAllLinesAsync(additionsFile, additions);
                 }
 
                 Log.Information("Completed shipping Public API for {Project}", project.Name);

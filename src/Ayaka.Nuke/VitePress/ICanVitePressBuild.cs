@@ -49,7 +49,7 @@ public interface ICanVitePressBuild
         .TryDependsOn<IHaveVitePressLintTarget>()
         .Executes(() =>
         {
-            _ = NpmTasks.NpmRun(
+            NpmTasks.NpmRun(
                 npm => npm
                     .Apply(VitePressBuildSettingsBase)
                     .Apply(VitePressBuildSettings));

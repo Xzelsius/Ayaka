@@ -33,7 +33,7 @@ See `AGENTS.md` at the repo root for the full agent guide.
 - Type parameters `TFoo`
 - `var` when the type is apparent
 - Pattern matching preferred: `is null` over `== null`, `is not` over `!(...)`
-- Primary constructors preferred
+- No primary constructors on classes or structs — use regular constructors (records are fine)
 - Expression bodies for single-line members
 - `ImplicitUsings` is enabled, and `System.Diagnostics.CodeAnalysis` is a global using everywhere —
   no explicit `using` needed for either

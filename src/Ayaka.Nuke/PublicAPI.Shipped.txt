@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 Ayaka.Nuke.DotNet.Configuration
 Ayaka.Nuke.DotNet.Configuration.Configuration() -> void
 Ayaka.Nuke.DotNet.ICanDotNetBuild

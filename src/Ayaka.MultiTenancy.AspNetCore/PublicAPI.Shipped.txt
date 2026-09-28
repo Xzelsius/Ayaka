@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 Ayaka.MultiTenancy.AspNetCore.Detection.FromRequestHeaderStrategy
 Ayaka.MultiTenancy.AspNetCore.Detection.FromRequestHeaderStrategy.FromRequestHeaderStrategy(string! headerName) -> void
 Ayaka.MultiTenancy.AspNetCore.Detection.FromRequestHeaderStrategy.HeaderName.get -> string!

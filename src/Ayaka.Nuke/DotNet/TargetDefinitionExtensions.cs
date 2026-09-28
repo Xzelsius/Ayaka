@@ -33,7 +33,7 @@ internal static class TargetDefinitionExtensions
                 {
                     var filename = $"{coverageFile.Parent!.Name}.cobertura.xml";
 
-                    _ = coverageFile.Copy(coverageDirectory / filename);
+                    coverageFile.Copy(coverageDirectory / filename);
                 }
             });
 }

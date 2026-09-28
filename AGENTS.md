@@ -57,7 +57,7 @@ Every package project tracks its public API with `PublicAPI.Shipped.txt` / `Publ
 (Microsoft.CodeAnalysis.PublicApiAnalyzers; RS0016–RS0050 are **errors**).
 
 - Adding/changing a public API → add the new symbol lines to that project's `PublicAPI.Unshipped.txt`
-  (keep the `#nullable enable` header; files are UTF-8 with BOM). IDEs with Roslyn support offer a
+  (keep the `#nullable enable` header). IDEs with Roslyn support offer a
   code-fix that generates the lines; otherwise add them by hand following the format of existing entries.
 - Removing a shipped API → add a `*REMOVED*`-prefixed line to `PublicAPI.Unshipped.txt`.
 - **Never edit `PublicAPI.Shipped.txt`** — the after-release automation moves Unshipped → Shipped via
@@ -85,7 +85,7 @@ Idioms:
 
 - `var` when the type is apparent
 - Pattern matching preferred: `is null` over `== null`, `is not` over `!(...)`
-- Primary constructors preferred
+- No primary constructors on classes or structs — use regular constructors (records are fine)
 - Expression bodies for single-line members
 - Avoid unnecessary code/clutter — match the surrounding style
 

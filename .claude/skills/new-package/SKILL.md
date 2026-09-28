@@ -21,7 +21,7 @@ Use the kebab-case of the feature part for docs paths (e.g. `Ayaka.MultiTenancy`
    - package-specific NuGet dependencies go directly into this csproj with pinned versions
      (Renovate manages them); shared ones come via `eng/Packages.props`
 2. **Public API files** — copy `PublicAPI.Shipped.txt` and `PublicAPI.Unshipped.txt` from an
-   existing src project (preserves the required encoding); both contain only `#nullable enable`
+   existing src project; both contain only `#nullable enable`
 3. **PACKAGE.md** — NuGet readme; follow `src/Ayaka.MultiTenancy/PACKAGE.md`
    (About / Key Features / How to Use / Additional Documentation / Feedback & Contributing)
 4. **test project** — `test/<Name>.Tests/<Name>.Tests.csproj`, copying the shape of
