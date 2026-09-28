@@ -57,7 +57,7 @@ public interface ICanDotNetTest
             .SetProjectFile(project)
             .When(
                 GitHubActions.Instance is not null && project.HasPackageReference("GitHubActionsTestLogger"),
-                d => d.AddLoggers("GitHubActions;report-warnings=false"))
+                d => d.AddLoggers("GitHubActions"))
             .AddLoggers($"trx;LogFileName={project.Name}.trx")
             .When(
                 this is IHaveCodeCoverage && project.HasPackageReference("coverlet.collector"),

@@ -251,7 +251,7 @@ By default, `TestProjects` represents all projects within the `TestsDirectory` d
 The following loggers are used when running the tests:
 
 * `trx;LogFileName={project-name}.trx`: Always used
-* `GitHubActions;report-warnings=false`: If building with GitHub Actions and the test project references
+* `GitHubActions`: If building with GitHub Actions and the test project references
    the `GitHubActionsTestLogger` NuGet package
 
 If the build is decorated with the [`IHaveCodeCoverage`] build context component and the test project

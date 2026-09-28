@@ -42,7 +42,7 @@ Configure<DotNetTestSettings, Project> ICanDotNetTest.DotNetTestProjectSettings
     => (dotnet, project) => dotnet
         .When(
             GitHubActions.Instance is not null && project.HasPackageReference("GitHubActionsTestLogger"),
-            d => d.AddLoggers("GitHubActions;report-warnings=false"))
+            d => d.AddLoggers("GitHubActions"))
         .When(
             this is IHaveCodeCoverage && project.HasPackageReference("coverlet.collector"),
             d => d
