@@ -9,8 +9,7 @@ applyTo: "src/**/*.cs, src/**/PublicAPI.*.txt"
 Public API tracking:
 
 - Every package project tracks its public API: add new/changed public symbols to
-  `PublicAPI.Unshipped.txt`, keeping the `#nullable enable` header (files are UTF-8 with BOM —
-  copy from an existing project to preserve encoding)
+  `PublicAPI.Unshipped.txt`, keeping the `#nullable enable` header
 - Lines use the analyzer format, e.g.
   `Ayaka.MultiTenancy.AsyncLocalTenantContextAccessor.TenantContext.get -> Ayaka.MultiTenancy.TenantContext?`
 - The analyzer error (RS0016 etc.) names the exact symbol text it expects — mirror it
