@@ -15,6 +15,8 @@ Claude-specific notes:
   - `eslint --fix` for files under `docs/` (requires `npm ci` in `docs/` once).
   - Don't hand-fix pure formatting — it's already handled.
 - Use `/new-package` to scaffold a new NuGet package (project, tests, PublicAPI files, docs, solution entries).
+- Use `/renovate-sweep` to work through all open Renovate PRs (merge the safe ones, fix red builds within a
+  non-breaking 20-line budget, report the rest); `/renovate-fix <pr>` analyzes a single PR without pushing anything.
 - Docs rendering: `npm run build` catches dead links and produces readable HTML in
   `docs/.vitepress/dist/`; for visual checks (theme, sidebar, containers, console errors) use
   `/docs-verify`, which drives the site via the Playwright MCP server (one-time browser setup:
