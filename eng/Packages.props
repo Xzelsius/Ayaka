@@ -19,8 +19,8 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.10.1" />
     <PackageReference Include="Shouldly" Version="4.3.0" />
     <!-- Tests run on VSTest (see ICanDotNetTest), so opt out of Microsoft.Testing.Platform. Migration tracked in #299 -->
-    <PackageReference Include="xunit.v3.mtp-off" Version="3.2.2" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.5" />
+    <PackageReference Include="xunit.v3.mtp-off" Version="4.0.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="4.0.0" />
   </ItemGroup>
 
 </Project>
