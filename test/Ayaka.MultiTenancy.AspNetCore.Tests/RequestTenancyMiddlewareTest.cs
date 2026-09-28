@@ -374,7 +374,7 @@ public abstract class RequestTenancyMiddlewareTest
             }
 
             public override Task HandleAsync(CancellationToken ct)
-                => SendStringAsync(_accessor.TenantContext?.Id ?? "no tenant", cancellation: ct);
+                => Send.StringAsync(_accessor.TenantContext?.Id ?? "no tenant", cancellation: ct);
         }
 
         private sealed class GetTenantIdDisabledEndpoint : EndpointWithoutRequest
@@ -394,7 +394,7 @@ public abstract class RequestTenancyMiddlewareTest
             }
 
             public override Task HandleAsync(CancellationToken ct)
-                => SendStringAsync(_accessor.TenantContext?.Id ?? "no tenant", cancellation: ct);
+                => Send.StringAsync(_accessor.TenantContext?.Id ?? "no tenant", cancellation: ct);
         }
     }
 
