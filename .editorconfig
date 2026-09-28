@@ -205,6 +205,10 @@ dotnet_naming_rule.local_naming.severity = warning
 
 [*.cs]
 
+# Formatting rules only run in the build when IDE0055 has an explicit severity.
+# MSBuild ignores them otherwise.
+dotnet_diagnostic.IDE0055.severity = warning
+
 # Namespaces
 csharp_style_namespace_declarations = file_scoped
 

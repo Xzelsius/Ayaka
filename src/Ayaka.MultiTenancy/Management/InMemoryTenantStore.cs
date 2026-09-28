@@ -44,5 +44,5 @@ public sealed class InMemoryTenantStore : ITenantStore
 
     /// <inheritdoc />
     public Task<IReadOnlyList<Tenant>> GetAllAsync(CancellationToken cancellationToken = default)
-        => Task.FromResult<IReadOnlyList<Tenant>>([.._tenants.Values]);
+        => Task.FromResult<IReadOnlyList<Tenant>>([.. _tenants.Values]);
 }
