@@ -24,7 +24,7 @@ partial class Build
         {
             Log.Information("Checking for existing remote branch {BranchName}", AfterReleaseBranchName);
 
-            _ = GitTasks.Git("fetch --quiet --no-tags origin");
+            GitTasks.Git("fetch --quiet --no-tags origin");
 
             var branchExists = GitTasks
                 .Git(
@@ -41,7 +41,7 @@ partial class Build
 
             Log.Information("Switching to new branch {BranchName}", AfterReleaseBranchName);
 
-            _ = GitTasks.Git($"checkout --quiet --no-track -b {AfterReleaseBranchName} origin/main");
+            GitTasks.Git($"checkout --quiet --no-track -b {AfterReleaseBranchName} origin/main");
         });
 
     [Parameter("The Git user email address")]
@@ -61,8 +61,8 @@ partial class Build
         {
             Log.Information("Configuring the Git user");
 
-            _ = GitTasks.Git($"config user.email {GitUserEmail}");
-            _ = GitTasks.Git($"config user.name {GitUserName}");
+            GitTasks.Git($"config user.email {GitUserEmail}");
+            GitTasks.Git($"config user.name {GitUserName}");
 
             Log.Information("Staging pending changes on PublicAPI.*.txt files");
 
@@ -71,7 +71,7 @@ partial class Build
                 .GlobFiles("**/PublicAPI.*.txt")
                 .ForEach(file =>
                 {
-                    _ = GitTasks.Git($"add {file}");
+                    GitTasks.Git($"add {file}");
                 });
 
             Log.Information("Checking if there are staged changes");
@@ -88,11 +88,11 @@ partial class Build
 
             Log.Information("Commiting staged changes on PublicAPI.*.txt files");
 
-            _ = GitTasks.Git($"commit --quiet -m {message}");
+            GitTasks.Git($"commit --quiet -m {message}");
 
             Log.Information("Pushing changes to remote");
 
-            _ = GitTasks.Git(
+            GitTasks.Git(
                 $"push --quiet -u origin {AfterReleaseBranchName}",
                 logOutput: false /* GitHub writes some weird stuff back */);
 

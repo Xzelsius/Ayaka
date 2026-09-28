@@ -58,7 +58,7 @@ public interface ICanDotNetPack
         .Produces(PackagesDirectory / "*.nupkg")
         .Executes(() =>
         {
-            _ = DotNetTasks.DotNetPack(
+            DotNetTasks.DotNetPack(
                 dotnet => dotnet
                     .Apply(DotNetPackSettingsBase)
                     .Apply(DotNetPackSettings)

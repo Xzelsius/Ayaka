@@ -52,7 +52,7 @@ public interface ICanDotNetValidate
         .OnlyWhenStatic(() => IsServerBuild)
         .Executes(() =>
         {
-            _ = DotNetValidateTasks.DotNetValidateLocalPackage(
+            DotNetValidateTasks.DotNetValidateLocalPackage(
                 dotnetValidate => dotnetValidate
                     .CombineWith(NuGetPackagesToValidate, (d, f) => d
                         .Apply(DotNetValidatePackageSettingsBase, f)

@@ -110,7 +110,7 @@ public sealed class RequestTenancyBuilder
         if (_configureActions.Count > 0)
         {
             // Apply them custom configuration actions
-            _ = optionBuilder.Configure<IServiceProvider>((opts, sp) =>
+            optionBuilder.Configure<IServiceProvider>((opts, sp) =>
             {
                 foreach (var action in _configureActions)
                 {

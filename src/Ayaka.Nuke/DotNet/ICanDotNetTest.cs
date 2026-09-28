@@ -103,7 +103,7 @@ public interface ICanDotNetTest
         {
             try
             {
-                _ = DotNetTasks.DotNetTest(
+                DotNetTasks.DotNetTest(
                     dotnet => dotnet
                         .Apply(DotNetTestSettingsBase)
                         .Apply(DotNetTestSettings)

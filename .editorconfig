@@ -319,8 +319,8 @@ csharp_style_throw_expression = true:suggestion
 csharp_style_conditional_delegate_call = true:suggestion
 
 # Unnecessary code
-csharp_style_unused_value_expression_statement_preference = discard_variable:warning
-csharp_style_unused_value_assignment_preference = discard_variable:warning
+csharp_style_unused_value_expression_statement_preference = discard_variable:silent
+csharp_style_unused_value_assignment_preference = discard_variable:suggestion
 
 #================================
 # ReSharper
@@ -330,12 +330,3 @@ csharp_style_unused_value_assignment_preference = discard_variable:warning
 
 resharper_align_linq_query = true
 resharper_arguments_literal = named
-
-#================================
-# Analyzer Overrides
-#================================
-
-[/test/**/*.cs]
-# Computed value is never used
-# Reason: We don't want this rule in tests as it would not play nice with the assertion library (Shouldly)
-dotnet_diagnostic.IDE0058.severity = none

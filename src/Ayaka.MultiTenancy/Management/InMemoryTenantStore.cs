@@ -26,7 +26,7 @@ public sealed class InMemoryTenantStore : ITenantStore
     /// <inheritdoc />
     public Task UpdateAsync(Tenant tenant, CancellationToken cancellationToken = default)
     {
-        _ = _tenants.AddOrUpdate(
+        _tenants.AddOrUpdate(
             tenant.Id,
             _ => throw new TenantManagementException($"Tenant with id '{tenant.Id}' does not exist"),
             (_, _) => tenant
@@ -38,7 +38,7 @@ public sealed class InMemoryTenantStore : ITenantStore
     /// <inheritdoc />
     public Task RemoveAsync(string id, CancellationToken cancellationToken = default)
     {
-        _ = _tenants.TryRemove(id, out _);
+        _tenants.TryRemove(id, out _);
         return Task.CompletedTask;
     }
 

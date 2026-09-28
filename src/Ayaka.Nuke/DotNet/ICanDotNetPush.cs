@@ -77,7 +77,7 @@ public interface ICanDotNetPush
         .After<IHaveDotNetPackTarget>()
         .Executes(() =>
         {
-            _ = DotNetTasks.DotNetNuGetPush(
+            DotNetTasks.DotNetNuGetPush(
                 dotnet => dotnet
                     .Apply(DotNetPushSettingsBase)
                     .Apply(DotNetPushSettings)

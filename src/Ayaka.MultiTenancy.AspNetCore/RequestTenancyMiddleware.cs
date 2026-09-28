@@ -73,7 +73,7 @@ public sealed partial class RequestTenancyMiddleware
             var activityFeature = context.Features.Get<IHttpActivityFeature>();
             if (activityFeature is not null)
             {
-                _ = activityFeature.Activity.SetTag(_options.ActivityTagName, tenant);
+                activityFeature.Activity.SetTag(_options.ActivityTagName, tenant);
             }
 
             _accessor.TenantContext = new TenantContext(tenant, tenant);

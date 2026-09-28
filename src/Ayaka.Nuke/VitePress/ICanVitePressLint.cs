@@ -45,7 +45,7 @@ public interface ICanVitePressLint
         .TryBefore<IHaveVitePressBuildTarget>()
         .Executes(() =>
         {
-            _ = NpmTasks.NpmRun(
+            NpmTasks.NpmRun(
                 npm => npm
                     .Apply(VitePressLintSettingsBase)
                     .Apply(VitePressLintSettings));
