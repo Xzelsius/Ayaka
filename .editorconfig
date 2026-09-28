@@ -16,12 +16,12 @@ indent_size = 2
 [*.{yml,yaml}]
 indent_size = 2
 
-# Visual Studio XML project files
-[*.{csproj,vbproj,vcxproj.filters,proj,projitems,shproj}]
+# Visual Studio XML solution and project files
+[*.{slnx,csproj,vbproj,vcxproj.filters,proj,projitems,shproj}]
 indent_size = 2
 
 # XML, and XML based configuration files
-[*.{slnx,xml,config,props,targets,nuspec,resx,ruleset}]
+[*.{xml,config,props,targets,nuspec,resx,ruleset}]
 indent_size = 2
 
 # Markdown files
@@ -53,6 +53,7 @@ indent_size = 2
 
 # C# Source files
 [*.cs]
+max_line_length = 180
 indent_size = 4
 
 # File Header
