@@ -14,6 +14,7 @@ internal sealed partial class DefaultTenantManager : ITenantManager
     private readonly ITenantStore _store;
     private readonly ITenantCache? _cache;
     private readonly ILogger<DefaultTenantManager> _logger;
+    private readonly Func<string, CancellationToken, ValueTask<Tenant?>> _loadFromStore;
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="DefaultTenantManager"/> class.
@@ -29,27 +30,30 @@ internal sealed partial class DefaultTenantManager : ITenantManager
         _store = store;
         _cache = cache;
         _logger = loggerFactory.CreateLogger<DefaultTenantManager>();
+
+        // Created once, so cached lookups don't allocate a delegate per call
+        _loadFromStore = (id, ct) => new ValueTask<Tenant?>(_store.GetAsync(id, ct));
     }
 
     /// <inheritdoc />
     public async ValueTask AddAsync(Tenant tenant, CancellationToken cancellationToken = default)
     {
         await _store.AddAsync(tenant.MustNotBeNull(), cancellationToken);
-        await EvictSafelyAsync(tenant.Id, cancellationToken);
+        await EvictSafelyAsync(tenant.Id);
     }
 
     /// <inheritdoc />
     public async ValueTask UpdateAsync(Tenant tenant, CancellationToken cancellationToken = default)
     {
         await _store.UpdateAsync(tenant.MustNotBeNull(), cancellationToken);
-        await EvictSafelyAsync(tenant.Id, cancellationToken);
+        await EvictSafelyAsync(tenant.Id);
     }
 
     /// <inheritdoc />
     public async ValueTask<bool> RemoveAsync(string id, CancellationToken cancellationToken = default)
     {
         var removed = await _store.RemoveAsync(id.MustNotBeNullOrWhiteSpace(), cancellationToken);
-        await EvictSafelyAsync(id, cancellationToken);
+        await EvictSafelyAsync(id);
 
         return removed;
     }
@@ -61,14 +65,14 @@ internal sealed partial class DefaultTenantManager : ITenantManager
 
         return _cache is null
             ? new ValueTask<Tenant?>(_store.GetAsync(id, cancellationToken))
-            : _cache.GetOrCreateAsync(id, (id, ct) => new(_store.GetAsync(id, ct)), cancellationToken);
+            : _cache.GetOrCreateAsync(id, _loadFromStore, cancellationToken);
     }
 
     /// <inheritdoc />
     public ValueTask<IReadOnlyList<Tenant>> GetAllAsync(CancellationToken cancellationToken = default)
         => new(_store.GetAllAsync(cancellationToken));
 
-    private async ValueTask EvictSafelyAsync(string id, CancellationToken cancellationToken)
+    private async ValueTask EvictSafelyAsync(string id)
     {
         if (_cache is null)
         {
@@ -77,9 +81,10 @@ internal sealed partial class DefaultTenantManager : ITenantManager
 
         try
         {
-            await _cache.EvictAsync(id, cancellationToken);
+            // The store write already happened, so a caller cancelling now must not leave a stale entry behind
+            await _cache.EvictAsync(id, CancellationToken.None);
         }
-        catch (Exception exception) when (exception is not OperationCanceledException || !cancellationToken.IsCancellationRequested)
+        catch (Exception exception)
         {
             TenantManagerLog.FailedToEvict(_logger, id, exception);
         }

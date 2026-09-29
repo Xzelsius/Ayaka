@@ -1,10 +1,12 @@
-﻿// Copyright (c) Raphael Strotz. All rights reserved.
+// Copyright (c) Raphael Strotz. All rights reserved.
 
 namespace Ayaka.MultiTenancy.DependencyInjection;
 
 using Ayaka.MultiTenancy.Management;
+using Microsoft.Extensions.Caching.Hybrid;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Options;
 
 /// <summary>
 ///     Extension methods for <see cref="IMultiTenancyBuilder"/>.
@@ -25,6 +27,10 @@ public static class MultiTenancyBuilderExtensions
 
     private static void ConfigureDefaultServices(this IServiceCollection services)
     {
+        _ = services.AddHybridCache();
+        _ = services.AddOptions<TenantCacheOptions>().ValidateOnStart();
+        services.TryAddEnumerable(ServiceDescriptor.Singleton<IValidateOptions<TenantCacheOptions>, TenantCacheOptionsValidator>());
+        services.TryAddSingleton<ITenantCache, HybridCacheTenantCache>();
         services.TryAddSingleton<ITenantManager, DefaultTenantManager>();
     }
 }

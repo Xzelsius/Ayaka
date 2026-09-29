@@ -55,15 +55,28 @@ public abstract class TenantStoreCompliance<TStoreFixture> : IDisposable, IAsync
     [Fact]
     public async Task Allows_adding_many_tenants_parallel()
     {
+        // Arm every addition first, then release them together so the adds actually overlap.
         var store = StoreFixture.Store;
+        var cancellationToken = TestContext.Current.CancellationToken;
 
-        await Parallel.ForEachAsync(
-            Enumerable.Range(1, 100),
-            new ParallelOptions { MaxDegreeOfParallelism = 10 },
-            async (i, ct) => await store.AddAsync(new Tenant("tenant" + i), ct));
+        var expectedTenants = Enumerable.Range(1, 100)
+            .Select(i => new Tenant("tenant" + i))
+            .ToArray();
 
-        var tenants = await store.GetAllAsync(TestContext.Current.CancellationToken);
-        tenants.Count.ShouldBe(100);
+        var start = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var additions = expectedTenants
+            .Select(async tenant =>
+            {
+                await start.Task.WaitAsync(cancellationToken);
+                await store.AddAsync(tenant, cancellationToken);
+            })
+            .ToArray();
+
+        start.SetResult();
+        await Task.WhenAll(additions);
+
+        var storedTenants = await store.GetAllAsync(cancellationToken);
+        storedTenants.ShouldBe(expectedTenants, ignoreOrder: true);
     }
 
     [Fact]
