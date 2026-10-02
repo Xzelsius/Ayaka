@@ -12,7 +12,7 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "9.5.1",
-    "@playwright/mcp": "0.0.82",
+    "@playwright/mcp": "0.0.83",
     "eslint": "10.11.0",
     "vitepress": "1.6.4"
   }
