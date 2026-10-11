@@ -1,5 +1,5 @@
 #nullable enable
-Ayaka.MultiTenancy.Management.Tenant.Deconstruct(out string! Id, out string? DisplayName, out System.Collections.Immutable.IImmutableDictionary<string!, string!>? Attributes) -> void
+Ayaka.MultiTenancy.Management.Tenant.Deconstruct(out string! Id, out string? DisplayName, out System.Collections.Immutable.ImmutableDictionary<string!, string!>? Attributes) -> void
 Ayaka.MultiTenancy.TenantContext.Deconstruct(out string! Id, out string? DisplayName) -> void
 Ayaka.MultiTenancy.TenantContext.TenantContext(Ayaka.MultiTenancy.TenantContext! original) -> void
 override Ayaka.MultiTenancy.Management.Tenant.Equals(object? obj) -> bool

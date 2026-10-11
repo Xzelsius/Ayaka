@@ -18,4 +18,4 @@ using System.ComponentModel;
 public sealed record Tenant(
     string Id,
     string? DisplayName = null,
-    IImmutableDictionary<string, string>? Attributes = null);
+    ImmutableDictionary<string, string>? Attributes = null);
