@@ -16,7 +16,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.10.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.11.0" />
     <PackageReference Include="Shouldly" Version="4.3.0" />
     <!-- Tests run on VSTest (see ICanDotNetTest), so opt out of Microsoft.Testing.Platform. Migration tracked in #299 -->
     <PackageReference Include="xunit.v3.mtp-off" Version="4.0.1" />
