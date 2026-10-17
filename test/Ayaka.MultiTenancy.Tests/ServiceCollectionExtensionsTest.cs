@@ -48,7 +48,7 @@ public sealed class ServiceCollectionExtensionsTest
             services.AddMultiTenancy();
             services.AddMultiTenancy();
 
-            services.Count(x => x.ServiceType == typeof(ITenantContextAccessor)).ShouldBe(1);
+            services.Where(x => x.ServiceType == typeof(ITenantContextAccessor)).ShouldHaveSingleItem();
         }
     }
 
@@ -75,14 +75,10 @@ public sealed class ServiceCollectionExtensionsTest
 
             services.AddTenantContextAccessor();
 
-            var accessor = services.FirstOrDefault(x => x.ServiceType == typeof(ITenantContextAccessor));
+            var accessor = services.SingleOrDefault(x => x.ServiceType == typeof(ITenantContextAccessor));
             accessor.ShouldNotBeNull();
             accessor.Lifetime.ShouldBe(ServiceLifetime.Scoped);
-
-            var serviceProvider = services.BuildServiceProvider();
-            serviceProvider
-                .GetRequiredService<ITenantContextAccessor>()
-                .ShouldBeOfType<TestTenantContextAccessor>();
+            accessor.ImplementationType.ShouldBe(typeof(TestTenantContextAccessor));
         }
 
         [Fact]

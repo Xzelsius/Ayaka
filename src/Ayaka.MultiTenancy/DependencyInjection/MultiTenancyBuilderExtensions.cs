@@ -3,6 +3,7 @@
 namespace Ayaka.MultiTenancy.DependencyInjection;
 
 using Ayaka.MultiTenancy.Management;
+using Light.GuardClauses;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -18,6 +19,8 @@ public static class MultiTenancyBuilderExtensions
     /// <returns>A <see cref="ITenantManagementBuilder"/> that can be used to further configure tenant management.</returns>
     public static ITenantManagementBuilder AddTenantManagement(this IMultiTenancyBuilder builder)
     {
+        builder.MustNotBeNull();
+
         ConfigureDefaultServices(builder.Services);
 
         return new TenantManagementBuilder(builder);
@@ -25,6 +28,7 @@ public static class MultiTenancyBuilderExtensions
 
     private static void ConfigureDefaultServices(this IServiceCollection services)
     {
+        services.TryAddSingleton<ITenantCache, NoopTenantCache>();
         services.TryAddSingleton<ITenantManager, DefaultTenantManager>();
     }
 }

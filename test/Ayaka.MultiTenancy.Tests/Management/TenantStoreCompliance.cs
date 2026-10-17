@@ -55,15 +55,28 @@ public abstract class TenantStoreCompliance<TStoreFixture> : IDisposable, IAsync
     [Fact]
     public async Task Allows_adding_many_tenants_parallel()
     {
+        // Arm every addition first, then release them together so the adds actually overlap.
         var store = StoreFixture.Store;
+        var cancellationToken = TestContext.Current.CancellationToken;
 
-        await Parallel.ForEachAsync(
-            Enumerable.Range(1, 100),
-            new ParallelOptions { MaxDegreeOfParallelism = 10 },
-            async (i, ct) => await store.AddAsync(new Tenant("tenant" + i), ct));
+        var expectedTenants = Enumerable.Range(1, 100)
+            .Select(i => new Tenant("tenant" + i))
+            .ToArray();
 
-        var tenants = await store.GetAllAsync(TestContext.Current.CancellationToken);
-        tenants.Count.ShouldBe(100);
+        var start = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var additions = expectedTenants
+            .Select(async tenant =>
+            {
+                await start.Task.WaitAsync(cancellationToken);
+                await store.AddAsync(tenant, cancellationToken);
+            })
+            .ToArray();
+
+        start.SetResult();
+        await Task.WhenAll(additions);
+
+        var storedTenants = await store.GetAllAsync(cancellationToken);
+        storedTenants.ShouldBe(expectedTenants, ignoreOrder: true);
     }
 
     [Fact]
@@ -72,10 +85,10 @@ public abstract class TenantStoreCompliance<TStoreFixture> : IDisposable, IAsync
         var store = StoreFixture.Store;
         await store.AddAsync(new Tenant("tenant1"), TestContext.Current.CancellationToken);
 
-        var act = async () => await store.AddAsync(new Tenant("tenant1"));
+        var exception = await Should.ThrowAsync<TenantManagementException>(
+                async () => await store.AddAsync(new Tenant("tenant1")));
 
-        (await Should.ThrowAsync<TenantManagementException>(act))
-            .Message.ShouldBe("Tenant with id 'tenant1' already exists");
+        exception.Message.ShouldBe("Tenant with id 'tenant1' already exists");
     }
 
     [Fact]
@@ -137,10 +150,10 @@ public abstract class TenantStoreCompliance<TStoreFixture> : IDisposable, IAsync
             Attributes = tenant.Attributes?.Add("key2", "value2"),
         };
 
-        var act = async () => await store.UpdateAsync(updatedTenant);
+        var exception = await Should.ThrowAsync<TenantManagementException>(
+            async () => await store.UpdateAsync(updatedTenant));
 
-        (await Should.ThrowAsync<TenantManagementException>(act))
-            .Message.ShouldBe("Tenant with id 'tenant1' does not exist");
+        exception.Message.ShouldBe("Tenant with id 'tenant1' does not exist");
     }
 
     [Fact]

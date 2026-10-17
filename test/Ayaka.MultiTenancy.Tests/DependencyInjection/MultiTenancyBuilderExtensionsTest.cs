@@ -39,6 +39,10 @@ public sealed class MultiTenancyBuilderExtensionsTest
 
             var manager = builder.Services.FirstOrDefault(x => x.ServiceType == typeof(ITenantManager));
             manager.ShouldNotBeNull("ITenantManager should be registered");
+
+            var cache = builder.Services.FirstOrDefault(x => x.ServiceType == typeof(ITenantCache));
+            cache.ShouldNotBeNull("ITenantCache should be registered");
+            cache.ImplementationType.ShouldBe(typeof(NoopTenantCache));
         }
 
         [Fact]
@@ -49,7 +53,8 @@ public sealed class MultiTenancyBuilderExtensionsTest
             builder.AddTenantManagement();
             builder.AddTenantManagement();
 
-            builder.Services.Count(x => x.ServiceType == typeof(ITenantManager)).ShouldBe(1);
+            builder.Services.Where(x => x.ServiceType == typeof(ITenantManager)).ShouldHaveSingleItem();
+            builder.Services.Where(x => x.ServiceType == typeof(ITenantCache)).ShouldHaveSingleItem();
         }
     }
 
