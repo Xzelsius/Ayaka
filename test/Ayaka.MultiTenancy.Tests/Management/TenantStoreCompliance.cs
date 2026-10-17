@@ -55,15 +55,28 @@ public abstract class TenantStoreCompliance<TStoreFixture> : IDisposable, IAsync
     [Fact]
     public async Task Allows_adding_many_tenants_parallel()
     {
+        // Arm every addition first, then release them together so the adds actually overlap.
         var store = StoreFixture.Store;
+        var cancellationToken = TestContext.Current.CancellationToken;
 
-        await Parallel.ForEachAsync(
-            Enumerable.Range(1, 100),
-            new ParallelOptions { MaxDegreeOfParallelism = 10 },
-            async (i, ct) => await store.AddAsync(new Tenant("tenant" + i), ct));
+        var expectedTenants = Enumerable.Range(1, 100)
+            .Select(i => new Tenant("tenant" + i))
+            .ToArray();
 
-        var tenants = await store.GetAllAsync(TestContext.Current.CancellationToken);
-        tenants.Count.ShouldBe(100);
+        var start = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var additions = expectedTenants
+            .Select(async tenant =>
+            {
+                await start.Task.WaitAsync(cancellationToken);
+                await store.AddAsync(tenant, cancellationToken);
+            })
+            .ToArray();
+
+        start.SetResult();
+        await Task.WhenAll(additions);
+
+        var storedTenants = await store.GetAllAsync(cancellationToken);
+        storedTenants.ShouldBe(expectedTenants, ignoreOrder: true);
     }
 
     [Fact]
@@ -72,10 +85,10 @@ public abstract class TenantStoreCompliance<TStoreFixture> : IDisposable, IAsync
         var store = StoreFixture.Store;
         await store.AddAsync(new Tenant("tenant1"), TestContext.Current.CancellationToken);
 
-        var act = async () => await store.AddAsync(new Tenant("tenant1"));
+        var exception = await Should.ThrowAsync<TenantManagementException>(
+                async () => await store.AddAsync(new Tenant("tenant1")));
 
-        (await Should.ThrowAsync<TenantManagementException>(act))
-            .Message.ShouldBe("Tenant with id 'tenant1' already exists");
+        exception.Message.ShouldBe("Tenant with id 'tenant1' already exists");
     }
 
     [Fact]
@@ -137,10 +150,10 @@ public abstract class TenantStoreCompliance<TStoreFixture> : IDisposable, IAsync
             Attributes = tenant.Attributes?.Add("key2", "value2"),
         };
 
-        var act = async () => await store.UpdateAsync(updatedTenant);
+        var exception = await Should.ThrowAsync<TenantManagementException>(
+            async () => await store.UpdateAsync(updatedTenant));
 
-        (await Should.ThrowAsync<TenantManagementException>(act))
-            .Message.ShouldBe("Tenant with id 'tenant1' does not exist");
+        exception.Message.ShouldBe("Tenant with id 'tenant1' does not exist");
     }
 
     [Fact]
@@ -153,20 +166,79 @@ public abstract class TenantStoreCompliance<TStoreFixture> : IDisposable, IAsync
         var tenants = await store.GetAllAsync(TestContext.Current.CancellationToken);
         tenants.ShouldHaveSingleItem();
 
-        await store.RemoveAsync("tenant1", TestContext.Current.CancellationToken);
+        var removed = await store.RemoveAsync("tenant1", TestContext.Current.CancellationToken);
+
+        removed.ShouldBeTrue();
 
         tenants = await store.GetAllAsync(TestContext.Current.CancellationToken);
         tenants.ShouldBeEmpty();
     }
 
     [Fact]
-    public Task Does_not_throw_when_removing_non_existing_tenant()
+    public async Task Reports_false_when_removing_non_existing_tenant()
     {
         var store = StoreFixture.Store;
 
-        var act = async () => await store.RemoveAsync("tenant1");
+        var removed = await store.RemoveAsync("tenant1", TestContext.Current.CancellationToken);
 
-        return Should.NotThrowAsync(act);
+        removed.ShouldBeFalse();
+    }
+
+    [Fact]
+    public async Task Allows_getting_an_existing_tenant()
+    {
+        var store = StoreFixture.Store;
+        var tenant = new Tenant(
+            "tenant1",
+            "Tenant 1",
+            new Dictionary<string, string>
+            {
+                { "key", "value" }
+            }.ToImmutableDictionary());
+
+        await store.AddAsync(tenant, TestContext.Current.CancellationToken);
+
+        var found = await store.GetAsync("tenant1", TestContext.Current.CancellationToken);
+
+        found.ShouldNotBeNull().ShouldBeEquivalentTo(tenant);
+    }
+
+    [Fact]
+    public async Task Returns_null_when_getting_a_non_existing_tenant()
+    {
+        var store = StoreFixture.Store;
+        await store.AddAsync(new Tenant("tenant1"), TestContext.Current.CancellationToken);
+
+        var found = await store.GetAsync("tenant2", TestContext.Current.CancellationToken);
+
+        found.ShouldBeNull();
+    }
+
+    [Fact]
+    public async Task Allows_getting_all_existing_tenants()
+    {
+        var store = StoreFixture.Store;
+        var tenant1 = new Tenant(
+            "tenant1",
+            "Tenant 1",
+            new Dictionary<string, string>
+            {
+                { "key", "value" }
+            }.ToImmutableDictionary());
+        var tenant2 = new Tenant(
+            "tenant2",
+            "Tenant 2",
+            new Dictionary<string, string>
+            {
+                    { "key", "value" }
+            }.ToImmutableDictionary());
+
+        await store.AddAsync(tenant1, TestContext.Current.CancellationToken);
+        await store.AddAsync(tenant2, TestContext.Current.CancellationToken);
+
+        var found = await store.GetAllAsync(TestContext.Current.CancellationToken);
+
+        found.ShouldBe([tenant1, tenant2], ignoreOrder: true);
     }
 
     public ValueTask InitializeAsync()

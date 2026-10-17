@@ -2,39 +2,95 @@
 
 namespace Ayaka.MultiTenancy.Management;
 
+using Light.GuardClauses;
+using Microsoft.Extensions.Logging;
+
 /// <summary>
 ///     The default <see cref="ITenantManager" /> providing basic tenant management capabilities
 ///     using an <see cref="ITenantStore" /> as the underlying persistence.
 /// </summary>
-internal sealed class DefaultTenantManager : ITenantManager
+internal sealed partial class DefaultTenantManager : ITenantManager
 {
     private readonly ITenantStore _store;
+    private readonly ITenantCache _cache;
+    private readonly ILogger _logger;
+    private readonly Func<string, CancellationToken, ValueTask<Tenant?>> _loadFromStore;
 
     /// <summary>
-    /// Initializes a new instance of <see cref="DefaultTenantManager"/>.
+    ///     Initializes a new instance of the <see cref="DefaultTenantManager"/> class.
     /// </summary>
     /// <param name="store">The underlying <see cref="ITenantStore"/> to use.</param>
-    public DefaultTenantManager(ITenantStore store)
+    /// <param name="cache">The <see cref="ITenantCache"/> to use for caching tenant lookups.</param>
+    /// <param name="loggerFactory">The <see cref="ILoggerFactory"/> used for logging.</param>
+    public DefaultTenantManager(
+        ITenantStore store,
+        ITenantCache cache,
+        ILoggerFactory loggerFactory)
     {
         _store = store;
+        _cache = cache;
+        _logger = loggerFactory.CreateLogger<DefaultTenantManager>();
+
+        _loadFromStore = (id, ct) => new ValueTask<Tenant?>(_store.GetAsync(id, ct));
     }
 
     /// <inheritdoc />
-    public Task AddAsync(Tenant tenant, CancellationToken cancellationToken = default)
-        => _store.AddAsync(tenant, cancellationToken);
-
-    /// <inheritdoc />
-    public Task RemoveAsync(string id, CancellationToken cancellationToken = default)
-        => _store.RemoveAsync(id, cancellationToken);
-
-    /// <inheritdoc />
-    public async Task<Tenant?> GetAsync(string id, CancellationToken cancellationToken = default)
+    public async ValueTask AddAsync(Tenant tenant, CancellationToken cancellationToken = default)
     {
-        var allTenants = await _store.GetAllAsync(cancellationToken);
-        return allTenants.FirstOrDefault(t => t.Id == id);
+        tenant.MustNotBeNull();
+
+        await _store.AddAsync(tenant, cancellationToken);
+        await EvictSafelyAsync(tenant.Id);
     }
 
     /// <inheritdoc />
-    public Task<IReadOnlyList<Tenant>> GetAllAsync(CancellationToken cancellationToken = default)
-        => _store.GetAllAsync(cancellationToken);
+    public async ValueTask UpdateAsync(Tenant tenant, CancellationToken cancellationToken = default)
+    {
+        tenant.MustNotBeNull();
+
+        await _store.UpdateAsync(tenant, cancellationToken);
+        await EvictSafelyAsync(tenant.Id);
+    }
+
+    /// <inheritdoc />
+    public async ValueTask<bool> RemoveAsync(string id, CancellationToken cancellationToken = default)
+    {
+        id.MustNotBeNullOrWhiteSpace();
+
+        var removed = await _store.RemoveAsync(id, cancellationToken);
+        await EvictSafelyAsync(id);
+
+        return removed;
+    }
+
+    /// <inheritdoc />
+    public ValueTask<Tenant?> GetAsync(string id, CancellationToken cancellationToken = default)
+    {
+        id.MustNotBeNullOrWhiteSpace();
+
+        return _cache.GetOrCreateAsync(id, _loadFromStore, cancellationToken);
+    }
+
+    /// <inheritdoc />
+    public ValueTask<IReadOnlyList<Tenant>> GetAllAsync(CancellationToken cancellationToken = default)
+        => new(_store.GetAllAsync(cancellationToken));
+
+    private async ValueTask EvictSafelyAsync(string id)
+    {
+        try
+        {
+            // The store write already happened, so a caller cancelling now must not leave a stale entry behind
+            await _cache.EvictAsync(id, CancellationToken.None);
+        }
+        catch (Exception exception)
+        {
+            TenantManagerLog.FailedToEvict(_logger, id, exception);
+        }
+    }
+
+    private static partial class TenantManagerLog
+    {
+        [LoggerMessage(1, LogLevel.Warning, "Failed to evict tenant {TenantId} from the cache")]
+        public static partial void FailedToEvict(ILogger logger, string tenantId, Exception exception);
+    }
 }
