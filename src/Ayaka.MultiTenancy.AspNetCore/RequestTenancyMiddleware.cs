@@ -4,6 +4,7 @@ namespace Ayaka.MultiTenancy.AspNetCore;
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
@@ -44,9 +45,14 @@ public sealed partial class RequestTenancyMiddleware
     public Task InvokeAsync(HttpContext context)
     {
         var endpoint = context.GetEndpoint();
+        if (endpoint is null)
+        {
+            RequestTenancyLog.NoEndpointMatched(_logger);
+            return _next(context);
+        }
 
         // Check whether we should skip tenant detection
-        if (endpoint?.Metadata.GetMetadata<DisableMultiTenancyAttribute>() is not null)
+        if (endpoint.Metadata.GetMetadata<DisableMultiTenancyAttribute>() is not null)
         {
             RequestTenancyLog.EndpointSkipsTenantDetection(_logger);
             return _next(context);
@@ -62,24 +68,47 @@ public sealed partial class RequestTenancyMiddleware
             throw new InvalidOperationException("Tenant was already set previously in the request pipeline");
         }
 
-        if (_options.DetectionStrategies.Count == 0)
+        var id = await TryDetectTenant(context);
+        if (id is null)
         {
-            throw new InvalidOperationException("No tenant detection strategies are configured");
+            await RejectAsync(context, StatusCodes.Status400BadRequest, "Tenant could not be detected.");
+            return;
         }
 
-        var tenant = await TryDetectTenant(context);
-        if (tenant is not null)
+        var tenantContext = await TryResolveTenant(id, context);
+        if (tenantContext is null)
         {
-            var activityFeature = context.Features.Get<IHttpActivityFeature>();
-            if (activityFeature is not null)
-            {
-                activityFeature.Activity.SetTag(_options.ActivityTagName, tenant);
-            }
-
-            _accessor.TenantContext = new TenantContext(tenant, tenant);
+            await RejectAsync(context, StatusCodes.Status404NotFound, "Tenant is unknown.");
+            return;
         }
 
+        var activityFeature = context.Features.Get<IHttpActivityFeature>();
+        if (activityFeature is not null)
+        {
+            activityFeature.Activity.SetTag(_options.ActivityTagName, tenantContext.Id);
+        }
+
+        _accessor.TenantContext = tenantContext;
         await _next(context);
+    }
+
+    private static async Task RejectAsync(HttpContext context, int statusCode, string title)
+    {
+        context.Response.StatusCode = statusCode;
+
+        var problemDetails = context.RequestServices.GetService<IProblemDetailsService>();
+        if (problemDetails is not null)
+        {
+            await problemDetails.TryWriteAsync(new ProblemDetailsContext
+            {
+                HttpContext = context,
+                ProblemDetails =
+                {
+                    Status = statusCode,
+                    Title = title
+                },
+            });
+        }
     }
 
     private async Task<string?> TryDetectTenant(HttpContext context)
@@ -98,15 +127,38 @@ public sealed partial class RequestTenancyMiddleware
         return null;
     }
 
+    private async Task<TenantContext?> TryResolveTenant(string id, HttpContext context)
+    {
+        var tenantContext = await _options.ContextResolver.ResolveAsync(id, context.RequestAborted);
+        if (tenantContext is not null)
+        {
+            RequestTenancyLog.TenantFound(_logger, tenantContext.Id);
+            return tenantContext;
+        }
+
+        RequestTenancyLog.UnknownTenant(_logger, id);
+        return null;
+
+    }
+
     private static partial class RequestTenancyLog
     {
-        [LoggerMessage(1, LogLevel.Debug, "Endpoint is marked to skip tenant detection.")]
+        [LoggerMessage(1, LogLevel.Debug, "No endpoint matched. Skipping tenant detection.")]
+        public static partial void NoEndpointMatched(ILogger logger);
+
+        [LoggerMessage(2, LogLevel.Debug, "Endpoint is marked to skip tenant detection.")]
         public static partial void EndpointSkipsTenantDetection(ILogger logger);
 
-        [LoggerMessage(2, LogLevel.Debug, "Tenant '{Tenant}' was detected using strategy '{Strategy}'.")]
+        [LoggerMessage(3, LogLevel.Debug, "Tenant '{Tenant}' was detected using strategy '{Strategy}'.")]
         public static partial void TenantDetected(ILogger logger, string tenant, string strategy);
 
-        [LoggerMessage(3, LogLevel.Debug, "Unable to detect tenant.")]
+        [LoggerMessage(4, LogLevel.Debug, "Unable to detect tenant.")]
         public static partial void UnableToDetectTenant(ILogger logger);
+
+        [LoggerMessage(5, LogLevel.Debug, "Detected tenant {Tenant} was found.")]
+        public static partial void TenantFound(ILogger logger, string tenant);
+
+        [LoggerMessage(6, LogLevel.Debug, "Detected tenant {Tenant} is unknown.")]
+        public static partial void UnknownTenant(ILogger logger, string tenant);
     }
 }

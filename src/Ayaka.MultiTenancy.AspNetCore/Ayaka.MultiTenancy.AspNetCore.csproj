@@ -4,6 +4,10 @@
     <TargetFramework>$(DotNetTargetFramework)</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="Ayaka.MultiTenancy.AspNetCore.Tests" />
+  </ItemGroup>
+
   <PropertyGroup>
     <VersionSuffix>preview</VersionSuffix>
     <PackageDescription>Provides ASP.NET core specific extensions for multi-tenanted applications. $(PackageDescriptionAppendix)</PackageDescription>
