@@ -1,9 +1,1 @@
 #nullable enable
-Ayaka.MultiTenancy.Management.InMemoryTenantStore.GetAsync(string! id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Ayaka.MultiTenancy.Management.Tenant?>!
-Ayaka.MultiTenancy.Management.InMemoryTenantStore.RemoveAsync(string! id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<bool>!
-Ayaka.MultiTenancy.Management.TenantCacheOptions
-Ayaka.MultiTenancy.Management.TenantCacheOptions.Expiration.get -> System.TimeSpan
-Ayaka.MultiTenancy.Management.TenantCacheOptions.Expiration.set -> void
-Ayaka.MultiTenancy.Management.TenantCacheOptions.TenantCacheOptions() -> void
-static Ayaka.MultiTenancy.DependencyInjection.TenantManagementBuilderExtensions.UseHybridCache(this Ayaka.MultiTenancy.DependencyInjection.ITenantManagementBuilder! builder, System.Action<Ayaka.MultiTenancy.Management.TenantCacheOptions!>? configure = null) -> Ayaka.MultiTenancy.DependencyInjection.ITenantManagementBuilder!
-static Ayaka.MultiTenancy.DependencyInjection.TenantManagementBuilderExtensions.UseKeyedHybridCache(this Ayaka.MultiTenancy.DependencyInjection.ITenantManagementBuilder! builder, object! serviceKey, System.Action<Ayaka.MultiTenancy.Management.TenantCacheOptions!>? configure = null) -> Ayaka.MultiTenancy.DependencyInjection.ITenantManagementBuilder!
