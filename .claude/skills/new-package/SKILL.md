@@ -35,7 +35,8 @@ Use the kebab-case of the feature part for docs paths (e.g. `Ayaka.MultiTenancy`
      `docs/en/guide/packages/multi-tenancy/index.md`
    - a sidebar section in `guideSidebar()` in `docs/.vitepress/en.ts`
    - a table row + link reference in `docs/en/guide/packages.md`
-7. **Verify** — `dotnet build Ayaka.slnx`, then `./build.sh` (Pack runs dotnet-validate over the
-   new package), then `/docs-verify guide/packages/<kebab>` for the new page and sidebar entry
+7. **Verify** — `dotnet build Ayaka.slnx`, then `./build.sh` (build, test, pack; dotnet-validate
+   checks the new package on CI), then `/docs-verify guide/packages/<kebab>` for the new page and
+   sidebar entry
 
 Do not invent initial APIs — leave the package empty or minimal unless the user specified contents.

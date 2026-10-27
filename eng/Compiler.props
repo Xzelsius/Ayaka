@@ -5,6 +5,11 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <!-- Deterministic builds on CI, required for SourceLink and validated by dotnet-validate -->
+  <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
+    <ContinuousIntegrationBuild>True</ContinuousIntegrationBuild>
+  </PropertyGroup>
+
   <!-- Compiler options for NuGet packages -->
   <PropertyGroup Condition="'$(IsNuGetPackage)' == 'True'">
     <UsePublicApiAnalyzers Condition="'$(UsePublicApiAnalyzers)' == ''">True</UsePublicApiAnalyzers>

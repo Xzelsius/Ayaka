@@ -4,9 +4,6 @@ on:
   release:
     types: [ published ]
 
-env:
-  NUGET_PACKAGES: '${{ github.workspace }}/.nuget/packages'
-
 jobs:
   after-release:
     runs-on: ubuntu-latest
@@ -40,30 +37,40 @@ jobs:
           fetch-depth: 0
           token: ${{ steps.app.outputs.token }}
 
-      - name: NuGet Cache
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
-        with:
-          path: |
-            ${{ env.NUGET_PACKAGES }}
-            .nuke/temp
-          key: ${{ runner.os }}-nuget-${{ hashFiles('**/global.json', '**/*.csproj', '**/*.props') }}
-          restore-keys: |
-            ${{ runner.os }}-nuget-
-
-      - name: Setup .NET
-        uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6
-
-      - name: Restore .NET Tools
+      # The release event checks out the tag, the changes go on top of main
+      - name: Create After-Release Branch
         run: |
-          dotnet tool restore
+          if git rev-parse --verify --quiet refs/remotes/origin/after-release > /dev/null; then
+            echo "::error::Branch 'after-release' already exists. Merge or close its pull request, delete the branch and rerun"
+            exit 1
+          fi
+
+          git checkout --quiet --no-track -b after-release origin/main
+
+      - name: Ship Public APIs
+        run: |
+          ./eng/scripts/ship-public-apis.sh
 
       - name: Publish After-Release Changes
         run: |
-          dotnet nuke AfterRelease \
-            --github-token $GITHUB_TOKEN \
-            --git-user-email $GIT_CONFIG_EMAIL \
-            --git-user-name $GIT_CONFIG_NAME
+          git add 'src/*/PublicAPI.*.txt'
+
+          if git diff --cached --quiet; then
+            echo "::warning::No after-release changes detected. Skipping commit, push and pull request"
+            exit 0
+          fi
+
+          git config user.email "$GIT_CONFIG_EMAIL"
+          git config user.name "$GIT_CONFIG_NAME"
+          git commit --quiet -m "chore: ship public apis"
+          git push --quiet -u origin after-release
+
+          gh pr create --base main --head after-release --title "chore: after release changes" --body-file - <<'EOF'
+          **This PR was automatically generated after the release**
+
+          - Ships the public APIs for the latest release.
+          EOF
         env:
-          GITHUB_TOKEN: ${{ steps.app.outputs.token }}
+          GH_TOKEN: ${{ steps.app.outputs.token }}
           GIT_CONFIG_EMAIL: ${{ steps.git-config.outputs.email }}
           GIT_CONFIG_NAME: ${{ steps.git-config.outputs.name }}

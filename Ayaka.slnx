@@ -11,11 +11,6 @@
   <Folder Name="/eng/assets/">
     <File Path="eng/assets/logo.png" />
   </Folder>
-  <Folder Name="/nukebuild/">
-    <Project Path="nukebuild/Build.csproj">
-      <Build Project="false" />
-    </Project>
-  </Folder>
   <Folder Name="/src/">
     <File Path="src/Directory.Build.props" />
     <Project Path="src/Ayaka.MultiTenancy.Abstractions/Ayaka.MultiTenancy.Abstractions.csproj" />

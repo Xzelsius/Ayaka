@@ -2,10 +2,17 @@
   "version": 1,
   "isRoot": true,
   "tools": {
-    "nuke.globaltool": {
-      "version": "10.1.0",
+    "gitversion.tool": {
+      "version": "6.7.0",
       "commands": [
-        "nuke"
+        "dotnet-gitversion"
+      ],
+      "rollForward": false
+    },
+    "dotnet-validate": {
+      "version": "0.0.1-preview.582",
+      "commands": [
+        "dotnet-validate"
       ],
       "rollForward": false
     }

@@ -31,10 +31,8 @@ jobs:
         - name: NuGet Cache
           uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
           with:
-            path: |
-              ${{ env.NUGET_PACKAGES }}
-              .nuke/temp
-            key: ${{ runner.os }}-nuget-${{ hashFiles('**/global.json', '**/*.csproj', '**/*.props') }}
+            path: ${{ env.NUGET_PACKAGES }}
+            key: ${{ runner.os }}-nuget-${{ hashFiles('**/global.json', '**/*.csproj', '**/*.props', '.config/dotnet-tools.json') }}
             restore-keys: |
               ${{ runner.os }}-nuget-
 
@@ -47,7 +45,15 @@ jobs:
 
         - name: Create GitHub Release
           run: |
-            dotnet nuke CreateRelease \
-              --github-token $GITHUB_TOKEN
+            tag="v$(dotnet gitversion -output json -format '{MajorMinorPatch}' -nofetch -nocache)"
+
+            if gh release view "$tag" > /dev/null 2>&1; then
+              echo "::warning::Release $tag already exists. No GitHub release is created"
+              exit 0
+            fi
+
+            gh release create "$tag" --target "$(git rev-parse HEAD)" --title "$tag" --generate-notes
           env:
-            GITHUB_TOKEN: ${{ steps.app.outputs.token }}
+            # The GitHub App token is required, events created with GITHUB_TOKEN would not
+            # trigger the ci (tag push) and after-release (release published) workflows
+            GH_TOKEN: ${{ steps.app.outputs.token }}

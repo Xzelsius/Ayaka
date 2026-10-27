@@ -11,10 +11,10 @@ See `AGENTS.md` at the repo root for the full agent guide.
 
 ## Build & test
 
-- `dotnet tool restore` once, then fast loop: `dotnet build Ayaka.slnx`, `dotnet test test/<Project>.Tests`
+- Fast loop: `dotnet build Ayaka.slnx`, `dotnet test test/<Project>.Tests`
 - Full pipeline (what CI runs):
-  - `./build.sh` — NUKE targets Compile → Test → Pack
-  - `./build.sh Docs` builds the VitePress docs
+  - `./build.sh` — steps build → test → pack (CI adds `validate`)
+  - `./build.sh docs` builds the VitePress docs
 
 ## Public APIs
 
