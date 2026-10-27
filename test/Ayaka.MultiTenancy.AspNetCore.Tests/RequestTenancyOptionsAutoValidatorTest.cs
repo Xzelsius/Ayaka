@@ -7,6 +7,15 @@ using Ayaka.MultiTenancy.AspNetCore.Resolution;
 
 public sealed class RequestTenancyOptionsAutoValidatorTest
 {
+    [Fact]
+    public void Sets_DetectOnlyTenantContextResolver_as_default_resolver()
+    {
+        var options = new RequestTenancyOptions();
+
+        options.ContextResolver.ShouldNotBeNull();
+        options.ContextResolver.ShouldBeOfType<DetectOnlyTenantContextResolver>();
+    }
+
     public sealed class Validate
     {
         [Fact]
