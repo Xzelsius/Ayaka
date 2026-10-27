@@ -57,8 +57,6 @@ See `AGENTS.md` at the repo root for the full agent guide.
 - Version bump: `feat:` → minor, everything else → patch, `!` or `BREAKING CHANGE:` footer → major
 - PR labels drive the changelog: `breaking-change`, `enhancement`, `bug`, `dependencies`,
   `documentation`
-- Breaking changes to `Ayaka.Nuke` (the only stable package) need both the `!`/`BREAKING CHANGE:`
-  commit and the `breaking-change` PR label
 
 ## Documentation
 

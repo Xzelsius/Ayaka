@@ -36,7 +36,7 @@ Writing tests:
   `Should.Throw<T>(action)` (the delegate is the argument, not the receiver)
 - Fake with FakeItEasy: `A.Fake<T>()` to create, `A.CallTo(() => ...)` to configure and assert
 - Internals can be made testable via `InternalsVisibleTo` in the src `.csproj` (already declared
-  for `Ayaka.Nuke` and `Ayaka.MultiTenancy`)
+  for the `Ayaka.MultiTenancy*` packages)
 
 Workflow:
 

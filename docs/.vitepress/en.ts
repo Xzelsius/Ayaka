@@ -58,48 +58,6 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
       ],
     },
     {
-      text: 'Ayaka.Nuke',
-      collapsed: true,
-      items: [
-        { text: 'Overview', link: 'packages/nuke' },
-        {
-          text: `Build Components`,
-          items: [
-            {
-              text: 'General',
-              link: 'packages/nuke/build-components/general',
-            },
-            {
-              text: '.NET',
-              link: 'packages/nuke/build-components/dotnet',
-            },
-            {
-              text: 'VitePress',
-              link: 'packages/nuke/build-components/vitepress',
-            },
-            {
-              text: 'GitHub',
-              link: 'packages/nuke/build-components/github',
-            },
-          ],
-        },
-        {
-          text: 'Build Tasks',
-          items: [
-            {
-              text: '.NET',
-              link: 'packages/nuke/build-tasks/dotnet',
-            },
-            {
-              text: 'GitHub',
-              link: 'packages/nuke/build-tasks/github',
-            },
-          ],
-        },
-        { text: 'Utilities', link: 'packages/nuke/utilities' },
-      ],
-    },
-    {
       text: 'Ayaka.MultiTenancy',
       collapsed: true,
       items: [

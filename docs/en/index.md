@@ -18,8 +18,8 @@ hero:
     alt: Ayaka
 
 features:
-  - title: Nuke Build Components
-    details: Various opinionated build components for simpler build automation using NUKE.
+  - title: Multi-Tenancy
+    details: Building blocks for multi-tenanted applications, from tenant detection to tenant management. Work-in-progress.
   - title: Soon&trade;
     details: Keep an eye out for upcoming features and enhancements.
 ---

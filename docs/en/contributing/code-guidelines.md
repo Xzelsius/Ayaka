@@ -99,7 +99,7 @@ Namespace declaration should be file-scoped and always match the folder structur
 ::: tip GOOD
 
 ```csharp
-namespace Ayaka.Nuke;
+namespace Ayaka.MultiTenancy;
 
 public class Foo
 {
@@ -111,7 +111,7 @@ public class Foo
 ::: danger BAD
 
 ```csharp
-namespace Ayaka.Nuke
+namespace Ayaka.MultiTenancy
 {
     public class Foo
     {
