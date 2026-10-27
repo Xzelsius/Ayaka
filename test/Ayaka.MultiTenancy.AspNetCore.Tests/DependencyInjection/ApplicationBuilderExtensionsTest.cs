@@ -30,11 +30,10 @@ public sealed class ApplicationBuilderExtensionsTest
             })
             .Build();
 
-        var action = () => host.Start();
+        var exception = Should.Throw<InvalidOperationException>(host.Start);
 
-        Should.Throw<InvalidOperationException>(action)
-            .Message.ShouldBe(
-                "Unable to find the required services. " +
-                "Please add all the required services by calling 'IServiceCollection.AddMultiTenancy()' in the application startup code.");
+        exception.Message.ShouldBe(
+            "Unable to find the required services. " +
+            "Please add all the required services by calling 'IServiceCollection.AddMultiTenancy().ConfigureRequestTenancy(...)' in the application startup code.");
     }
 }

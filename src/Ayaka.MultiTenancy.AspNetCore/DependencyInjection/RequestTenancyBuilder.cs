@@ -6,7 +6,10 @@ namespace Ayaka.MultiTenancy.DependencyInjection;
 using System.Diagnostics;
 using Ayaka.MultiTenancy.AspNetCore;
 using Ayaka.MultiTenancy.AspNetCore.Detection;
+using Ayaka.MultiTenancy.AspNetCore.Resolution;
+using Ayaka.MultiTenancy.Management;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 /// <summary>
 ///     A builder for configuring <see cref="RequestTenancyOptions"/> used by the <see cref="RequestTenancyMiddleware"/>.
@@ -87,6 +90,33 @@ public sealed class RequestTenancyBuilder
     public RequestTenancyBuilder DetectUsing(ITenantDetectionStrategy strategy)
         => AddStrategy(_ => strategy);
 
+    /// <summary>
+    ///     Configures request tenancy to resolve the tenant context using <see cref="ITenantManager" />.
+    /// </summary>
+    /// <returns>The same <see cref="RequestTenancyBuilder"/>.</returns>
+    public RequestTenancyBuilder ResolveWithTenantManagement()
+        => AddResolver(sp => CreateResolverInstance(sp, typeof(TenantManagementTenantContextResolver)));
+
+    /// <summary>
+    ///     Configures request tenancy to resolve the tenant context using an instance of the specified
+    ///     <typeparamref name="TResolver"/>.
+    /// </summary>
+    /// <remarks>
+    ///     Automatically injects constructor dependencies during instantiation.
+    /// </remarks>
+    /// <typeparam name="TResolver">The type of resolver to use.</typeparam>
+    /// <returns>The same <see cref="RequestTenancyBuilder"/>.</returns>
+    public RequestTenancyBuilder ResolveUsing<TResolver>()
+        where TResolver : ITenantContextResolver
+        => AddResolver(sp => CreateResolverInstance(sp, typeof(TResolver)));
+
+    /// <summary>
+    ///    Configures request tenancy to resolve the tenant context using the specified <paramref name="resolver"/>.
+    /// </summary>
+    /// <param name="resolver">The resolver to use.</param>
+    /// <returns>The same <see cref="RequestTenancyBuilder"/>.</returns>
+    public RequestTenancyBuilder ResolveUsing(ITenantContextResolver resolver)
+        => AddResolver(_ => resolver);
 
     /// <summary>
     ///     Configures the request tenancy to use the specified <paramref name="tagName"/> as the name of the tag
@@ -104,8 +134,11 @@ public sealed class RequestTenancyBuilder
 
     internal void ConfigureServices()
     {
+        MultiTenancy.Services.TryAddSingleton<RequestTenancyMarkerService>();
+
         // Ability to resolve IOptions<RequestTenancyOptions>
-        var optionBuilder = MultiTenancy.Services.AddOptions<RequestTenancyOptions>();
+        var optionBuilder = MultiTenancy.Services
+            .AddOptionsWithValidateOnStart<RequestTenancyOptions, RequestTenancyOptionsAutoValidator>();
 
         if (_configureActions.Count > 0)
         {
@@ -129,12 +162,26 @@ public sealed class RequestTenancyBuilder
             strategyType,
             args);
 
+    private static ITenantContextResolver CreateResolverInstance(
+        IServiceProvider serviceProvider,
+        Type resolverType)
+        => (ITenantContextResolver)ActivatorUtilities.CreateInstance(serviceProvider, resolverType);
+
     private RequestTenancyBuilder AddStrategy(Func<IServiceProvider, ITenantDetectionStrategy> factory)
     {
         _configureActions.Add(
             (opts, sp) =>
                 opts.DetectionStrategies
                     .Add(factory(sp)));
+
+        return this;
+    }
+
+    private RequestTenancyBuilder AddResolver(Func<IServiceProvider, ITenantContextResolver> factory)
+    {
+        _configureActions.Add(
+            (opts, sp) =>
+                opts.ContextResolver = factory(sp));
 
         return this;
     }
