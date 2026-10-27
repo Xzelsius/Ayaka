@@ -1,1 +1,7 @@
 #nullable enable
+Ayaka.MultiTenancy.AspNetCore.Resolution.ITenantContextResolver
+Ayaka.MultiTenancy.AspNetCore.Resolution.ITenantContextResolver.ResolveAsync(string! id, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.ValueTask<Ayaka.MultiTenancy.TenantContext?>
+Ayaka.MultiTenancy.AspNetCore.RequestTenancyOptions.ContextResolver.get -> Ayaka.MultiTenancy.AspNetCore.Resolution.ITenantContextResolver!
+Ayaka.MultiTenancy.DependencyInjection.RequestTenancyBuilder.ResolveUsing(Ayaka.MultiTenancy.AspNetCore.Resolution.ITenantContextResolver! resolver) -> Ayaka.MultiTenancy.DependencyInjection.RequestTenancyBuilder!
+Ayaka.MultiTenancy.DependencyInjection.RequestTenancyBuilder.ResolveUsing<TResolver>() -> Ayaka.MultiTenancy.DependencyInjection.RequestTenancyBuilder!
+Ayaka.MultiTenancy.DependencyInjection.RequestTenancyBuilder.ResolveWithTenantManagement() -> Ayaka.MultiTenancy.DependencyInjection.RequestTenancyBuilder!

@@ -3,7 +3,9 @@
 namespace Ayaka.MultiTenancy.AspNetCore.Tests.DependencyInjection;
 
 using Ayaka.MultiTenancy.AspNetCore.Detection;
+using Ayaka.MultiTenancy.AspNetCore.Resolution;
 using Ayaka.MultiTenancy.DependencyInjection;
+using Ayaka.MultiTenancy.Management;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -21,6 +23,19 @@ public sealed class RequestTenancyBuilderTest
         var options = sp.GetService<IOptions<RequestTenancyOptions>>();
 
         options.ShouldNotBeNull("IOptions<RequestTenancyOptions> should be registered");
+    }
+
+    [Fact]
+    public void Does_add_marker_service()
+    {
+        var builder = new TestMultiTenancyBuilder();
+
+        builder.ConfigureRequestTenancy(_ => { });
+
+        var sp = builder.Services.BuildServiceProvider();
+        var marker = sp.GetService<RequestTenancyMarkerService>();
+
+        marker.ShouldNotBeNull("RequestTenancyMarkerService should be registered");
     }
 
     public sealed class DetectFromRequestHeader
@@ -134,6 +149,91 @@ public sealed class RequestTenancyBuilderTest
         }
     }
 
+    public sealed class ResolveWithTenantManagement
+    {
+        [Fact]
+        public void Does_add_TenantManagementTenantContextResolver()
+        {
+            var builder = new TestMultiTenancyBuilder();
+
+            builder.Services.AddSingleton(A.Fake<ITenantManager>());
+            builder.ConfigureRequestTenancy(opts =>
+            {
+                opts.DetectUsing(A.Fake<ITenantDetectionStrategy>()); // required to avoid validation error
+                opts.ResolveWithTenantManagement();
+            });
+
+            var sp = builder.Services.BuildServiceProvider();
+            var options = sp.GetRequiredService<IOptions<RequestTenancyOptions>>().Value;
+
+            options.ContextResolver.ShouldBeOfType<TenantManagementTenantContextResolver>();
+        }
+    }
+
+    public sealed class ResolveUsingType
+    {
+        [Fact]
+        public void Does_add_resolver()
+        {
+            var builder = new TestMultiTenancyBuilder();
+
+            builder.ConfigureRequestTenancy(opts =>
+            {
+                opts.DetectUsing(A.Fake<ITenantDetectionStrategy>()); // required to avoid validation error
+                opts.ResolveUsing<TestResolver>();
+            });
+
+            var sp = builder.Services.BuildServiceProvider();
+            var options = sp.GetRequiredService<IOptions<RequestTenancyOptions>>().Value;
+
+            options.ContextResolver.ShouldBeOfType<TestResolver>();
+        }
+
+        [Fact]
+        public void Does_resolve_dependencies_from_service_provider()
+        {
+            var builder = new TestMultiTenancyBuilder();
+
+            var service = new Dependency();
+            builder.Services.AddSingleton<IDependency>(service);
+
+            builder.ConfigureRequestTenancy(opts =>
+            {
+                opts.DetectUsing(A.Fake<ITenantDetectionStrategy>()); // required to avoid validation error
+                opts.ResolveUsing<TestResolverWithDependency>();
+            });
+
+            var sp = builder.Services.BuildServiceProvider();
+            var options = sp.GetRequiredService<IOptions<RequestTenancyOptions>>().Value;
+
+            var resolver = options.ContextResolver;
+
+            resolver.ShouldBeOfType<TestResolverWithDependency>()
+                .Dependency.ShouldBeSameAs(service);
+        }
+    }
+
+    public sealed class ResolveUsingInstance
+    {
+        [Fact]
+        public void Does_add_resolver()
+        {
+            var builder = new TestMultiTenancyBuilder();
+
+            var resolver = new TestResolver();
+            builder.ConfigureRequestTenancy(opts =>
+            {
+                opts.DetectUsing(A.Fake<ITenantDetectionStrategy>()); // required to avoid validation error
+                opts.ResolveUsing(resolver);
+            });
+
+            var sp = builder.Services.BuildServiceProvider();
+            var options = sp.GetRequiredService<IOptions<RequestTenancyOptions>>().Value;
+
+            options.ContextResolver.ShouldBeSameAs(resolver);
+        }
+    }
+
     public sealed class ActivityTagName
     {
         [Fact]
@@ -141,7 +241,7 @@ public sealed class RequestTenancyBuilderTest
         {
             var builder = new TestMultiTenancyBuilder();
 
-            builder.ConfigureRequestTenancy(opts => { });
+            builder.ConfigureRequestTenancy(opts => opts.DetectFromRequestHost());
 
             var sp = builder.Services.BuildServiceProvider();
             var options = sp.GetRequiredService<IOptions<RequestTenancyOptions>>().Value;
@@ -154,7 +254,9 @@ public sealed class RequestTenancyBuilderTest
         {
             var builder = new TestMultiTenancyBuilder();
 
-            builder.ConfigureRequestTenancy(opts => opts.UseCustomActivityTagName("custom"));
+            builder.ConfigureRequestTenancy(opts => opts
+                .DetectFromRequestHost()
+                .UseCustomActivityTagName("custom"));
 
             var sp = builder.Services.BuildServiceProvider();
             var options = sp.GetRequiredService<IOptions<RequestTenancyOptions>>().Value;
@@ -183,6 +285,23 @@ public sealed class RequestTenancyBuilderTest
         public IDependency Dependency { get; }
 
         public Task<string?> TryDetectAsync(HttpContext context) => throw new NotImplementedException();
+    }
+
+    private sealed class TestResolver : ITenantContextResolver
+    {
+        public ValueTask<TenantContext?> ResolveAsync(string id, CancellationToken cancellationToken) => throw new NotImplementedException();
+    }
+
+    private sealed class TestResolverWithDependency : ITenantContextResolver
+    {
+        public TestResolverWithDependency(IDependency dependency)
+        {
+            Dependency = dependency;
+        }
+
+        public IDependency Dependency { get; }
+
+        public ValueTask<TenantContext?> ResolveAsync(string id, CancellationToken cancellationToken) => throw new NotImplementedException();
     }
 
     private interface IDependency;
