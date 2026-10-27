@@ -5,12 +5,11 @@ MIT licensed, docs at <https://xzelsius.github.io/Ayaka>.
 
 ## Packages
 
-| Package                           | Path                                  | Status                                                                                                                                          |
-|-----------------------------------|---------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------|
-| `Ayaka.Nuke`                      | `src/Ayaka.Nuke`                      | stable — opinionated build components for [NUKE](https://nuke.build) (`IHave*` context interfaces, `ICan*` target interfaces, `*Tasks` classes) |
-| `Ayaka.MultiTenancy.Abstractions` | `src/Ayaka.MultiTenancy.Abstractions` | preview                                                                                                                                         |
-| `Ayaka.MultiTenancy`              | `src/Ayaka.MultiTenancy`              | preview                                                                                                                                         |
-| `Ayaka.MultiTenancy.AspNetCore`   | `src/Ayaka.MultiTenancy.AspNetCore`   | preview                                                                                                                                         |
+| Package                           | Path                                  | Status  |
+|-----------------------------------|---------------------------------------|---------|
+| `Ayaka.MultiTenancy.Abstractions` | `src/Ayaka.MultiTenancy.Abstractions` | preview |
+| `Ayaka.MultiTenancy`              | `src/Ayaka.MultiTenancy`              | preview |
+| `Ayaka.MultiTenancy.AspNetCore`   | `src/Ayaka.MultiTenancy.AspNetCore`   | preview |
 
 Everything targets **net10.0 only** — no multi-targeting, by explicit decision. The .NET SDK is pinned
 to `10.0.301` in `global.json`.

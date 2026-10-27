@@ -15,6 +15,6 @@ The full guide is in `AGENTS.md` (always loaded); this file only adds test-speci
 - Exception assertions use Shouldly's static form: `await Should.ThrowAsync<T>(act)` / `Should.Throw<T>(action)` (the delegate is the argument, not the receiver)
 - Fakes: `A.Fake<T>()` to create, `A.CallTo(() => ...)` to configure and assert (FakeItEasy)
 - Internals can be made testable via `InternalsVisibleTo` in the src `.csproj` (already declared
-  for `Ayaka.Nuke` and `Ayaka.MultiTenancy`)
+  for the `Ayaka.MultiTenancy*` packages)
 - When changing existing behavior in `src/`, extend the matching existing test file — don't create
   a parallel new one
