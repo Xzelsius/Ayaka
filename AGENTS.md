@@ -61,7 +61,7 @@ Every package project tracks its public API with `PublicAPI.Shipped.txt` / `Publ
   code-fix that generates the lines; otherwise add them by hand following the format of existing entries.
 - Removing a shipped API → add a `*REMOVED*`-prefixed line to `PublicAPI.Unshipped.txt`.
 - **Never edit `PublicAPI.Shipped.txt`** — the after-release automation moves Unshipped → Shipped via
-  the `ShipPublicApis` target and an auto-PR.
+  `eng/scripts/ship-public-apis.sh` (which also applies `*REMOVED*` lines) and an auto-PR.
 
 ## Code style (essentials)
 
