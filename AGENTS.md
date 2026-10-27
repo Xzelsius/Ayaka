@@ -21,13 +21,13 @@ to `10.0.301` in `global.json`.
 - `test/` — `<Project>.Tests` xunit projects (not every package has one)
 - `eng/` — shared MSBuild `.props` imported by `src/Directory.Build.props` and `test/Directory.Build.props`
   (target framework, compiler settings, package metadata, analyzers, global usings, dependency versions)
-- `nukebuild/` — this repo's own NUKE build (dogfoods the shipped `Ayaka.Nuke` package — don't confuse the two)
 - `docs/` — VitePress site (`docs/en/...` pages, `docs/.vitepress/en.ts` sidebar/nav)
 - `artifacts/` — build output (gitignored)
+- `build.sh` — the build entry point, used locally and by CI
 
 ## Build, test, docs
 
-One-time setup: `dotnet tool restore` (installs the NUKE global tool).
+`build.sh` restores the local .NET tools (GitVersion, dotnet-validate) itself when it needs them.
 
 Fast inner loop (preferred while iterating):
 
@@ -40,14 +40,14 @@ dotnet test test/Ayaka.MultiTenancy.Tests --filter "FullyQualifiedName~AsyncLoca
 Full pipeline (run before declaring work done — this is what CI runs):
 
 ```sh
-./build.sh              # Default target: Compile → Test → Pack (incl. dotnet-validate)
-./build.sh Test         # tests only
-./build.sh Pack         # pack + validate packages
-./build.sh Docs         # build the VitePress docs
-dotnet nuke --help      # list all targets (equivalent entry point after tool restore)
+./build.sh              # default: build test pack (Release, versioned by GitVersion)
+./build.sh build test   # only the given steps, in the given order
+./build.sh docs         # lint + build the VitePress docs
 ```
 
-On Windows use `build.cmd`.
+Steps: `version`, `build`, `test`, `pack`, `validate`, `docs`. CI runs `build test pack validate` and
+`docs`. `validate` (dotnet-validate) only passes on CI builds, because deterministic builds are only
+enabled when `GITHUB_ACTIONS` is set. On Windows run it from Git Bash.
 
 Docs directly: `cd docs && npm ci && npm run dev` (live preview), `npm run build`, `npm run lint:js`.
 
@@ -118,8 +118,7 @@ xunit + Shouldly + FakeItEasy (see `eng/Packages.props` for versions).
 - Version bump: `feat:` → minor, everything else → patch, `!` or `BREAKING CHANGE:` footer → major
 - Changelog sections come from **PR labels**: `breaking-change`, `enhancement`, `bug`, `dependencies`,
   `documentation`
-- PRs target `main`; CI must pass (`build-packages` + `build-docs` run the same NUKE targets as
-  `./build.sh`)
+- PRs target `main`; CI must pass (`build-packages` + `build-docs` run the same `./build.sh` steps)
 - Releases are manual (`workflow_dispatch`), followed by an automated after-release PR — don't touch
   that machinery casually
 
@@ -134,6 +133,5 @@ xunit + Shouldly + FakeItEasy (see `eng/Packages.props` for versions).
 
 - The MultiTenancy packages carry `<VersionSuffix>preview</VersionSuffix>` — API may still churn, but
   the Public API gate above applies regardless.
-- `dotnet nuke` (and `./build.sh`) clean before compiling — use the fast inner loop for iteration.
-- `nukebuild/Build.csproj` has a `ProjectReference` to `src/Ayaka.Nuke` — the repo's own build dogfoods
-  the local project, so a breaking change to `src/Ayaka.Nuke` immediately breaks the repo's own build.
+- `./build.sh` always builds `Release` with GitVersion-computed versions, so it is slower than the fast
+  inner loop. Use plain `dotnet build` / `dotnet test` while iterating.

@@ -6,8 +6,6 @@
       "Bash(dotnet test)",
       "Bash(dotnet test *)",
       "Bash(dotnet format *)",
-      "Bash(dotnet nuke)",
-      "Bash(dotnet nuke *)",
       "Bash(dotnet tool restore)",
       "Bash(dotnet sln *)",
       "Bash(./build.sh)",

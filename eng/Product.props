@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(IsNuGetPackage)' == 'True'">
-    <RepositoryUrl>https://github.com/Xzlesius/Ayaka</RepositoryUrl>
+    <RepositoryUrl>https://github.com/Xzelsius/Ayaka</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageProjectUrl>https://github.com/Xzelsius/Ayaka</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>

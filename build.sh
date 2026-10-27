@@ -1,63 +1,103 @@
 #!/usr/bin/env bash
+#
+# Builds, tests and packs Ayaka. CI runs the same steps, use Git Bash on Windows.
+#
+#   ./build.sh                 # build test pack
+#   ./build.sh build test      # only the given steps, in the given order
+#   ./build.sh docs
+#
+# Steps: version, build, test, pack, validate (passes on CI builds only), docs
 
-bash --version 2>&1 | head -n 1
-
-set -eo pipefail
-SCRIPT_DIR=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
-
-###########################################################################
-# CONFIGURATION
-###########################################################################
-
-BUILD_PROJECT_FILE="$SCRIPT_DIR/nukebuild/Build.csproj"
-TEMP_DIRECTORY="$SCRIPT_DIR//.nuke/temp"
-
-DOTNET_GLOBAL_FILE="$SCRIPT_DIR//global.json"
-DOTNET_INSTALL_URL="https://dot.net/v1/dotnet-install.sh"
-DOTNET_CHANNEL="STS"
+set -euo pipefail
+cd "$(dirname "${BASH_SOURCE[0]}")"
 
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 export DOTNET_NOLOGO=1
-export DOTNET_MULTILEVEL_LOOKUP=0
 
-###########################################################################
-# EXECUTION
-###########################################################################
+artifacts="artifacts"
+no_build=()
 
-function FirstJsonValue {
-    perl -nle 'print $1 if m{"'"$1"'": "([^"]+)",?}' <<< "${@:2}"
+restore_tools() {
+  [[ -z ${tools_restored:-} ]] || return 0
+  dotnet tool restore
+  tools_restored=1
 }
 
-# If dotnet CLI is installed globally and it matches requested version, use for execution
-if [ -x "$(command -v dotnet)" ] && dotnet --version &>/dev/null; then
-    export DOTNET_EXE="$(command -v dotnet)"
-else
-    # Download install script
-    DOTNET_INSTALL_FILE="$TEMP_DIRECTORY/dotnet-install.sh"
-    mkdir -p "$TEMP_DIRECTORY"
-    curl -Lsfo "$DOTNET_INSTALL_FILE" "$DOTNET_INSTALL_URL"
-    chmod +x "$DOTNET_INSTALL_FILE"
+# Reads the GitVersion_* variables line by line, values are never evaluated by the shell
+step_version() {
+  [[ -z ${GitVersion_SemVer:-} ]] || return 0
+  restore_tools
 
-    # If global.json exists, load expected version
-    if [[ -f "$DOTNET_GLOBAL_FILE" ]]; then
-        DOTNET_VERSION=$(FirstJsonValue "version" "$(cat "$DOTNET_GLOBAL_FILE")")
-        if [[ "$DOTNET_VERSION" == ""  ]]; then
-            unset DOTNET_VERSION
-        fi
+  local output line
+  output=$(dotnet gitversion -output dotenv -nofetch -nocache)
+  while IFS= read -r line; do
+    line=${line%$'\r'}
+    if [[ $line =~ ^(GitVersion_[A-Za-z]+)=\'(.*)\'$ ]]; then
+      declare -g "${BASH_REMATCH[1]}=${BASH_REMATCH[2]}"
     fi
+  done <<< "$output"
 
-    # Install by channel or version
-    DOTNET_DIRECTORY="$TEMP_DIRECTORY/dotnet-unix"
-    if [[ -z ${DOTNET_VERSION+x} ]]; then
-        "$DOTNET_INSTALL_FILE" --install-dir "$DOTNET_DIRECTORY" --channel "$DOTNET_CHANNEL" --no-path
-    else
-        "$DOTNET_INSTALL_FILE" --install-dir "$DOTNET_DIRECTORY" --version "$DOTNET_VERSION" --no-path
-    fi
-    export DOTNET_EXE="$DOTNET_DIRECTORY/dotnet"
-    export PATH="$DOTNET_DIRECTORY:$PATH"
+  echo "Version: $GitVersion_SemVer"
+}
+
+step_build() {
+  step_version
+  dotnet build Ayaka.slnx -c Release \
+    -p:AssemblyVersion="$GitVersion_AssemblySemVer" \
+    -p:FileVersion="$GitVersion_AssemblySemFileVer" \
+    -p:InformationalVersion="$GitVersion_InformationalVersion"
+  no_build=(--no-build)
+}
+
+step_test() {
+  rm -rf "$artifacts/test-results"
+  dotnet test Ayaka.slnx -c Release "${no_build[@]}" \
+    --results-directory "$artifacts/test-results" \
+    --collect "XPlat Code Coverage" \
+    ${GITHUB_ACTIONS:+--logger GitHubActions}
+}
+
+step_pack() {
+  step_version
+
+  # With a pre-release label (main, PRs) Version overrides the projects' VersionSuffix, so all packages
+  # share one version. Without one (tag builds) only the prefix is set and preview packages keep their suffix.
+  local version="-p:VersionPrefix=$GitVersion_SemVer"
+  if [[ -n $GitVersion_PreReleaseLabel ]]; then
+    version="-p:Version=$GitVersion_SemVer"
+  fi
+
+  rm -rf "$artifacts/packages"
+  dotnet pack Ayaka.slnx -c Release "${no_build[@]}" --output "$artifacts/packages" "$version"
+}
+
+step_validate() {
+  restore_tools
+
+  local package failed=0
+  for package in "$artifacts"/packages/*.nupkg; do
+    dotnet validate package local "$package" || failed=1
+  done
+  return "$failed"
+}
+
+step_docs() (
+  cd docs
+  npm ci
+  npm run lint:js
+  npm run build -- --outDir "../$artifacts/docs"
+)
+
+if (($# == 0)); then
+  set -- build test pack
 fi
 
-echo "Microsoft (R) .NET SDK version $("$DOTNET_EXE" --version)"
-
-"$DOTNET_EXE" build "$BUILD_PROJECT_FILE" /nodeReuse:false /p:UseSharedCompilation=false -nologo -clp:NoSummary --verbosity quiet
-"$DOTNET_EXE" run --project "$BUILD_PROJECT_FILE" --no-build -- "$@"
+for step in "$@"; do
+  case $step in
+    version | build | test | pack | validate | docs) "step_$step" ;;
+    *)
+      echo "Unknown step '$step'. Available: version build test pack validate docs" >&2
+      exit 1
+      ;;
+  esac
+done

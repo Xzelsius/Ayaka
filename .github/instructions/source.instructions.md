@@ -41,5 +41,3 @@ Breaking changes:
   label drives the changelog)
 - The preview `Ayaka.MultiTenancy*` packages may break APIs, but the Public API files must still
   be updated in the same change
-- `nukebuild/Build.csproj` project-references `src/Ayaka.Nuke` — breaking it breaks the repo's own
-  build

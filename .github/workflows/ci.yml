@@ -26,29 +26,23 @@ jobs:
       - name: NuGet Cache
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
         with:
-          path: |
-            ${{ env.NUGET_PACKAGES }}
-            .nuke/temp
-          key: ${{ runner.os }}-nuget-${{ hashFiles('**/global.json', '**/*.csproj', '**/*.props') }}
+          path: ${{ env.NUGET_PACKAGES }}
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/global.json', '**/*.csproj', '**/*.props', '.config/dotnet-tools.json') }}
           restore-keys: |
             ${{ runner.os }}-nuget-
 
       - name: Setup .NET
         uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6
 
-      - name: Restore .NET Tools
+      - name: Build, Test, Pack and Validate
         run: |
-          dotnet tool restore
-
-      - name: Build, Test and Pack
-        run: |
-          dotnet nuke
+          ./build.sh build test pack validate
 
       - name: Upload Coverage
         uses: codacy/codacy-coverage-reporter-action@89d6c85cfafaec52c72b6c5e8b2878d33104c699 # v1.3.0
         with:
           project-token: ${{ secrets.CODACY_TOKEN }}
-          coverage-reports: ${{ github.workspace }}/artifacts/coverage/*.cobertura.xml
+          coverage-reports: ${{ github.workspace }}/artifacts/test-results/*/coverage.cobertura.xml
 
       - name: Upload Packages
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
@@ -79,26 +73,9 @@ jobs:
         with:
           node-version: 'lts/krypton'
 
-      - name: NuGet Cache
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
-        with:
-          path: |
-            ${{ env.NUGET_PACKAGES }}
-            .nuke/temp
-          key: ${{ runner.os }}-nuget-${{ hashFiles('**/global.json', '**/*.csproj', '**/*.props') }}
-          restore-keys: |
-            ${{ runner.os }}-nuget-
-
-      - name: Setup .NET
-        uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6
-
-      - name: Restore .NET Tools
-        run: |
-          dotnet tool restore
-
       - name: Build Docs
         run: |
-          dotnet nuke Docs
+          ./build.sh docs
 
       - name: Upload Docs
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5
@@ -131,10 +108,6 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6
 
-      - name: Restore .NET Tools
-        run: |
-          dotnet tool restore
-
       - name: NuGet Login
         uses: NuGet/login@8d196754b4036150537f80ac539e15c2f1028841 # v1.2.0
         id: nuget-login
@@ -143,8 +116,10 @@ jobs:
 
       - name: Publish NuGet packages
         run: |
-          dotnet nuke Publish \
-            --nuget-api-key $NUGET_API_KEY
+          dotnet nuget push "artifacts/packages/*.nupkg" \
+            --source https://api.nuget.org/v3/index.json \
+            --api-key "$NUGET_API_KEY" \
+            --skip-duplicate
         env:
           NUGET_API_KEY: ${{ steps.nuget-login.outputs.NUGET_API_KEY }}
 
