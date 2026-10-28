@@ -79,6 +79,7 @@ onBeforeUnmount(() => observer?.disconnect());
     <p>Diagram could not be rendered: {{ error }}</p>
     <pre>{{ source }}</pre>
   </div>
+  <!-- nosemgrep: svg is Mermaid output for repo-authored diagrams, sanitized by its 'strict' securityLevel -->
   <div v-else-if="svg" class="mermaid-diagram" :style="{ '--mermaid-min-width': minWidth }" v-html="svg" />
   <div v-else class="mermaid-diagram mermaid-diagram--loading" aria-busy="true" />
 </template>
