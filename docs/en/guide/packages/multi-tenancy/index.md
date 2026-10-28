@@ -1,43 +1,85 @@
-::: warning
-Multi-Tenancy features from Ayaka are work-in-progress and subject to breaking changes.
+# Multi-tenancy
+
+Ayaka.MultiTenancy answers one question for every piece of work in a .NET application:
+**which tenant is this for?** A tenant might be a customer organization, a workspace, or an account.
+Ayaka carries the tenant's identity through an execution flow, keeps a catalog of known tenants,
+and selects the tenant for each ASP.NET Core request.
+
+::: warning Preview
+The multi-tenancy packages are in preview. Their API can change between releases; check the release
+notes when you update.
 :::
 
-# Ayaka.MultiTenancy
+## How the pieces fit together
 
-Provides functionality for creating multi-tenanted applications.
+```mermaid
+flowchart TB
+  accTitle: Multi-tenancy components
+  accDescr: An HTTP request enters the request pipeline. Detection strategies find a tenant ID, and the resolver turns it into a tenant context, optionally looking the tenant up through the tenant manager, which uses a cache in front of a store. The middleware stores the context in the tenant context accessor, which your code reads.
 
-## What is Multi-Tenancy?
+  request([HTTP request]) --> detect
 
-Multi-tenancy in a software application refers to an architecture where a single instance of the software
-serves multiple tenants. Each tenant is a group of users who share common access with specific privileges
-to the software instance.
+  subgraph aspnetcore [Ayaka.MultiTenancy.AspNetCore]
+    detect[Detection strategies] -- tenant ID --> resolve[Resolver]
+  end
 
-Key points include:
+  resolve -- "TenantContext, set by the middleware" --> accessor
+  resolve -. optional lookup .-> manager
 
-* __Data Isolation__: Each tenant's data is isolated and remains invisible to other tenants
-* __Resource Sharing__: The application instance and its resources (e.g., CPU, memory) are shared among all tenants.
-* __Customization__: Tenants can have custom configurations, themes, or even functionality
-* __Scalability__: Allows efficient scaling by serving multiple tenants from a single application instance
-* __Cost Efficiency__: Reduces infrastructure and maintenance costs by consolidating resources
+  subgraph core [Ayaka.MultiTenancy]
+    accessor[ITenantContextAccessor]
+    manager[ITenantManager] --> cache[ITenantCache] --> store[ITenantStore]
+  end
 
-But these benefits come with challenges like:
+  accessor -- read by --> code([Your code])
+```
 
-* __Complexity__: Implementing multi-tenancy can add significant complexity to the application architecture, including
-  data isolation, security, and tenant-specific customizations
-* __Performance Overhead__: Sharing resources among multiple tenants can lead to performance bottlenecks,
-  especially if one tenant's usage spikes
-* __Security Risks__: Ensuring data isolation and preventing data leaks between tenants can be challenging
-  and requires robust security measures
-* __Customization Limitations__: While multi-tenancy allows for some level of customization, it may not be as
-  flexible as having separate instances for each tenant
-* __Maintenance Challenges__: Upgrading and maintaining a multi-tenant application can be more complex,
-  as changes need to be compatible with all tenants
-* __Testing Difficulties__: Testing a multi-tenant application can be more challenging due to the need to simulate
-  multiple tenant environments and scenarios
+Outside HTTP requests (background jobs, message handlers), your code sets the tenant context itself;
+see [Background work](./guides/background-work.md).
 
-## How does `Ayaka` help?
+| Component | What it does | Read more |
+| --- | --- | --- |
+| Tenant context | Holds the current tenant for the running execution flow. | [Tenant context](./tenant-context.md) |
+| Tenant management | Adds, updates, removes, and looks up known tenants in a store. | [Managing tenants](./management/tenants.md) |
+| Tenant caching | Keeps tenant lookups in memory so requests do not hit the store every time. | [Caching](./management/caching.md) |
+| Request pipeline | Middleware that sets the tenant context for each ASP.NET Core request. | [Request pipeline](./aspnetcore/pipeline.md) |
+| Tenant detection | Reads a tenant ID from a header, the host, or your own source. | [Tenant detection](./aspnetcore/detection.md) |
+| Tenant resolution | Turns a detected ID into a tenant context, optionally rejecting unknown tenants. | [Tenant resolution](./aspnetcore/resolution.md) |
 
-The `Ayaka.MultiTenancy` packages try to tackle the pros and cons by providing you the right tools for many
-scenarios:
+## Choose your packages
 
-* [Tenant Context](./tenant-context.md) which is the heart of the multi-tenancy functionality
+| Package | Use it for |
+| --- | --- |
+| `Ayaka.MultiTenancy.Abstractions` | Contracts and models, for libraries that should not choose an implementation. |
+| `Ayaka.MultiTenancy` | The tenant context accessor, tenant management, the in-memory store, and HybridCache integration. |
+| `Ayaka.MultiTenancy.AspNetCore` | Request detection, context resolution, and middleware for ASP.NET Core. |
+
+For a web application, install `Ayaka.MultiTenancy` and `Ayaka.MultiTenancy.AspNetCore`; a worker
+service needs only `Ayaka.MultiTenancy`. Both require `ILoggerFactory`, which ASP.NET Core and the
+Generic Host register for you.
+
+| Namespace | Contains |
+| --- | --- |
+| `Ayaka.MultiTenancy` | `TenantContext`, `ITenantContextAccessor`, `AddMultiTenancy()` |
+| `Ayaka.MultiTenancy.Management` | `Tenant`, `ITenantManager`, `ITenantStore`, `ITenantCache`, `TenantCacheOptions` |
+| `Ayaka.MultiTenancy.DependencyInjection` | Builder interfaces and their registration extensions, `UseMultiTenancy()` |
+| `Ayaka.MultiTenancy.AspNetCore` | `RequestTenancyMiddleware`, `RequestTenancyOptions`, `DisableMultiTenancyAttribute` |
+| `Ayaka.MultiTenancy.AspNetCore.Detection` | `ITenantDetectionStrategy` and the built-in strategies |
+| `Ayaka.MultiTenancy.AspNetCore.Resolution` | `ITenantContextResolver` |
+
+## What Ayaka does not do
+
+Your application decides how the tenant identity affects its data and services. Ayaka does not
+filter database queries, choose connection strings, provision databases, authenticate users, or check
+whether a user belongs to a tenant. Selecting a tenant, whether from a header, a host, or anything
+else the caller controls, establishes which tenant a request targets, not that the caller may access
+it; your authorization policies decide that.
+
+## Where to go next
+
+- [Quickstart](./quickstart.md) — a working tenant-aware API in a few minutes.
+- Guides — complete scenarios that combine several components:
+  - [Database-backed tenant store](./guides/database-store.md)
+  - [Background work](./guides/background-work.md)
+  - [Keep cached tenants in sync](./guides/cache-sync.md)
+- [Troubleshooting](./troubleshooting.md) — start from a response or exception you see.

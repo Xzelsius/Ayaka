@@ -25,13 +25,13 @@ public class AsyncLocalTenantContextAccessor : ITenantContextAccessor
             var holder = _tenantContextCurrent.Value;
             if (holder != null)
             {
-                // Clear current HttpContext trapped in the AsyncLocals, as it's done.
+                // Clear the current tenant context trapped in the AsyncLocals, as it's done.
                 holder.TenantContext = null;
             }
 
             if (value != null)
             {
-                // Use an object indirection to hold the HttpContext in the AsyncLocal,
+                // Use an object indirection to hold the tenant context in the AsyncLocal,
                 // so it can be cleared in all ExecutionContexts when it's cleared.
                 _tenantContextCurrent.Value = new TenantContextHolder
                 {

@@ -64,3 +64,5 @@ See `AGENTS.md` at the repo root for the full agent guide.
 
 - Public-surface or behavior changes must update `docs/en/guide/packages/<package>/` and the
   project's `PACKAGE.md`
+- Document behavior and guarantees, not the mechanism behind them (internal type names, constants,
+  retry counts, DI registration helpers) — see `docs/en/contributing/documentation.md`

@@ -23,3 +23,8 @@ Structure:
 - New pages need a sidebar entry in `en.ts`; new packages also get a row in
   `docs/en/guide/packages.md`
 - Use VitePress containers (`::: warning`, `::: tip`, `::: info`) like the existing pages do
+
+Content:
+
+- Document behavior and guarantees, not the mechanism behind them (internal type names, constants,
+  retry counts, DI registration helpers) — see `docs/en/contributing/documentation.md`

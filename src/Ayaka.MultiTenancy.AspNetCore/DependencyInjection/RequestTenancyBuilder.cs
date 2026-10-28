@@ -120,7 +120,7 @@ public sealed class RequestTenancyBuilder
 
     /// <summary>
     ///     Configures the request tenancy to use the specified <paramref name="tagName"/> as the name of the tag
-    ///     written to the request's <see cref="Activity"/> after the middleware successfully detected a tenant.
+    ///     written to the request's <see cref="Activity"/> after the middleware successfully resolved a tenant.
     /// </summary>
     /// <param name="tagName">The name of the tag to write to the request's <see cref="Activity"/>.</param>
     /// <returns>The same <see cref="RequestTenancyBuilder"/>.</returns>

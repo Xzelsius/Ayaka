@@ -18,8 +18,10 @@ hero:
     alt: Ayaka
 
 features:
-  - title: Multi-Tenancy
-    details: Building blocks for multi-tenanted applications, from tenant detection to tenant management. Work-in-progress.
+  - title: Multi-tenancy
+    details: Carry tenant context through your application, manage known tenants, and resolve tenants from ASP.NET Core requests.
+    link: /guide/packages/multi-tenancy/quickstart
+    linkText: Build your first tenant-aware API
   - title: Soon&trade;
     details: Keep an eye out for upcoming features and enhancements.
 ---
