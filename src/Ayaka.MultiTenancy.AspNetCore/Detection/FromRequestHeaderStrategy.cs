@@ -38,7 +38,6 @@ public sealed class FromRequestHeaderStrategy : ITenantDetectionStrategy
         // Catch possible multiple header values
         if (headerValues.Count > 1)
         {
-            // Log.MultipleHeaderValuesFound(_logger, _headerName);
             headerValue = headerValues[0];
         }
         else

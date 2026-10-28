@@ -1,23 +1,21 @@
 ## About
 
-Provides abstractions for multi-tenanted applications. Interfaces defined in this package are implemented
-by classes in [`Ayaka.MultiTenancy`](https://www.nuget.org/packages/Ayaka.MultiTenancy) and other multi-tenancy packages.
+Contracts and models for multi-tenant .NET applications. Reference it from libraries that work with
+tenants without choosing how an application stores or selects them. It registers no services;
+applications use [`Ayaka.MultiTenancy`](https://www.nuget.org/packages/Ayaka.MultiTenancy).
 
 ## Key Features
 
-Defines abstractions for multi-tenancy functionality like `TenantContext`, `ITenantContextAccessor`, etc.
+* The current tenant and the accessor to read it
+* Tenant records and the contracts for managing, storing, and caching them
+* Builder interfaces for your own registration extensions
 
 ## How to Use
 
-`Ayaka.MultiTenancy.Abstractions` does not provide any functionality on its own. The functionality comes
-from classes in other packages.
-
-But it allows you to create your own implementation in case the implementation provided by other packages
-does not suit your needs.
-
-## Additional Documentation
-
-See [the documentation](https://xzelsius.github.io/Ayaka/guide/packages/multi-tenancy) for more details.
+* [Overview](https://xzelsius.github.io/Ayaka/guide/packages/multi-tenancy) — how the pieces fit together
+* [Tenant context](https://xzelsius.github.io/Ayaka/guide/packages/multi-tenancy/tenant-context) — read the current tenant
+* [Provide a store](https://xzelsius.github.io/Ayaka/guide/packages/multi-tenancy/management/tenants#provide-a-store) — implement your own tenant store
+* [Replace the cache](https://xzelsius.github.io/Ayaka/guide/packages/multi-tenancy/management/caching#replace-the-cache) — implement your own tenant cache
 
 ## Feedback & Contributing
 

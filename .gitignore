@@ -140,6 +140,7 @@ artifacts/
 #================================
 
 docs/.vitepress/cache
+docs/.vitepress/dist/
 
 # In NuGet section we exclude **/packages/*
 # but we want to include the packages folder in docs.

@@ -21,7 +21,7 @@ internal sealed class TenantManagementTenantContextResolver : ITenantContextReso
         _manager = manager;
     }
 
-    // <inheritdoc/>
+    /// <inheritdoc />
     public async ValueTask<TenantContext?> ResolveAsync(string id, CancellationToken cancellationToken)
     {
         var tenant = await _manager.GetAsync(id, cancellationToken);

@@ -28,7 +28,7 @@ public sealed class RequestTenancyOptions
 
     /// <summary>
     ///     Gets or sets the name of the tag written to the request's <see cref="Activity"/> after the middleware
-    ///     successfully detected a tenant.
+    ///     successfully resolved a tenant.
     /// </summary>
     /// <remarks>
     ///     The tag is only written if the <see cref="IHttpActivityFeature"/> is available. It does not use

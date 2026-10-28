@@ -129,6 +129,8 @@ xunit + Shouldly + FakeItEasy (see `eng/Packages.props` for versions).
   `docs/en/guide/packages/<package>/` (and the sidebar in `docs/.vitepress/en.ts` when adding pages)
 - CI builds the docs site, so broken docs fail the PR
 - Each package also has a `PACKAGE.md` used as the NuGet readme — keep it accurate
+- Document behavior and guarantees, not the mechanism behind them (internal type names, constants,
+  retry counts, DI registration helpers) — see `docs/en/contributing/documentation.md`
 
 ## Gotchas
 

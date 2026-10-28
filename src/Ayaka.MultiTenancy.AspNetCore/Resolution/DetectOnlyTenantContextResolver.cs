@@ -8,7 +8,7 @@ namespace Ayaka.MultiTenancy.AspNetCore.Resolution;
 /// </summary>
 internal sealed class DetectOnlyTenantContextResolver : ITenantContextResolver
 {
-    // <inheritdoc/>
+    /// <inheritdoc />
     public ValueTask<TenantContext?> ResolveAsync(string id, CancellationToken cancellationToken)
         => ValueTask.FromResult<TenantContext?>(new TenantContext(id, id));
 }

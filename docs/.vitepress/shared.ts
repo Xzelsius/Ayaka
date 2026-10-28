@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitepress';
+import { mermaidMarkdown } from './mermaid/markdown';
 
 export const shared = defineConfig({
   title: 'Ayaka',
@@ -12,6 +13,12 @@ export const shared = defineConfig({
   lastUpdated: true,
   cleanUrls: true,
   metaChunk: true,
+
+  markdown: {
+    config: (md) => {
+      md.use(mermaidMarkdown);
+    },
+  },
 
   themeConfig: {
     logo: {

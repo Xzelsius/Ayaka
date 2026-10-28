@@ -2,8 +2,11 @@
 
 Ayaka is a collection of packages, aiming to help developing applications using .NET.
 
-Don't hesitate and check out the [packages] to see what's available and if there is something
-for you.
+Choose a starting point:
+
+* [Multi-tenancy](./packages/multi-tenancy/index.md): flexible libraries for building applications that serve multiple tenants.
+
+See [packages] for the package breakdown and installation choices.
 
 ## Introduction
 
