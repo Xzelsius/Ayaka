@@ -21,6 +21,8 @@ Style:
 - File header `// Copyright (c) Raphael Strotz. All rights reserved.` on every file
 - File-scoped namespace matching the folder
 - `using` directives inside the namespace, `System.*` first
+- Guard arguments with the BCL throw helpers, e.g. `ArgumentNullException.ThrowIfNull(x)` or
+  `ArgumentException.ThrowIfNullOrWhiteSpace(x)` — no guard-clause library
 - Read `docs/en/contributing/code-guidelines.md` before non-trivial changes
 
 Dependencies:

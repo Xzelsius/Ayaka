@@ -3,7 +3,6 @@
 namespace Ayaka.MultiTenancy.DependencyInjection;
 
 using Ayaka.MultiTenancy.Management;
-using Light.GuardClauses;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Hybrid;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,7 +22,7 @@ public static class TenantManagementBuilderExtensions
     /// <returns>The same <see cref="ITenantManagementBuilder"/>.</returns>
     public static ITenantManagementBuilder UseInMemoryStore(this ITenantManagementBuilder builder)
     {
-        builder.MustNotBeNull();
+        ArgumentNullException.ThrowIfNull(builder);
 
         builder.MultiTenancy.Services.TryAddSingleton<ITenantStore, InMemoryTenantStore>();
 
@@ -43,7 +42,7 @@ public static class TenantManagementBuilderExtensions
         this ITenantManagementBuilder builder,
         Action<TenantCacheOptions>? configure = null)
     {
-        builder.MustNotBeNull();
+        ArgumentNullException.ThrowIfNull(builder);
 
         builder.MultiTenancy.Services.AddHybridCache();
 
@@ -69,8 +68,8 @@ public static class TenantManagementBuilderExtensions
         object serviceKey,
         Action<TenantCacheOptions>? configure = null)
     {
-        builder.MustNotBeNull();
-        serviceKey.MustNotBeNull();
+        ArgumentNullException.ThrowIfNull(builder);
+        ArgumentNullException.ThrowIfNull(serviceKey);
 
         return builder.UseTenantCache(
             ServiceDescriptor.Singleton<ITenantCache>(services => new HybridCacheTenantCache(

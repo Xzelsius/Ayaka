@@ -3,7 +3,6 @@
 namespace Ayaka.MultiTenancy.Management;
 
 using System.Collections.Concurrent;
-using Light.GuardClauses;
 
 /// <summary>
 ///     Represents in-memory persistence for <see cref="Tenant"/> instances.
@@ -15,7 +14,7 @@ public sealed class InMemoryTenantStore : ITenantStore
     /// <inheritdoc />
     public Task AddAsync(Tenant tenant, CancellationToken cancellationToken = default)
     {
-        tenant.MustNotBeNull();
+        ArgumentNullException.ThrowIfNull(tenant);
 
         var added = _tenants.TryAdd(tenant.Id, tenant);
         if (!added)
@@ -29,7 +28,7 @@ public sealed class InMemoryTenantStore : ITenantStore
     /// <inheritdoc />
     public Task UpdateAsync(Tenant tenant, CancellationToken cancellationToken = default)
     {
-        tenant.MustNotBeNull();
+        ArgumentNullException.ThrowIfNull(tenant);
 
         _tenants.AddOrUpdate(
             tenant.Id,
@@ -43,7 +42,7 @@ public sealed class InMemoryTenantStore : ITenantStore
     /// <inheritdoc />
     public Task<bool> RemoveAsync(string id, CancellationToken cancellationToken = default)
     {
-        id.MustNotBeNullOrWhiteSpace();
+        ArgumentException.ThrowIfNullOrWhiteSpace(id);
 
         return Task.FromResult(_tenants.TryRemove(id, out _));
     }
@@ -51,7 +50,7 @@ public sealed class InMemoryTenantStore : ITenantStore
     /// <inheritdoc />
     public Task<Tenant?> GetAsync(string id, CancellationToken cancellationToken = default)
     {
-        id.MustNotBeNullOrWhiteSpace();
+        ArgumentException.ThrowIfNullOrWhiteSpace(id);
 
         return Task.FromResult(_tenants.TryGetValue(id, out var tenant) ? tenant : null);
     }

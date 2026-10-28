@@ -173,6 +173,7 @@ The following rules should be followed regarding null-checking:
 * Use the null-conditional operator `?.` when possible
 * Use coalescing operator `??` when possible (e.g. `var foo = bar ?? "default"` over `var foo = bar != null ? bar : "default"`)
 * Use `is null` over `== null`
+* Use the BCL throw helpers to guard arguments instead of a guard clause library (e.g. `ArgumentNullException.ThrowIfNull(foo)` or `ArgumentException.ThrowIfNullOrWhiteSpace(foo)` over `if (foo is null) throw new ArgumentNullException(nameof(foo))`)
 
 ### Others
 
