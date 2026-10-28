@@ -3,7 +3,7 @@
   https://github.com/emersonbottero/vitepress-plugin-mermaid
 -->
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref, useId } from 'vue';
+import { computed, onBeforeUnmount, onMounted, ref, useId, watchPostEffect } from 'vue';
 import { createMermaidConfig } from '../../mermaid/theme';
 
 const props = defineProps<{
@@ -19,6 +19,7 @@ const id = `mermaid-${useId()}`;
 
 const svg = ref<string>();
 const error = ref<string>();
+const container = ref<HTMLDivElement>();
 
 const minWidth = computed(() => {
   const width = Number(svg.value?.match(/viewBox="[\d.-]+ [\d.-]+ ([\d.]+)/)?.[1]);
@@ -71,6 +72,15 @@ onMounted(() => {
   render();
 });
 
+// Mount the (already sanitized) SVG as a parsed node instead of an HTML string; the parser yields an inert document.
+watchPostEffect(() => {
+  if (!container.value || !svg.value)
+    return;
+  const node = new DOMParser().parseFromString(svg.value, 'text/html').body.firstElementChild;
+  if (node)
+    container.value.replaceChildren(node);
+});
+
 onBeforeUnmount(() => observer?.disconnect());
 </script>
 
@@ -79,8 +89,7 @@ onBeforeUnmount(() => observer?.disconnect());
     <p>Diagram could not be rendered: {{ error }}</p>
     <pre>{{ source }}</pre>
   </div>
-  <!-- nosemgrep: svg is Mermaid output for repo-authored diagrams, sanitized by its 'strict' securityLevel -->
-  <div v-else-if="svg" class="mermaid-diagram" :style="{ '--mermaid-min-width': minWidth }" v-html="svg" />
+  <div v-else-if="svg" ref="container" class="mermaid-diagram" :style="{ '--mermaid-min-width': minWidth }" />
   <div v-else class="mermaid-diagram mermaid-diagram--loading" aria-busy="true" />
 </template>
 
