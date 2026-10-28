@@ -84,6 +84,8 @@ Idioms:
 
 - `var` when the type is apparent
 - Pattern matching preferred: `is null` over `== null`, `is not` over `!(...)`
+- Guard arguments with the BCL throw helpers, e.g. `ArgumentNullException.ThrowIfNull(x)` or
+  `ArgumentException.ThrowIfNullOrWhiteSpace(x)` — no guard-clause library
 - No primary constructors on classes or structs — use regular constructors (records are fine)
 - Expression bodies for single-line members
 - Avoid unnecessary code/clutter — match the surrounding style

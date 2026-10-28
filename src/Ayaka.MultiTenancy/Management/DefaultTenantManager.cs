@@ -2,7 +2,6 @@
 
 namespace Ayaka.MultiTenancy.Management;
 
-using Light.GuardClauses;
 using Microsoft.Extensions.Logging;
 
 /// <summary>
@@ -37,7 +36,7 @@ internal sealed partial class DefaultTenantManager : ITenantManager
     /// <inheritdoc />
     public async ValueTask AddAsync(Tenant tenant, CancellationToken cancellationToken = default)
     {
-        tenant.MustNotBeNull();
+        ArgumentNullException.ThrowIfNull(tenant);
 
         await _store.AddAsync(tenant, cancellationToken);
         await EvictSafelyAsync(tenant.Id);
@@ -46,7 +45,7 @@ internal sealed partial class DefaultTenantManager : ITenantManager
     /// <inheritdoc />
     public async ValueTask UpdateAsync(Tenant tenant, CancellationToken cancellationToken = default)
     {
-        tenant.MustNotBeNull();
+        ArgumentNullException.ThrowIfNull(tenant);
 
         await _store.UpdateAsync(tenant, cancellationToken);
         await EvictSafelyAsync(tenant.Id);
@@ -55,7 +54,7 @@ internal sealed partial class DefaultTenantManager : ITenantManager
     /// <inheritdoc />
     public async ValueTask<bool> RemoveAsync(string id, CancellationToken cancellationToken = default)
     {
-        id.MustNotBeNullOrWhiteSpace();
+        ArgumentException.ThrowIfNullOrWhiteSpace(id);
 
         var removed = await _store.RemoveAsync(id, cancellationToken);
         await EvictSafelyAsync(id);
@@ -66,7 +65,7 @@ internal sealed partial class DefaultTenantManager : ITenantManager
     /// <inheritdoc />
     public ValueTask<Tenant?> GetAsync(string id, CancellationToken cancellationToken = default)
     {
-        id.MustNotBeNullOrWhiteSpace();
+        ArgumentException.ThrowIfNullOrWhiteSpace(id);
 
         return _cache.GetOrCreateAsync(id, _loadFromStore, cancellationToken);
     }
