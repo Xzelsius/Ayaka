@@ -89,7 +89,14 @@ public sealed partial class RequestTenancyMiddleware
         }
 
         _accessor.TenantContext = tenantContext;
-        await _next(context);
+        try
+        {
+            await _next(context);
+        }
+        finally
+        {
+            _accessor.TenantContext = null;
+        }
     }
 
     private static async Task RejectAsync(HttpContext context, int statusCode, string title)

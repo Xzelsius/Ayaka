@@ -68,8 +68,11 @@ sees no endpoint and lets every request through without a tenant. Then check tha
 matched, that it hasn't disabled multi-tenancy or short-circuited during routing, and that you read
 the accessor after `UseMultiTenancy()` has run.
 
-For background work, set the context where the job runs: queued work doesn't inherit it. Work that
-you start and don't await can outlive the context; copy the tenant ID into that work. See
+Work started from a request and not awaited, such as a fire-and-forget task or a timer callback,
+sees `null` once the request has ended: the middleware clears the context then. Copy the tenant ID
+into that work before you start it.
+
+For background work, set the context where the job runs: queued work doesn't inherit it. See
 [background work](./guides/background-work.md) and the tenant context's
 [behavior and limits](./tenant-context.md#behavior-and-limits).
 

@@ -169,6 +169,106 @@ public abstract class RequestTenancyMiddlewareTest
     }
 
     [Fact]
+    public async Task Does_clear_tenant_context_after_request_completed()
+    {
+        var release = new TaskCompletionSource();
+        Task<TenantContext?>? detachedWork = null;
+
+        using var host = await CreateHost(
+            services =>
+            {
+                services
+                    .AddMultiTenancy()
+                    .ConfigureRequestTenancy(requestTenancy =>
+                    {
+                        requestTenancy
+                            .DetectUsing(new StaticValueStrategy("test"))
+                            .ResolveUsing(new StaticContextResolver(new TenantContext("test", "Acme")));
+                    });
+
+                ConfigureServices(services);
+            },
+            app =>
+            {
+                app.UseMultiTenancy();
+                app.Use((httpContext, next) =>
+                {
+                    var accessor = httpContext.RequestServices.GetRequiredService<ITenantContextAccessor>();
+
+                    detachedWork = Task.Run(async () =>
+                    {
+                        await release.Task;
+                        return accessor.TenantContext;
+                    });
+
+                    return next(httpContext);
+                });
+
+                ConfigureApp(app);
+            });
+
+        using var client = host.GetTestClient();
+        using var response = await client.GetAsync("/tenancy-enabled", TestContext.Current.CancellationToken);
+
+        var content = await response.Content.ReadFromJsonAsync<TenancyResponse>(TestContext.Current.CancellationToken);
+        content.ShouldBeEquivalentTo(new TenancyResponse(new TenantContext("test", "Acme")));
+
+        release.SetResult(); // Allow the detached work to run
+        var tenantContext = await detachedWork.ShouldNotBeNull();
+        tenantContext.ShouldBeNull();
+    }
+
+    [Fact]
+    public async Task Does_clear_tenant_context_if_request_pipeline_throws()
+    {
+        var release = new TaskCompletionSource();
+        Task<TenantContext?>? detachedWork = null;
+
+        using var host = await CreateHost(
+            services =>
+            {
+                services
+                    .AddMultiTenancy()
+                    .ConfigureRequestTenancy(requestTenancy =>
+                    {
+                        requestTenancy
+                            .DetectUsing(new StaticValueStrategy("test"))
+                            .ResolveUsing(new StaticContextResolver(new TenantContext("test", "Acme")));
+                    });
+
+                ConfigureServices(services);
+            },
+            app =>
+            {
+                app.UseMultiTenancy();
+                app.Use((HttpContext httpContext, RequestDelegate _) =>
+                {
+                    var accessor = httpContext.RequestServices.GetRequiredService<ITenantContextAccessor>();
+
+                    detachedWork = Task.Run(async () =>
+                    {
+                        await release.Task;
+                        return accessor.TenantContext;
+                    });
+
+                    throw new InvalidOperationException("request failed");
+                });
+
+                ConfigureApp(app);
+            });
+
+        using var client = host.GetTestClient();
+
+        var exception = await Should.ThrowAsync<InvalidOperationException>(
+            async () => await client.GetAsync("/tenancy-enabled", TestContext.Current.CancellationToken));
+        exception.Message.ShouldBe("request failed");
+
+        release.SetResult(); // Allow the detached work to run
+        var tenantContext = await detachedWork.ShouldNotBeNull();
+        tenantContext.ShouldBeNull();
+    }
+
+    [Fact]
     public async Task Does_consume_all_available_detection_strategies()
     {
         using var host = await CreateHost(

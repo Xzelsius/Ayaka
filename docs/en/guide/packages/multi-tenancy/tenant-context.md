@@ -103,7 +103,9 @@ async helper becoming the caller's context after the helper returns: it applies 
 *inside* that helper. The [background work guide](./guides/background-work.md) shows a complete
 job runner.
 
-For HTTP requests, let the middleware own the context. It throws if a context is already set when it
+For HTTP requests, let the middleware own the context. It sets the context for the request and clears
+it when the request ends, so work that outlives the request doesn't keep the request's tenant. It
+throws if a context is already set when it
 handles a tenant-enabled endpoint, so don't set one earlier in the pipeline to influence detection;
 write a [detection strategy](./aspnetcore/detection.md) instead.
 
