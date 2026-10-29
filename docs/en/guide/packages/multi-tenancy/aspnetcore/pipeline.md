@@ -23,7 +23,8 @@ flowchart TB
 ```
 
 A tenant-enabled endpoint is a matched endpoint without `DisableMultiTenancyAttribute`; everything
-else passes through untouched.
+else passes through untouched. Once the rest of the pipeline has finished, the middleware clears the
+context again, even when the request fails.
 
 ## Register it
 
@@ -185,8 +186,9 @@ Request tenancy is read once at startup; strategies and resolvers live as long a
 - **Tenant-enabled endpoints always have a context.** Requests without a known tenant are rejected
   before they reach your endpoint, so `ITenantContextAccessor.TenantContext` is never `null` there.
 - **Scoped to the request.** The middleware sets the context for the rest of the pipeline, including
-  your endpoint. Don't read it from work that you start from a request and don't await; copy the
-  tenant ID into that work instead.
+  your endpoint, and clears it when the request ends, whether it succeeds or throws. Work you start
+  from a request and don't await sees `null` once the request has ended; copy the tenant ID into that
+  work before you start it.
 - **One owner per request.** If a tenant context is already set when a tenant-enabled endpoint is
   reached, the middleware throws `InvalidOperationException`. Don't set the context earlier in the
   pipeline; write a [detection strategy](./detection.md#write-your-own) instead.
