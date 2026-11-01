@@ -211,7 +211,7 @@ request already sees the change.
 | --- | --- |
 | One instance, all writes through `ITenantManager` | Nothing to do — the manager [evicts automatically](../management/caching.md#behavior-and-limits). |
 | Writes outside the manager, or several instances | Publish a change notification and evict on every instance, as above. |
-| Notifications are not possible | Rely on expiration alone and lower `TenantCacheOptions.Expiration` to the staleness you can accept (minimum 1 minute). |
+| Notifications are not possible | Rely on expiration alone and lower `HybridCacheTenantCacheOptions.Expiration` to the staleness you can accept (minimum 1 minute). |
 
 Notifications and expiration combine well: notifications make changes visible immediately, and the
 expiration bounds the damage if one is lost.

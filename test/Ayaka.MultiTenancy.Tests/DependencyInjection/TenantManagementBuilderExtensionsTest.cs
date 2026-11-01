@@ -95,7 +95,7 @@ public sealed class TenantManagementBuilderExtensionsTest
             builder.UseHybridCache(options => options.Expiration = TimeSpan.FromMinutes(10));
 
             using var services = builder.MultiTenancy.Services.BuildServiceProvider();
-            services.GetRequiredService<IOptions<TenantCacheOptions>>().Value.Expiration.ShouldBe(TimeSpan.FromMinutes(10));
+            services.GetRequiredService<IOptions<HybridCacheTenantCacheOptions>>().Value.Expiration.ShouldBe(TimeSpan.FromMinutes(10));
         }
     }
 
@@ -162,7 +162,7 @@ public sealed class TenantManagementBuilderExtensionsTest
             builder.UseKeyedHybridCache("tenancy", options => options.Expiration = TimeSpan.FromMinutes(10));
 
             using var services = builder.MultiTenancy.Services.BuildServiceProvider();
-            services.GetRequiredService<IOptions<TenantCacheOptions>>().Value.Expiration.ShouldBe(TimeSpan.FromMinutes(10));
+            services.GetRequiredService<IOptions<HybridCacheTenantCacheOptions>>().Value.Expiration.ShouldBe(TimeSpan.FromMinutes(10));
         }
     }
 

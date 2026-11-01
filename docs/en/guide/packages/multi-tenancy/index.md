@@ -61,7 +61,7 @@ Generic Host register for you.
 | Namespace | Contains |
 | --- | --- |
 | `Ayaka.MultiTenancy` | `TenantContext`, `ITenantContextAccessor`, `AddMultiTenancy()` |
-| `Ayaka.MultiTenancy.Management` | `Tenant`, `ITenantManager`, `ITenantStore`, `ITenantCache`, `TenantCacheOptions` |
+| `Ayaka.MultiTenancy.Management` | `Tenant`, `ITenantManager`, `ITenantStore`, `ITenantCache` |
 | `Ayaka.MultiTenancy.DependencyInjection` | Builder interfaces and their registration extensions, `UseMultiTenancy()` |
 | `Ayaka.MultiTenancy.AspNetCore` | `RequestTenancyMiddleware`, `RequestTenancyOptions`, `DisableMultiTenancyAttribute` |
 | `Ayaka.MultiTenancy.AspNetCore.Detection` | `ITenantDetectionStrategy` and the built-in strategies |

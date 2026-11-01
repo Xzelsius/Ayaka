@@ -36,17 +36,17 @@ public static class TenantManagementBuilderExtensions
     ///     Tenants are cached in memory, and additionally in the registered <see cref="IDistributedCache"/>, if any.
     /// </remarks>
     /// <param name="builder">The <see cref="ITenantManagementBuilder"/> to configure.</param>
-    /// <param name="configure">An optional action to configure the <see cref="TenantCacheOptions"/>.</param>
+    /// <param name="configure">An optional action to configure the <see cref="HybridCacheTenantCacheOptions"/>.</param>
     /// <returns>The same <see cref="ITenantManagementBuilder"/>.</returns>
     public static ITenantManagementBuilder UseHybridCache(
         this ITenantManagementBuilder builder,
-        Action<TenantCacheOptions>? configure = null)
+        Action<HybridCacheTenantCacheOptions>? configure = null)
     {
         ArgumentNullException.ThrowIfNull(builder);
 
         builder.MultiTenancy.Services.AddHybridCache();
 
-        return builder.UseTenantCache(ServiceDescriptor.Singleton<ITenantCache, HybridCacheTenantCache>(), configure);
+        return builder.UseHybridCacheCore(ServiceDescriptor.Singleton<ITenantCache, HybridCacheTenantCache>(), configure);
     }
 
     /// <summary>
@@ -61,37 +61,44 @@ public static class TenantManagementBuilderExtensions
     /// </remarks>
     /// <param name="builder">The <see cref="ITenantManagementBuilder"/> to configure.</param>
     /// <param name="serviceKey">The service key of the <see cref="HybridCache"/> to use.</param>
-    /// <param name="configure">An optional action to configure the <see cref="TenantCacheOptions"/>.</param>
+    /// <param name="configure">An optional action to configure the <see cref="HybridCacheTenantCacheOptions"/>.</param>
     /// <returns>The same <see cref="ITenantManagementBuilder"/>.</returns>
     public static ITenantManagementBuilder UseKeyedHybridCache(
         this ITenantManagementBuilder builder,
         object serviceKey,
-        Action<TenantCacheOptions>? configure = null)
+        Action<HybridCacheTenantCacheOptions>? configure = null)
     {
         ArgumentNullException.ThrowIfNull(builder);
         ArgumentNullException.ThrowIfNull(serviceKey);
 
-        return builder.UseTenantCache(
+        return builder.UseHybridCacheCore(
             ServiceDescriptor.Singleton<ITenantCache>(services => new HybridCacheTenantCache(
                 services.GetRequiredKeyedService<HybridCache>(serviceKey),
-                services.GetRequiredService<IOptions<TenantCacheOptions>>(),
+                services.GetRequiredService<IOptions<HybridCacheTenantCacheOptions>>(),
                 services.GetRequiredService<TimeProvider>())),
             configure);
     }
 
-    private static ITenantManagementBuilder UseTenantCache(
+    private static ITenantManagementBuilder UseHybridCacheCore(
         this ITenantManagementBuilder builder,
         ServiceDescriptor cache,
-        Action<TenantCacheOptions>? configure)
+        Action<HybridCacheTenantCacheOptions>? configure)
     {
         var services = builder.MultiTenancy.Services;
 
-        services.AddOptionsWithValidateOnStart<TenantCacheOptions, TenantCacheOptionsAutoValidator>();
+        services.AddOptionsWithValidateOnStart<HybridCacheTenantCacheOptions, HybridCacheTenantCacheOptionsAutoValidator>();
         if (configure is not null)
         {
             services.Configure(configure);
         }
 
+        ReplaceDefaultCache(services, cache);
+
+        return builder;
+    }
+
+    private static void ReplaceDefaultCache(IServiceCollection services, ServiceDescriptor cache)
+    {
         // Replace the default cache, but keep a cache registered by the user
         var defaultCache = services.FirstOrDefault(x =>
             x.ServiceType == typeof(ITenantCache) && x.ImplementationType == typeof(NoopTenantCache));
@@ -101,7 +108,5 @@ public static class TenantManagementBuilderExtensions
         }
 
         services.TryAdd(cache);
-
-        return builder;
     }
 }
