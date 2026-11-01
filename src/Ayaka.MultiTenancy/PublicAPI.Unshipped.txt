@@ -1,1 +1,15 @@
 #nullable enable
+*REMOVED*Ayaka.MultiTenancy.Management.TenantCacheOptions
+*REMOVED*Ayaka.MultiTenancy.Management.TenantCacheOptions.Expiration.get -> System.TimeSpan
+*REMOVED*Ayaka.MultiTenancy.Management.TenantCacheOptions.Expiration.set -> void
+*REMOVED*Ayaka.MultiTenancy.Management.TenantCacheOptions.TenantCacheOptions() -> void
+*REMOVED*static Ayaka.MultiTenancy.DependencyInjection.TenantManagementBuilderExtensions.UseHybridCache(this Ayaka.MultiTenancy.DependencyInjection.ITenantManagementBuilder! builder, System.Action<Ayaka.MultiTenancy.Management.TenantCacheOptions!>? configure = null) -> Ayaka.MultiTenancy.DependencyInjection.ITenantManagementBuilder!
+*REMOVED*static Ayaka.MultiTenancy.DependencyInjection.TenantManagementBuilderExtensions.UseKeyedHybridCache(this Ayaka.MultiTenancy.DependencyInjection.ITenantManagementBuilder! builder, object! serviceKey, System.Action<Ayaka.MultiTenancy.Management.TenantCacheOptions!>? configure = null) -> Ayaka.MultiTenancy.DependencyInjection.ITenantManagementBuilder!
+Ayaka.MultiTenancy.Management.HybridCacheTenantCacheOptions
+Ayaka.MultiTenancy.Management.HybridCacheTenantCacheOptions.Expiration.get -> System.TimeSpan
+Ayaka.MultiTenancy.Management.HybridCacheTenantCacheOptions.Expiration.set -> void
+Ayaka.MultiTenancy.Management.HybridCacheTenantCacheOptions.HybridCacheTenantCacheOptions() -> void
+Ayaka.MultiTenancy.Management.HybridCacheTenantCacheOptions.KeyPrefix.get -> string?
+Ayaka.MultiTenancy.Management.HybridCacheTenantCacheOptions.KeyPrefix.set -> void
+static Ayaka.MultiTenancy.DependencyInjection.TenantManagementBuilderExtensions.UseHybridCache(this Ayaka.MultiTenancy.DependencyInjection.ITenantManagementBuilder! builder, System.Action<Ayaka.MultiTenancy.Management.HybridCacheTenantCacheOptions!>? configure = null) -> Ayaka.MultiTenancy.DependencyInjection.ITenantManagementBuilder!
+static Ayaka.MultiTenancy.DependencyInjection.TenantManagementBuilderExtensions.UseKeyedHybridCache(this Ayaka.MultiTenancy.DependencyInjection.ITenantManagementBuilder! builder, object! serviceKey, System.Action<Ayaka.MultiTenancy.Management.HybridCacheTenantCacheOptions!>? configure = null) -> Ayaka.MultiTenancy.DependencyInjection.ITenantManagementBuilder!

@@ -49,6 +49,7 @@ builder.Services.AddMultiTenancy()
     .UseHybridCache(options =>
     {
         options.Expiration = TimeSpan.FromMinutes(10);
+        options.KeyPrefix = "billing-api";
     });
 ```
 
@@ -98,11 +99,12 @@ tenant stays cached until it expires. With several instances, every instance mus
 
 ## Options
 
-`TenantCacheOptions` is in `Ayaka.MultiTenancy.Management`.
+`HybridCacheTenantCacheOptions` is in `Ayaka.MultiTenancy.Management`.
 
 | Property | Default | Meaning |
 | --- | --- | --- |
 | `TimeSpan Expiration` | 5 minutes | How long an entry lives, in both the local and the distributed cache. Must be between 1 minute and 1 hour, inclusive; validated at host startup. |
+| `string? KeyPrefix` | none | Scopes the cached tenants to this application. It is added to Ayaka's own cache keys rather than replacing them, so it can't collide with your application's keys. ASCII letters, digits, `-`, `_`, and `.` only, at most 64 characters. An empty string means no prefix. Validated at host startup. |
 
 The expiration bounds how long a tenant changed outside the manager can stay stale. Choose it from
 your tolerance for stale catalog data.
@@ -124,6 +126,10 @@ your tolerance for stale catalog data.
   the distributed cache; other instances keep their local copy until it expires. With several
   instances, distribute invalidations yourself — the [cache sync guide](../guides/cache-sync.md) shows
   how.
+- **A shared distributed cache shares tenants.** Applications or environments that use the same
+  distributed cache, such as one Redis instance for staging and production, read each other's cached
+  tenants and misses, and an eviction in one evicts the entries of the others too. Give each of them its
+  own `KeyPrefix`. Instances of the same application should use the same prefix, so they share entries.
 
 ## Replace the cache
 

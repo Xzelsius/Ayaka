@@ -13,13 +13,12 @@ using Microsoft.Extensions.Options;
 /// </summary>
 internal sealed class HybridCacheTenantCache : ITenantCache
 {
-    private const string KeyPrefix = "ayaka:tenant:";
-    private const string TenantsTag = "ayaka:tenants";
     private const int MaxLoadAttempts = 3;
 
-    private static readonly string[] _tags = [TenantsTag];
-
     private readonly HybridCache _cache;
+    private readonly string _keyPrefix;
+    private readonly string _tenantsTag;
+    private readonly string[] _tags;
     private readonly HybridCacheEntryOptions _entryOptions;
     private readonly TimeProvider _timeProvider;
     private readonly long _evictionRetentionTicks;
@@ -30,14 +29,22 @@ internal sealed class HybridCacheTenantCache : ITenantCache
     ///     Initializes a new instance of the <see cref="HybridCacheTenantCache"/> class.
     /// </summary>
     /// <param name="cache">The <see cref="HybridCache"/> used to store and retrieve tenant data.</param>
-    /// <param name="options">The <see cref="TenantCacheOptions"/> representing the options for the cache.</param>
+    /// <param name="options">The <see cref="HybridCacheTenantCacheOptions"/> representing the options for the cache.</param>
     /// <param name="timeProvider">The <see cref="TimeProvider"/> used to timestamp loads and evictions.</param>
     public HybridCacheTenantCache(
         HybridCache cache,
-        IOptions<TenantCacheOptions> options,
+        IOptions<HybridCacheTenantCacheOptions> options,
         TimeProvider timeProvider)
     {
         _cache = cache;
+
+        // A configured prefix goes behind a fixed "p" segment, so prefixed keys can never match the
+        // unprefixed layout (whose second segment is "tenant") and keys without a prefix stay unchanged
+        var scope = string.IsNullOrEmpty(options.Value.KeyPrefix) ? "ayaka:" : $"ayaka:p:{options.Value.KeyPrefix}:";
+        _keyPrefix = scope + "tenant:";
+        _tenantsTag = scope + "tenants";
+        _tags = [_tenantsTag];
+
         _entryOptions = new HybridCacheEntryOptions
         {
             Expiration = options.Value.Expiration,
@@ -55,7 +62,7 @@ internal sealed class HybridCacheTenantCache : ITenantCache
         Func<string, CancellationToken, ValueTask<Tenant?>> factory,
         CancellationToken cancellationToken = default)
     {
-        var key = KeyPrefix + id;
+        var key = _keyPrefix + id;
 
         for (var attempt = 1; ; attempt++)
         {
@@ -93,7 +100,7 @@ internal sealed class HybridCacheTenantCache : ITenantCache
             now);
         PruneEvictions(now);
 
-        return _cache.RemoveAsync(KeyPrefix + id, cancellationToken);
+        return _cache.RemoveAsync(_keyPrefix + id, cancellationToken);
     }
 
     /// <inheritdoc />
@@ -101,7 +108,7 @@ internal sealed class HybridCacheTenantCache : ITenantCache
     {
         Volatile.Write(ref _allEvictedAt, UtcNowTicks(_timeProvider));
 
-        return _cache.RemoveByTagAsync(TenantsTag, cancellationToken);
+        return _cache.RemoveByTagAsync(_tenantsTag, cancellationToken);
     }
 
     private static long UtcNowTicks(TimeProvider timeProvider)
