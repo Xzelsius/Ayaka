@@ -1,7 +1,7 @@
 <Project>
 
   <PropertyGroup>
-    <DotNetTargetFramework>net10.0</DotNetTargetFramework>
+    <DotNetTargetFramework>net11.0</DotNetTargetFramework>
   </PropertyGroup>
 
 </Project>
