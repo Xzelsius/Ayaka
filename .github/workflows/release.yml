@@ -45,7 +45,7 @@ jobs:
 
         - name: Create GitHub Release
           run: |
-            tag="v$(dotnet gitversion -output json -format '{MajorMinorPatch}' -nofetch -nocache)"
+            tag="v$(dotnet gitversion --output json --format '{MajorMinorPatch}' --no-fetch --no-cache)"
 
             if gh release view "$tag" > /dev/null 2>&1; then
               echo "::warning::Release $tag already exists. No GitHub release is created"
