@@ -29,7 +29,7 @@ step_version() {
   restore_tools
 
   local output line
-  output=$(dotnet gitversion -output dotenv -nofetch -nocache)
+  output=$(dotnet gitversion --output dotenv --no-fetch --no-cache)
   while IFS= read -r line; do
     line=${line%$'\r'}
     if [[ $line =~ ^(GitVersion_[A-Za-z]+)=\'(.*)\'$ ]]; then
