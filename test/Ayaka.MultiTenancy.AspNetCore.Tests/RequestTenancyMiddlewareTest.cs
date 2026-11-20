@@ -466,8 +466,10 @@ public abstract class RequestTenancyMiddlewareTest
         using var response = await client.GetAsync("/tenancy-enabled", TestContext.Current.CancellationToken);
         response.StatusCode.ShouldBe(HttpStatusCode.OK);
 
-        tracker.StoppedActivities.ShouldHaveSingleItem();
-        tracker.StoppedActivities[0].Tags.ShouldContain(x => x.Key == "custom" && x.Value == "test", 1);
+        await tracker.WaitForStoppedActivityAsync(TestContext.Current.CancellationToken);
+
+        tracker.StoppedActivities.ShouldHaveSingleItem()
+            .Tags.ShouldContain(x => x.Key == "custom" && x.Value == "test", 1);
     }
 
     [Fact]
@@ -505,6 +507,8 @@ public abstract class RequestTenancyMiddlewareTest
         using var response = await client.GetAsync("/tenancy-disabled", TestContext.Current.CancellationToken);
 
         response.StatusCode.ShouldBe(HttpStatusCode.OK);
+
+        await tracker.WaitForStoppedActivityAsync(TestContext.Current.CancellationToken);
 
         tracker.StoppedActivities.ShouldNotBeEmpty();
         tracker.StoppedActivities.ShouldNotContain(activity => activity.Tags.Any(tag => tag.Key == "custom"));
@@ -545,6 +549,8 @@ public abstract class RequestTenancyMiddlewareTest
 
         response.StatusCode.ShouldBe(HttpStatusCode.BadRequest);
 
+        await tracker.WaitForStoppedActivityAsync(TestContext.Current.CancellationToken);
+
         tracker.StoppedActivities.ShouldNotBeEmpty();
         tracker.StoppedActivities.ShouldNotContain(activity => activity.Tags.Any(tag => tag.Key == "custom"));
     }
@@ -583,6 +589,8 @@ public abstract class RequestTenancyMiddlewareTest
         using var response = await client.GetAsync("/tenancy-enabled", TestContext.Current.CancellationToken);
 
         response.StatusCode.ShouldBe(HttpStatusCode.NotFound);
+
+        await tracker.WaitForStoppedActivityAsync(TestContext.Current.CancellationToken);
 
         tracker.StoppedActivities.ShouldNotBeEmpty();
         tracker.StoppedActivities.ShouldNotContain(activity => activity.Tags.Any(tag => tag.Key == "custom"));
